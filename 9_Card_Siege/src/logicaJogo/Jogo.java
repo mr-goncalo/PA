@@ -13,27 +13,34 @@ import logicaJogo.Cartas.*;
  * @author eu
  */
 public class Jogo {
-    
+    private int dia;
  private ArrayList<ArrayList<Card>> deck;
     public Jogo() {
+        dia = 0;
         deck = new  ArrayList<>();
         List<Card> card1 = new ArrayList<>();
         card1.add(new SuppliesSpoiled("coisa", "boas", 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0));
         card1.add(new SuppliesSpoiled("coisa2", "boas2", 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0));
         deck.add((ArrayList<Card>) card1);
-        
+        deck.add((ArrayList<Card>) card1);
         
     }
 
     @Override
     public String toString() {
           String s  = new String();
+          s+= "\n TOdos os elemtnos";
           for(ArrayList<Card> c : deck){
-              for(Card cIner : c){
-                  s+= "\n " + cIner.getEventName();
-              }
-          }
-          
+               for(Card cIner : c){
+                  s+= "\n " + cIner.getEventDesc();
+               }
+         }
+           s+= "\n Apenas o 1 dia";
+          for(ArrayList<Card> c : deck){
+             
+                  s+= "\n " + c.get(dia).getEventName();
+         
+         }
         return s;
     }
 
