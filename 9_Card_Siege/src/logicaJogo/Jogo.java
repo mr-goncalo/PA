@@ -4,6 +4,7 @@
  * and open the template in the editor.
  */
 package logicaJogo;
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
@@ -12,10 +13,17 @@ import logicaJogo.Cartas.*;
  *
  * @author eu
  */
-public class Jogo {
+public class Jogo implements Constantes, Serializable
+{
     private int dia;
- private ArrayList<ArrayList<Card>> deck;
-    public Jogo() {
+  
+    private ArrayList<ArrayList<Card>> deck;
+    
+    private Jogador jog;
+     
+    public Jogo()
+    {
+        jog  = new Jogador("DEFAULT", this);
         dia = 0;
         deck = new  ArrayList<>();
         List<Card> card1 = new ArrayList<>();
@@ -26,21 +34,28 @@ public class Jogo {
         
     }
 
+    public void setNomeJogador(String nome)
+    {
+        jog.setNomeJogador(nome);
+    }
+    
     @Override
-    public String toString() {
-          String s  = new String();
-          s+= "\n TOdos os elemtnos";
-          for(ArrayList<Card> c : deck){
-               for(Card cIner : c){
-                  s+= "\n " + cIner.getEventDesc();
-               }
-         }
-           s+= "\n Apenas o 1 dia";
-          for(ArrayList<Card> c : deck){
-             
-                  s+= "\n " + c.get(dia).getEventName();
-         
-         }
+    public String toString() 
+    {
+        String s  = new String();
+        s+= "\n Todos os elemtnos";
+        for(ArrayList<Card> c : deck)
+        {
+             for(Card cIner : c)
+             {
+                s+= "\n " + cIner.getEventDesc();
+             }
+        }
+        s+= "\n Apenas o 1 dia";
+        for(ArrayList<Card> c : deck)
+        {
+                s+= "\n " + c.get(dia).getEventName();
+        }
         return s;
     }
 
