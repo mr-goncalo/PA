@@ -1,5 +1,5 @@
 
-package IUjogo;
+package UiJogo;
 
 import logicaJogo.MaquinaEstados;
 
@@ -7,7 +7,7 @@ public class Main
 {
     public static void main(String[] args) 
     {
-        IUtexto iuTexto = new IUtexto(new MaquinaEstados());
+        UiTexto iuTexto = new UiTexto(new MaquinaEstados());
         iuTexto.corre();
     }
 }

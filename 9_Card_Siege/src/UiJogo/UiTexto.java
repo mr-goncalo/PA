@@ -1,4 +1,4 @@
-package IUjogo;
+package UiJogo;
 
 import java.util.Scanner;
 import logicaJogo.Estados.AguardaAccao;
@@ -8,18 +8,21 @@ import logicaJogo.Estados.IEstado;
 import logicaJogo.Jogo;
 import logicaJogo.MaquinaEstados;
 
-public class IUtexto 
+public class UiTexto 
 {        
     private MaquinaEstados jogo;
     boolean sair = false;
     
-    public IUtexto(MaquinaEstados jogo)
+    public UiTexto(MaquinaEstados jogo)
     {
         this.jogo = jogo;
     }
     
     void iuAguardaInicio()
     {
+        Jogo j = new Jogo();
+        System.out.println( j.toString());
+        
         System.out.println("1 - Novo Jogo\n2 - Sair");
         char c = ' ';
         Scanner sc = new Scanner(System.in);

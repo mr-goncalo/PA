@@ -23,7 +23,6 @@ public class AguardaInicio extends EstadoAdapter
 //        {
 //            return new AguardaColocacao(getJogoDados());
 //        }
-//        return this; 
-    }
-    
+      return this; 
+    } 
 }
