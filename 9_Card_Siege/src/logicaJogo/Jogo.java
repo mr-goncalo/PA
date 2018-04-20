@@ -46,7 +46,9 @@ public class Jogo implements Constantes, Serializable {
         enemiesLaddersLocation = 4;
         enemiesSiegeTowerLocation = 4;
         enemiesTrebuchetCount = 3;
+        enemiesBattRamLocation = 4;
         playerMorale = 4;
+        playerSupplies = 4;
         turnActionPoints = 0;
         playerWallStrength = 4;
 
@@ -86,13 +88,14 @@ public class Jogo implements Constantes, Serializable {
                 s += "\n " + cIner.getEventDesc();
             }
         }
-        s += "\n Apenas o 1 dia";
-        for (ArrayList<Card> c : deck) {
-            s += "\n " + c.get(dia).getEventName();
-        }
-
-        deck.get(dia).get(0).ApplyEvent(this);
-        s += "\n\n morale = " + moraleBonus;
+        s += "\n ";
+        for (ArrayList<Card> c : deck)  
+           c.get(dia).ApplyEvent(this); 
+        s += "\n Variaveis de jogo \n";
+        s +=" Jogador moraleBonus: " +moraleBonus+ " sabotage: " + sabotageBonus + " morale: " +playerMorale+
+                " Supplies: " + playerSupplies + " Wall strength: " +playerWallStrength;
+        s+= "\n Enimigos battLocation: " +enemiesBattRamLocation + " ladders Loc: " +enemiesLaddersLocation +
+                " siegeTower Location "+ enemiesSiegeTowerLocation + " trebuchet Count: " +enemiesTrebuchetCount;
         return s;
     }
 
