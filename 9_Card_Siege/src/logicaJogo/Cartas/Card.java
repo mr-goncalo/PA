@@ -15,31 +15,18 @@ public class Card implements Serializable{
         this.actionPoint = actionPoint;
     }
 
-    /**
-     *
-     * @param j
-     */
     public void ApplyEvent(DadosJogo j) {
-    }
-
-    ;
+    };
     
     public void AdvanceEnemies(DadosJogo j) {
-    }
-
-    ;
+    };
     
     public void TurnActionPoints(DadosJogo j) {
         j.setTurnActionPoints(j.getTurnActionPoints() + this.actionPoint);
-
-    }
-
-    ;
+    };
     
     public void RemoveEventBonus(DadosJogo j) {
-    }
-
-    ;
+    };
     
     public String getEventDesc() {
         return eventDesc;

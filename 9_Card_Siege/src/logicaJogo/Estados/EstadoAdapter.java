@@ -5,7 +5,7 @@ import java.io.Serializable;
 import logicaJogo.DadosJogo;
 
 
-public class EstadoAdapter implements IEstado, Serializable
+public abstract class EstadoAdapter implements IEstado, Serializable
 {
     private DadosJogo jogo;
     
@@ -27,7 +27,10 @@ public class EstadoAdapter implements IEstado, Serializable
     public IEstado comecarJogo() 
     {
         return this;
+    } 
+    
+    public IEstado retirarCarta()
+    { 
+        return this;
     }
-    
-    
 }

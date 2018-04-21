@@ -21,6 +21,5 @@ public class Illness extends Card
         j.setPlayerSupplies(j.getPlayerSupplies() - 1);
         j.setPlayerMorale(j.getPlayerMorale() - 1);
     }
-
     
 }
