@@ -3,7 +3,7 @@ package logicaJogo.Estados;
 
 import logicaJogo.DadosJogo;
 
-public class AguardaInicio extends EstadoAdapter
+public class AguardaInicio extends EstadoAdapter implements IEstado
 {
     
     public AguardaInicio(DadosJogo jogo) 
@@ -11,12 +11,14 @@ public class AguardaInicio extends EstadoAdapter
         super(jogo);
     }
     
+    @Override
     public IEstado defineNomeJogador(String nome)
     {
         getJogo().setNomeJogador(nome);
         return this;
     }
     
+    @Override
     public IEstado comecarJogo()
     {
 //        if(getJogo().inicializa())
@@ -26,4 +28,6 @@ public class AguardaInicio extends EstadoAdapter
         return new AguardaCarta(getJogo());
       //return this; 
     } 
+
+     
 }

@@ -6,22 +6,22 @@ import logicaJogo.Estados.AguardaCarta;
 import logicaJogo.Estados.AguardaInicio;
 import logicaJogo.Estados.IEstado;
 import logicaJogo.DadosJogo;
-import logicaJogo.MaquinaEstados;
+import logicaJogo.Jogo;
 
 public class UiTexto 
 {        
-    private MaquinaEstados jogo;
+    private Jogo jogo;
     private DadosJogo j;
     boolean sair = false;
     
-    public UiTexto(MaquinaEstados jogo)
+    public UiTexto(Jogo jogo)
     {
         this.jogo = jogo;
     }
     
     void iuAguardaInicio()
     {
-         j = new DadosJogo();
+        
         //System.out.println( j.toString());
         
         System.out.println("1 - Novo Jogo\n2 - Sair");
@@ -47,12 +47,12 @@ public class UiTexto
     void iuAguardaCarta()
     {
          //System.out.println("A mostrar carta...");
-        String s = new String();
-        s = j.getDadosJogador();
-        System.out.println("Ronda "+j.getRonda()+": "+s+"");
-        jogo.retirarCarta();       
-        s = j.getDadosJogador();
-        System.out.println(s);
+        String s = new String(); 
+         //System.out.println(jogo.DrawedCardToString());
+        System.out.println("\n");
+        jogo.retirarCarta();        
+        System.out.println(jogo.toString());
+        
         
         System.out.println("1 - Acções\n2 - Outra Carta\n3 - Sair");
         char c = ' ';
@@ -67,6 +67,7 @@ public class UiTexto
         }
         if(c=='2')
         {
+            jogo.mudarTurno();
             return;
         }      
         if(c=='3')

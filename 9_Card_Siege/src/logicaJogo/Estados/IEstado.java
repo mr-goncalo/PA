@@ -6,5 +6,6 @@ public interface IEstado
     IEstado defineNomeJogador(String nome);
     IEstado comecarJogo();
     IEstado retirarCarta();
+    IEstado mudarTurno();
 
 }

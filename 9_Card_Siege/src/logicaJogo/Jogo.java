@@ -6,13 +6,14 @@ import logicaJogo.Estados.AguardaCarta;
 import logicaJogo.Estados.AguardaInicio;
 import logicaJogo.Estados.IEstado;
 
-public class MaquinaEstados implements Serializable
+public class Jogo implements Serializable
 {
-    private DadosJogo jogo = new DadosJogo();
+    private DadosJogo jogo ;
     private IEstado estado;
 
-    public MaquinaEstados() 
+    public Jogo() 
     {
+        this.jogo = new DadosJogo();
         setEstado(new AguardaInicio(jogo));
     }
 
@@ -40,5 +41,14 @@ public class MaquinaEstados implements Serializable
     {
         setEstado(estado.retirarCarta());
     }
+
+    public void mudarTurno(){
+        setEstado(estado.mudarTurno());
+    }
+    @Override
+    public String toString() {
+         return jogo.toString();
+    }
+    
     
 }

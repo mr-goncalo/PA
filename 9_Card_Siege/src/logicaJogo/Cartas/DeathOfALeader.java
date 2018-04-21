@@ -20,7 +20,7 @@ public class DeathOfALeader extends Card {
     @Override
     public void AdvanceEnemies(DadosJogo j) {
         j.AdvanceSiegeTower(1);
-        j.setEnemiesLaddersLocation(j.getEnemiesLaddersLocation() - 1);
+        j.AdvanceLadders(1);
     }
 
     @Override

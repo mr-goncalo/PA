@@ -18,7 +18,7 @@ public class CoverOfDarkness extends Card
     @Override
     public void ApplyEvent(DadosJogo j) {
         j.setSabotageBonus(j.getSabotageBonus() + 1);
-        j.setRaidBonus(j.getRaidBonus() +1);
+        j.setRaidBonus(j.getRaidBonus() + 1);
     }
     
     @Override

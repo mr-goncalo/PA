@@ -21,4 +21,5 @@ public class Jogador implements Constantes, Serializable
         this.nome = nome;
     }
     
+    
 }

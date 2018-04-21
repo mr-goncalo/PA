@@ -50,29 +50,40 @@ public class DadosJogo implements Constantes, Serializable {
 
     public DadosJogo() {
         jog = new Jogador("DEFAULT", this);
-        dia = 1;
-        ronda = 1;
-        moraleBonus = 0;
-        //playerSupplies = 0; 
-        enemiesLaddersLocation = 2;
-        enemiesSiegeTowerLocation = 4;
-        enemiesTrebuchetCount = 3;
-        enemiesBattRamLocation = 4;
-        playerMorale = 4;
-        playerSupplies = 4;
-        turnActionPoints = 0;
-        playerWallStrength = 4;
 
-        BattRamInCircleSpace = false;
-        LaddersInCircleSpace = false;
-        SiegeTowerInCircleSpace = false;
+        this.dia = 1;
+        this.ronda = 0;
+        this.turnActionPoints = 0;
+        this.badWheather = false;
+        this.hasSiegeTower = true;
+        this.hasLadderns = true;
+        this.hasBattRam = true;
 
-        closeCombatUnits = new int[2];
-        closeCombatUnits[0] = 1;
-        closeCombatUnits[1] = 1;
+        this.unusedBoilingWater = true;
+        this.LaddersInCircleSpace = false;
+        this.BattRamInCircleSpace = false;
+        this.SiegeTowerInCircleSpace = false;
+        this.closeCombatUnits = new int[3];
+        this.laddersBonus = 0;
+        this.battRamBonus = 0;
+        this.siegeTowerBonus = 0;
+        this.closeCombatAttBonus = 0;
+        this.raidBonus = 0;
+        this.coupureBonus = 0;
+        this.moraleBonus = 0;
+        this.sabotageBonus = 0;
+        this.circleSpacesBonus = 0;
+        this.playerSupplies = 4;
+        this.playerMorale = 4;
+        this.playerWallStrength = 4;
+        this.enemiesLaddersLocation = 4;
+        this.enemiesSiegeTowerLocation = 4;
+        this.enemiesTrebuchetCount = 3;
+        this.enemiesBattRamLocation = 4;
 
         deck = new ArrayList<>();
         originalDeck = new ArrayList<>();
+
         List<Card> card1 = new ArrayList<>();
         List<Card> card2 = new ArrayList<>();
         List<Card> card3 = new ArrayList<>();
@@ -109,16 +120,15 @@ public class DadosJogo implements Constantes, Serializable {
         card7.add(new IronShields("Iron Shields", "-1 to attacks on the Siege Tower", 2));
         card7.add(new Faith("Faith", "+1 to attacks on the Battering Ram,Ladders and Morale actions", 3));
 
-        deck.add((ArrayList<Card>) card1);
-        deck.add((ArrayList<Card>) card2);
-        deck.add((ArrayList<Card>) card3);
-        deck.add((ArrayList<Card>) card4);
-        deck.add((ArrayList<Card>) card5);
-        deck.add((ArrayList<Card>) card6);
-        deck.add((ArrayList<Card>) card7);
+        originalDeck.add((ArrayList<Card>) card1);
+        originalDeck.add((ArrayList<Card>) card2);
+        originalDeck.add((ArrayList<Card>) card3);
+        originalDeck.add((ArrayList<Card>) card4);
+        originalDeck.add((ArrayList<Card>) card5);
+        originalDeck.add((ArrayList<Card>) card6);
+        originalDeck.add((ArrayList<Card>) card7);
 
-        originalDeck = deck;
-
+        deck.addAll(originalDeck);
         Collections.shuffle(deck);
 
     }
@@ -126,40 +136,48 @@ public class DadosJogo implements Constantes, Serializable {
     @Override
     public String toString() {
         String s = new String();
+        s += "Dia: " + dia;
+        s += deck.get(0).get(dia - 1).toString();
 
-        s += "\n Todos os elemtnos";
-        for (ArrayList<Card> c : deck) {
-            for (Card cIner : c) {
-                s += c.toString();
+        //Mostra apenas os bonus que tem para o turno
+        s += "Player Action Points: " +turnActionPoints;
+        s += "\nPlayer Bonus: ";
+        s += (moraleBonus != 0 ? "Morale Actions Bonus : " + moraleBonus : "");
+        s += (sabotageBonus != 0 ? " Sabotage Bonus: " + sabotageBonus : "");
+        s += (laddersBonus != 0 ? " Ladders Bonus: " + laddersBonus : "");
+        s += (battRamBonus != 0 ? " Battering Ram Bonus: " + battRamBonus : "");
+        s += (siegeTowerBonus != 0 ? " Siege Tower Bonus: " + siegeTowerBonus : "");
+        s += (closeCombatAttBonus != 0 ? " Close Combat Bonus: " + closeCombatAttBonus : "");
+        s += (raidBonus != 0 ? " Raid Bonus" + raidBonus : "");
+        s += (coupureBonus != 0 ? "Coupure Bonus: " + coupureBonus : "");
+        s += (circleSpacesBonus != 0 ? " Circle Space Bonus: " + circleSpacesBonus : "");
+
+        s += "\nPlayer Status: morale: " + playerMorale + " Supplies: " + playerSupplies + " Wall strength: " + playerWallStrength;
+
+        s += "\nEnemies Locations:";
+        s += (CountEnemiesInCloseCombat() > 0 ? " Enemies in Close Combat: " + CountEnemiesInCloseCombat() : "");
+        s += (hasBattRam ? "B attering Ram: " + enemiesBattRamLocation : "");
+        s += (hasLadderns ? " Ladders Location: " + enemiesLaddersLocation : "");
+        s += (hasSiegeTower ? " SiegeTower Location: " + enemiesSiegeTowerLocation : "");
+        s += " Trebuchet Count: " + enemiesTrebuchetCount;
+                
+        return s;
+    }
+
+    public int CountEnemiesInCloseCombat() {
+        int cont = 0;
+        for (int i = 0; i < closeCombatUnits.length; i++) {
+            if (closeCombatUnits[i] == BATTRAMID || closeCombatUnits[i] == LADDERSID || closeCombatUnits[i] == SIEGETOWERID) {
+                cont++;
             }
         }
-        s += "\n ";
-
-        for (ArrayList<Card> c : deck) {
-            c.get(dia).ApplyEvent(this);
-        }
-        AdvanceToCloseCombat(1);
-        deck.get(1).get(1).AdvanceEnemies(this);
-        s += "\n Variaveis de jogo \n";
-        s += " Jogador moraleBonus: " + moraleBonus + " sabotage: " + sabotageBonus + " morale: " + playerMorale
-                + " Supplies: " + playerSupplies + " Wall strength: " + playerWallStrength;
-        s += "\n Enimigos battLocation: " + enemiesBattRamLocation + " ladders Loc: " + enemiesLaddersLocation
-                + " siegeTower Location " + enemiesSiegeTowerLocation + " trebuchet Count: " + enemiesTrebuchetCount;
-        return s;
+        return cont;
     }
 
-    
-    public String getDadosJogador()
-    {
-        // ----- DEVOLVER DADOS ACTUALIZADOS 
-        String s = new String();
-        s += "\n Variaveis de jogo \n";
-        s += " Jogador moraleBonus: " + moraleBonus + " sabotage: " + sabotageBonus + " morale: " + playerMorale
-                + " Supplies: " + playerSupplies + " Wall strength: " + playerWallStrength;
-        s += "\n Enimigos battLocation: " + enemiesBattRamLocation + " ladders Loc: " + enemiesLaddersLocation
-                + " siegeTower Location " + enemiesSiegeTowerLocation + " trebuchet Count: " + enemiesTrebuchetCount;
-        return s;
+    public String DrawedCardToString() {
+        return deck.get(0).get(dia - 1).toString();
     }
+
     ///////////// funções do jogo 
     public void AvancaMaisLonge() {
         int maisLonge;
@@ -232,6 +250,41 @@ public class DadosJogo implements Constantes, Serializable {
         }
     }
 
+    public void AdvanceTurn() {
+        Card c = deck.get(0).get(dia - 1);
+        c.RemoveEventBonus(this);
+        turnActionPoints = 0;
+        deck.remove(0);
+
+        //Check enemie lines etc etc -.....
+    }
+
+    public void EndOfDay() {
+
+        //Copia o deck original para o de jogo e baralha 
+        deck.addAll(originalDeck);
+        Collections.shuffle(deck);
+
+        //Aumenta o dia 
+        dia++;
+        //reduz o supplies by 1 os aldeoes precisam de comer
+        playerSupplies--;
+
+        //os soldados no tunel voltam para o castelo. 
+        //Ainda por implementar
+        //se os soldados estiveram na linha dos enimigos são capturados
+        //ainda por implementar
+        // se o dia == 4 é porque sobrevivemos os 3 dias e ganhamos os jogo
+    }
+
+    public void DrawCard() {
+        Card c = deck.get(0).get(dia - 1);
+        c.AdvanceEnemies(this);
+        c.ApplyEvent(this);
+        c.TurnActionPoints(this);
+
+    }
+
     public void RemoveSiegeTower() {
         if (this.enemiesSiegeTowerLocation == POSICAO_INICIAL) {
             this.hasSiegeTower = false;
@@ -277,17 +330,17 @@ public class DadosJogo implements Constantes, Serializable {
     public void setDia(int dia) {
         this.dia = dia;
     }
-    
+
     public int getRonda() {
         return ronda;
     }
 
-    public void setRonda(int ronda) 
-    {
-        if(ronda==8)
-            this.ronda=1;
-        else
+    public void setRonda(int ronda) {
+        if (ronda == 8) {
+            this.ronda = 1;
+        } else {
             this.ronda = ronda;
+        }
     }
 
     public int getTurnActionPoints() {
@@ -465,4 +518,9 @@ public class DadosJogo implements Constantes, Serializable {
     public void setRaidBonus(int raidBonus) {
         this.raidBonus = raidBonus;
     }
+
+    public boolean DeckEmpty() {
+        return deck.isEmpty();
+    }
+
 }

@@ -19,18 +19,28 @@ public abstract class EstadoAdapter implements IEstado, Serializable
         return jogo; 
     }
 
+    @Override
     public IEstado defineNomeJogador(String nome) 
     {
         return this;
     }
 
+    @Override
     public IEstado comecarJogo() 
     {
         return this;
     } 
     
+    @Override
     public IEstado retirarCarta()
     { 
         return this;
     }
+
+    @Override
+    public IEstado mudarTurno() {
+        getJogo().AdvanceTurn();
+        return new AguardaCarta(jogo);
+    }
+    
 }
