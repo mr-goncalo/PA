@@ -2,10 +2,8 @@ package logicaJogo;
 
 import java.io.Serializable;
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
-import java.util.Set;
 import logicaJogo.Cartas.*;
 
 public class DadosJogo implements Constantes, Serializable {
@@ -20,6 +18,9 @@ public class DadosJogo implements Constantes, Serializable {
     private boolean hasLadderns;
     private boolean hasBattRam;
     private boolean unusedBoilingWater;
+    private boolean LaddersInCircleSpace;
+    private boolean BattRamInCircleSpace;
+    private boolean SiegeTowerInCircleSpace;
     private int[] closeCombatUnits;
 
     //Variaveis de Bonus
@@ -59,6 +60,10 @@ public class DadosJogo implements Constantes, Serializable {
         playerSupplies = 4;
         turnActionPoints = 0;
         playerWallStrength = 4;
+
+        BattRamInCircleSpace = false;
+        LaddersInCircleSpace = false;
+        SiegeTowerInCircleSpace = false;
 
         closeCombatUnits = new int[2];
         closeCombatUnits[0] = 1;
@@ -168,9 +173,15 @@ public class DadosJogo implements Constantes, Serializable {
     public void AdvanceSiegeTower(int v) {
         if (hasSiegeTower) {
             this.enemiesSiegeTowerLocation -= v;
-            if (this.enemiesSiegeTowerLocation == 01) {//se está a 0 vai para o close combat
+            if (this.enemiesSiegeTowerLocation == 0) {//se está a 0 vai para o close combat
                 this.hasSiegeTower = false;
                 AdvanceToCloseCombat(SIEGETOWERID);
+            } else if (this.enemiesSiegeTowerLocation == 1) {
+                this.SiegeTowerInCircleSpace = true;
+            }
+
+            if (this.enemiesSiegeTowerLocation > 4) {
+                this.enemiesSiegeTowerLocation = 4;
             }
         }
     }
@@ -181,6 +192,12 @@ public class DadosJogo implements Constantes, Serializable {
             if (this.enemiesLaddersLocation == 0) {//se está a 0 vai para o close combat
                 this.hasLadderns = false;
                 AdvanceToCloseCombat(LADDERSID);
+            } else if (this.enemiesLaddersLocation == 1) {
+                this.LaddersInCircleSpace = true;
+            }
+
+            if (this.enemiesLaddersLocation > 4) {
+                this.enemiesLaddersLocation = 4;
             }
         }
     }
@@ -191,6 +208,11 @@ public class DadosJogo implements Constantes, Serializable {
             if (this.enemiesBattRamLocation == 0) {//se está a 0 vai para o close combat
                 this.hasBattRam = false;
                 AdvanceToCloseCombat(BATTRAMID);
+            } else if (this.enemiesBattRamLocation == 1) {
+                this.BattRamInCircleSpace = true;
+            }
+            if (this.enemiesBattRamLocation > 4) {
+                this.enemiesBattRamLocation = 4;
             }
         }
     }
@@ -221,6 +243,11 @@ public class DadosJogo implements Constantes, Serializable {
             System.out.println("perdeu");
             //perde automaticamente 
         }
+    }
+
+    public int lancaDado() {
+        Dado d = new Dado();
+        return d.LancaDado();
     }
 
     //////////////////// GETS E SETS
@@ -354,14 +381,6 @@ public class DadosJogo implements Constantes, Serializable {
 
     public void setUnusedBoilingWater(boolean unusedBoilingWater) {
         this.unusedBoilingWater = unusedBoilingWater;
-    }
-
-    public int getArchersAttBonus() {
-        return laddersBonus;
-    }
-
-    public void setArchersAttBonus(int ArchersAttBonus) {
-        this.laddersBonus = ArchersAttBonus;
     }
 
     public int getCloseCombatAttBonus() {

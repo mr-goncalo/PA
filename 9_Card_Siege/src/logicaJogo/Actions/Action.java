@@ -1,11 +1,11 @@
 
 package logicaJogo.Actions;
+import java.io.Serializable;
 import logicaJogo.DadosJogo;
 
 
-public class Action 
-{
-    
+public class Action implements Constantes,Serializable
+{  
     private String name;
     private int cost;
 
