@@ -31,10 +31,5 @@ public class TrebuchetAttack extends  Card{
             j.setPlayerWallStrength(j.getPlayerWallStrength() -1);
         }
     }
-
-    @Override
-    public void TurnActionPoints(DadosJogo j) { 
-        j.setTurnActionPoints(j.getTurnActionPoints() + super.getActionPoint());
-    }
-    
+ 
 }

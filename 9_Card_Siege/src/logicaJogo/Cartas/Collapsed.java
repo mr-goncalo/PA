@@ -29,10 +29,6 @@ public class Collapsed extends Card {
         j.RemoveSiegeTower();
     }
 
-    @Override
-    public void TurnActionPoints(DadosJogo j) {
-        j.setTurnActionPoints(j.getTurnActionPoints() + super.getActionPoint());
-
-    }
+    
 
 }

@@ -22,9 +22,6 @@ public class SuppliesSpoiled extends Card
          j.setEnemiesLaddersLocation(j.getEnemiesLaddersLocation() - 1);
     }
 
-    @Override
-    public void TurnActionPoints(DadosJogo j) {
-        j.setTurnActionPoints(j.getTurnActionPoints() + super.getActionPoint());
-     } 
+    
     
 }

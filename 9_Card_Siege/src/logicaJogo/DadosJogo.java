@@ -1,4 +1,3 @@
-
 package logicaJogo;
 
 import java.io.Serializable;
@@ -9,9 +8,7 @@ import java.util.List;
 import java.util.Set;
 import logicaJogo.Cartas.*;
 
-
-public class DadosJogo implements Constantes, Serializable 
-{
+public class DadosJogo implements Constantes, Serializable {
 
     //Variaveis de Motor dejogo
     private int dia;
@@ -30,6 +27,7 @@ public class DadosJogo implements Constantes, Serializable
     private int battRamBonus;
     private int siegeTowerBonus;
     private int closeCombatAttBonus;
+    private int raidBonus;
     private int coupureBonus;
     private int moraleBonus;
     private int sabotageBonus;
@@ -48,8 +46,7 @@ public class DadosJogo implements Constantes, Serializable
 
     private Jogador jog;
 
-    public DadosJogo() 
-    {
+    public DadosJogo() {
         jog = new Jogador("DEFAULT", this);
         dia = 1;
         moraleBonus = 0;
@@ -96,15 +93,22 @@ public class DadosJogo implements Constantes, Serializable
         card5.add(new VolleyOfArrows("Volley of Arrows", "+1 to all attacks", 3));
         card5.add(new Collapsed("Collapsed", "Siege Tower removed from game if on starting space", 2));
         card5.add(new RepairedTrebuchet("Repaired Trebuchet", "Add 1 Trebuchet (max 3) \n\t| +1 to Coupure action", 2));
-        
+
         card6.add(new CoverOfDarkness("Cover of Darkness", "+1 to Raid and Sabotade actions", 3));
-        card6.add(new EnemyFatigue("Enemy Fatigue","+1 to Coupure, Raid and Sabotage actions",3));
-        card6.add(new Rally("Rally","+1 to attacks on Close Combant or Circle Spaces",3));
-        
+        card6.add(new EnemyFatigue("Enemy Fatigue", "+1 to Coupure, Raid and Sabotage actions", 3));
+        card6.add(new Rally("Rally", "+1 to attacks on Close Combant or Circle Spaces", 3));
+
+        card7.add(new DeterminedEnemy("Determined Enemy", "-1 to attacks on the Battering Ram", 2));
+        card7.add(new IronShields("Iron Shields", "-1 to attacks on the Siege Tower", 2));
+        card7.add(new Faith("Faith", "+1 to attacks on the Battering Ram,Ladders and Morale actions", 3));
+
         deck.add((ArrayList<Card>) card1);
         deck.add((ArrayList<Card>) card2);
         deck.add((ArrayList<Card>) card3);
         deck.add((ArrayList<Card>) card4);
+        deck.add((ArrayList<Card>) card5);
+        deck.add((ArrayList<Card>) card6);
+        deck.add((ArrayList<Card>) card7);
 
         originalDeck = deck;
 
@@ -126,7 +130,7 @@ public class DadosJogo implements Constantes, Serializable
         for (ArrayList<Card> c : deck) {
             c.get(dia).ApplyEvent(this);
         }
-        AdvanceToCloseCombat();
+        AdvanceToCloseCombat(1);
         deck.get(1).get(1).AdvanceEnemies(this);
         s += "\n Variaveis de jogo \n";
         s += " Jogador moraleBonus: " + moraleBonus + " sabotage: " + sabotageBonus + " morale: " + playerMorale
@@ -164,33 +168,33 @@ public class DadosJogo implements Constantes, Serializable
     public void AdvanceSiegeTower(int v) {
         if (hasSiegeTower) {
             this.enemiesSiegeTowerLocation -= v;
-            if (this.enemiesSiegeTowerLocation == -1) {//se está a menos 1 vai para o close combat
+            if (this.enemiesSiegeTowerLocation == 01) {//se está a 0 vai para o close combat
                 this.hasSiegeTower = false;
                 AdvanceToCloseCombat(SIEGETOWERID);
             }
         }
     }
-    
-    public void AdvanceLadders(int v){
+
+    public void AdvanceLadders(int v) {
         if (hasLadderns) {
             this.enemiesLaddersLocation -= v;
-            if (this.enemiesLaddersLocation == -1) {//se está a menos 1 vai para o close combat
+            if (this.enemiesLaddersLocation == 0) {//se está a 0 vai para o close combat
                 this.hasLadderns = false;
                 AdvanceToCloseCombat(LADDERSID);
             }
         }
     }
 
-    public void AdvanceBattRam(int v){
+    public void AdvanceBattRam(int v) {
         if (hasBattRam) {
             this.enemiesBattRamLocation -= v;
-            if (this.enemiesBattRamLocation == -1) {//se está a menos 1 vai para o close combat
+            if (this.enemiesBattRamLocation == 0) {//se está a 0 vai para o close combat
                 this.hasBattRam = false;
                 AdvanceToCloseCombat(BATTRAMID);
             }
         }
     }
-    
+
     public void RemoveSiegeTower() {
         if (this.enemiesSiegeTowerLocation == POSICAO_INICIAL) {
             this.hasSiegeTower = false;
@@ -203,17 +207,17 @@ public class DadosJogo implements Constantes, Serializable
         }
     }
 
-    public void AdvanceToCloseCombat(int id)  {
-       int i;
-        for ( i = 0; i < this.closeCombatUnits.length; i++) {
+    public void AdvanceToCloseCombat(int id) {
+        int i;
+        for (i = 0; i < this.closeCombatUnits.length; i++) {
             if (this.closeCombatUnits[i] == 0) {
                 this.closeCombatUnits[i] = id;
                 return;
-            } 
+            }
         }
         try {
-        this.closeCombatUnits[i] = id;
-        }catch(ArrayIndexOutOfBoundsException e){
+            this.closeCombatUnits[i] = id;
+        } catch (ArrayIndexOutOfBoundsException e) {
             System.out.println("perdeu");
             //perde automaticamente 
         }
@@ -406,6 +410,14 @@ public class DadosJogo implements Constantes, Serializable
 
     public void setSiegeTowerBonus(int siegeTowerBonus) {
         this.siegeTowerBonus = siegeTowerBonus;
+    }
+
+    public int getRaidBonus() {
+        return raidBonus;
+    }
+
+    public void setRaidBonus(int raidBonus) {
+        this.raidBonus = raidBonus;
     }
 
 }

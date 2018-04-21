@@ -8,7 +8,7 @@ public class Card {
     private String eventName;
     private int actionPoint;
 
-    public Card(String eventName,String eventDesc,  int actionPoint) {
+    public Card(String eventName, String eventDesc, int actionPoint) {
         this.eventDesc = eventDesc;
         this.eventName = eventName;
         this.actionPoint = actionPoint;
@@ -29,6 +29,8 @@ public class Card {
     ;
     
     public void TurnActionPoints(DadosJogo j) {
+        j.setTurnActionPoints(j.getTurnActionPoints() + this.actionPoint);
+
     }
 
     ;
@@ -68,8 +70,8 @@ public class Card {
         s += "-------------------------------";
         s += "\n \t|";
         s += " " + this.eventName;
-        s += "\n     " + this.actionPoint + "\t| "; 
-        s +=  this.eventDesc;
+        s += "\n     " + this.actionPoint + "\t| ";
+        s += this.eventDesc;
         s += "\n--------------------------------\n";
         return s;
     }

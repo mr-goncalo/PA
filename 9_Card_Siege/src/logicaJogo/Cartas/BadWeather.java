@@ -29,10 +29,7 @@ public class BadWeather extends Card{
         j.setBadWheather(false);
      }
 
-    @Override
-    public void TurnActionPoints(DadosJogo j) {
-        j.setTurnActionPoints(j.getTurnActionPoints() + super.getActionPoint());
-     }
+     
     
     
 }
