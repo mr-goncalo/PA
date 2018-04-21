@@ -24,7 +24,7 @@ public class VolleyOfArrows extends Card {
 
     @Override
     public void ApplyEvent(DadosJogo j) {
-        j.setArchersAttBonus(1);
+        j.setLaddersBonus(1);
         j.setBattRamBonus(1);
         j.setCloseCombatAttBonus(1);
         j.setSiegeTowerBonus(1);
@@ -32,12 +32,10 @@ public class VolleyOfArrows extends Card {
 
     @Override
     public void RemoveEventBonus(DadosJogo j) {
-        j.setArchersAttBonus(0);
+        j.setLaddersBonus(0); 
         j.setBattRamBonus(0);
         j.setCloseCombatAttBonus(0);
         j.setSiegeTowerBonus(0);
     }
-
-  
 
 }

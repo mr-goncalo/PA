@@ -11,8 +11,8 @@ import logicaJogo.DadosJogo;
  *
  * @author eu
  */
-public class Faith extends Card{
-    
+public class Faith extends Card {
+
     public Faith(String eventName, String eventDesc, int actionPoint) {
         super(eventName, eventDesc, actionPoint);
     }
@@ -22,22 +22,20 @@ public class Faith extends Card{
         j.AdvanceBattRam(1);
         j.AdvanceLadders(1);
         j.AdvanceSiegeTower(1);
-     }
+    }
 
     @Override
     public void ApplyEvent(DadosJogo j) {
         j.setBattRamBonus(1);
-        j.setArchersAttBonus(1);
+        j.setLaddersBonus(1);
         j.setMoraleBonus(1);
-     }
+    }
 
     @Override
     public void RemoveEventBonus(DadosJogo j) {
-         j.setBattRamBonus(0);
-        j.setArchersAttBonus(0);
+        j.setBattRamBonus(0);
+        j.setLaddersBonus(0);
         j.setMoraleBonus(0);
-     }
+    }
 
-    
-    
 }

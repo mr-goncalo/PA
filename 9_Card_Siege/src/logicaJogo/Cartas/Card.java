@@ -1,8 +1,9 @@
 package logicaJogo.Cartas;
 
+import java.io.Serializable;
 import logicaJogo.DadosJogo;
 
-public class Card {
+public class Card implements Serializable{
 
     private String eventDesc;
     private String eventName;
