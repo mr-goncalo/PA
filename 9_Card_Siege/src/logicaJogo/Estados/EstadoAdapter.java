@@ -2,19 +2,19 @@
 package logicaJogo.Estados;
 
 import java.io.Serializable;
-import logicaJogo.Jogo;
+import logicaJogo.DadosJogo;
 
 
 public class EstadoAdapter implements IEstado, Serializable
 {
-    private Jogo jogo;
+    private DadosJogo jogo;
     
-    public EstadoAdapter(Jogo jogo)
+    public EstadoAdapter(DadosJogo jogo)
     {
         this.jogo = jogo;
     }
 
-    public Jogo getJogo()
+    public DadosJogo getJogo()
     {
         return jogo; 
     }

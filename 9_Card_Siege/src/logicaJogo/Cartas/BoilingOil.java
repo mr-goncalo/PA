@@ -11,28 +11,32 @@ import logicaJogo.DadosJogo;
  *
  * @author eu
  */
-public class Illness extends Card {
+public class BoilingOil extends Card {
 
-    public Illness(String eventName, String eventDesc, int actionPoint) {
+    public BoilingOil(String eventName, String eventDesc, int actionPoint) {
         super(eventName, eventDesc, actionPoint);
     }
+    
 
-   
     @Override
     public void AdvanceEnemies(DadosJogo j) {
-        j.AdvanceSiegeTower(1);
-    }
+        j.setEnemiesBattRamLocation(j.getEnemiesBattRamLocation() - 1);
+        j.setEnemiesLaddersLocation(j.getEnemiesLaddersLocation()- 1);
+     }
 
     @Override
     public void ApplyEvent(DadosJogo j) {
-        j.setPlayerSupplies(j.getPlayerSupplies() - 1);
-        j.setPlayerMorale(j.getPlayerMorale() - 1);
+        j.setCircleSpacesBonus(2);
+     }
 
-    }
+    @Override
+    public void RemoveEventBonus(DadosJogo j) {
+        j.setCircleSpacesBonus(0);
+     }
 
     @Override
     public void TurnActionPoints(DadosJogo j) {
-        j.setTurnActionPoints(j.getTurnActionPoints() + super.getActionPoint());
-    }
-
+        j.setTurnActionPoints(j.getTurnActionPoints() + 2);
+     }
+    
 }

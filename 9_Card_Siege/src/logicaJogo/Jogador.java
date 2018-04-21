@@ -6,10 +6,10 @@ import java.io.Serializable;
 public class Jogador implements Constantes, Serializable
 {
     private String nome;
-    private Jogo jogo;
+    private DadosJogo jogo;
     private boolean ganhou;
     
-    public Jogador(String nome, Jogo jogo) 
+    public Jogador(String nome, DadosJogo jogo) 
     {
         this.nome = nome;
         this.jogo = jogo;

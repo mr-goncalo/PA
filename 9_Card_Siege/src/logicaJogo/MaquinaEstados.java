@@ -8,7 +8,7 @@ import logicaJogo.Estados.IEstado;
 
 public class MaquinaEstados implements Serializable
 {
-    private Jogo jogo = new Jogo();
+    private DadosJogo jogo = new DadosJogo();
     private IEstado estado;
 
     public MaquinaEstados() 

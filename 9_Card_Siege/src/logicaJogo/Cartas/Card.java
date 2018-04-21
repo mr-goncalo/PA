@@ -1,31 +1,42 @@
-
 package logicaJogo.Cartas;
 
-import logicaJogo.Jogo;
+import logicaJogo.DadosJogo;
 
-public class Card 
-{
+public class Card {
+
     private String eventDesc;
     private String eventName;
     private int actionPoint;
 
-    public Card(String eventDesc, String eventName, int actionPoint) {
+    public Card(String eventName,String eventDesc,  int actionPoint) {
         this.eventDesc = eventDesc;
         this.eventName = eventName;
         this.actionPoint = actionPoint;
     }
-  
+
     /**
      *
      * @param j
      */
-    public void ApplyEvent(Jogo j){};
+    public void ApplyEvent(DadosJogo j) {
+    }
+
+    ;
     
-    public void AdvanceEnemies(Jogo j){};
+    public void AdvanceEnemies(DadosJogo j) {
+    }
+
+    ;
     
-    public void TurnActionPoints(Jogo j){};
+    public void TurnActionPoints(DadosJogo j) {
+    }
+
+    ;
     
-    public void RemoveEventBonus(Jogo j){};
+    public void RemoveEventBonus(DadosJogo j) {
+    }
+
+    ;
     
     public String getEventDesc() {
         return eventDesc;
@@ -38,7 +49,7 @@ public class Card
     public int getActionPoint() {
         return actionPoint;
     }
- 
+
     public void setEventDesc(String eventDesc) {
         this.eventDesc = eventDesc;
     }
@@ -50,6 +61,17 @@ public class Card
     public void setActionPoint(int actionPoint) {
         this.actionPoint = actionPoint;
     }
- 
-     
+
+    @Override
+    public String toString() {
+        String s = "\n";
+        s += "-------------------------------";
+        s += "\n \t|";
+        s += " " + this.eventName;
+        s += "\n     " + this.actionPoint + "\t| "; 
+        s +=  this.eventDesc;
+        s += "\n--------------------------------\n";
+        return s;
+    }
+
 }

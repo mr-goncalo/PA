@@ -11,33 +11,28 @@ import logicaJogo.DadosJogo;
  *
  * @author eu
  */
-public class GuardsDistracted extends Card {
+public class DeathOfALeader extends Card {
 
-    public GuardsDistracted(String eventName, String eventDesc, int actionPoint) {
+    public DeathOfALeader(String eventName, String eventDesc, int actionPoint) {
         super(eventName, eventDesc, actionPoint);
     }
 
-     
     @Override
     public void AdvanceEnemies(DadosJogo j) {
-        j.AvancaMaisLonge();
+        j.AdvanceSiegeTower(1);
+        j.setEnemiesLaddersLocation(j.getEnemiesLaddersLocation() - 1);
     }
 
     @Override
     public void ApplyEvent(DadosJogo j) {
-        j.setMoraleBonus(j.getMoraleBonus() + 1);  
-        j.setSabotageBonus(j.getSabotageBonus() + 1);
+        j.setPlayerMorale(j.getPlayerMorale() - 1);
     }
 
     @Override
     public void TurnActionPoints(DadosJogo j) {
-        j.setTurnActionPoints(super.getActionPoint() + j.getTurnActionPoints());
-    }
 
-    @Override
-    public void RemoveEventBonus(DadosJogo j) {
-        j.setMoraleBonus(j.getMoraleBonus() - 1); 
-        j.setSabotageBonus(j.getSabotageBonus() - 1);
+        j.setTurnActionPoints(j.getTurnActionPoints() + super.getActionPoint());
+
     }
 
 }

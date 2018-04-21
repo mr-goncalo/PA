@@ -5,34 +5,36 @@
  */
 package logicaJogo.Cartas;
 
-import logicaJogo.Jogo;
+import logicaJogo.DadosJogo;
 
 /**
  *
  * @author eu
  */
 public class TrebuchetAttack extends  Card{
-    
-    public TrebuchetAttack(String eventDesc, String eventName, int actionPoint) {
-        super(eventDesc, eventName, actionPoint);
+
+    public TrebuchetAttack(String eventName, String eventDesc, int actionPoint) {
+        super(eventName, eventDesc, actionPoint);
     }
+    
+    
 
     @Override
-    public void ApplyEvent(Jogo j) { 
-        if(j.enemiesTrebuchetCount == 3)
-            j.playerWallStrength -= 2;
-        else if (j.enemiesTrebuchetCount == 2)
-            j.playerWallStrength -= 1;
+    public void ApplyEvent(DadosJogo j) { 
+        if(j.getEnemiesTrebuchetCount()  == 3)
+            j.setPlayerWallStrength(j.getPlayerWallStrength() - 2);
+        else if (j.getEnemiesTrebuchetCount()  == 2)
+            j.setPlayerWallStrength(j.getPlayerWallStrength() - 1);
         else{
             //Rolar o dado
             //if(j.rollDice > 3)
-                j.playerWallStrength -= 1;
+            j.setPlayerWallStrength(j.getPlayerWallStrength() -1);
         }
     }
 
     @Override
-    public void TurnActionPoints(Jogo j) { 
-        j.turnActionPoints += super.getActionPoint();
+    public void TurnActionPoints(DadosJogo j) { 
+        j.setTurnActionPoints(j.getTurnActionPoints() + super.getActionPoint());
     }
     
 }

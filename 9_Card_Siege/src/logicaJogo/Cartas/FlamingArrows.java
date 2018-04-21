@@ -11,13 +11,12 @@ import logicaJogo.DadosJogo;
  *
  * @author eu
  */
-public class Illness extends Card {
+public class FlamingArrows extends Card {
 
-    public Illness(String eventName, String eventDesc, int actionPoint) {
+    public FlamingArrows(String eventName, String eventDesc, int actionPoint) {
         super(eventName, eventDesc, actionPoint);
     }
 
-   
     @Override
     public void AdvanceEnemies(DadosJogo j) {
         j.AdvanceSiegeTower(1);
@@ -25,14 +24,17 @@ public class Illness extends Card {
 
     @Override
     public void ApplyEvent(DadosJogo j) {
-        j.setPlayerSupplies(j.getPlayerSupplies() - 1);
-        j.setPlayerMorale(j.getPlayerMorale() - 1);
+        super.ApplyEvent(j); //To change body of generated methods, choose Tools | Templates.
+    }
 
+    @Override
+    public void RemoveEventBonus(DadosJogo j) {
+        super.RemoveEventBonus(j); //To change body of generated methods, choose Tools | Templates.
     }
 
     @Override
     public void TurnActionPoints(DadosJogo j) {
-        j.setTurnActionPoints(j.getTurnActionPoints() + super.getActionPoint());
+        super.TurnActionPoints(j); //To change body of generated methods, choose Tools | Templates.
     }
 
 }

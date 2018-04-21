@@ -5,7 +5,7 @@ import logicaJogo.Estados.AguardaAccao;
 import logicaJogo.Estados.AguardaCarta;
 import logicaJogo.Estados.AguardaInicio;
 import logicaJogo.Estados.IEstado;
-import logicaJogo.Jogo;
+import logicaJogo.DadosJogo;
 import logicaJogo.MaquinaEstados;
 
 public class UiTexto 
@@ -20,7 +20,7 @@ public class UiTexto
     
     void iuAguardaInicio()
     {
-        Jogo j = new Jogo();
+        DadosJogo j = new DadosJogo();
         System.out.println( j.toString());
         
         System.out.println("1 - Novo Jogo\n2 - Sair");

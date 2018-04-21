@@ -1,12 +1,12 @@
 
 package logicaJogo.Estados;
 
-import logicaJogo.Jogo;
+import logicaJogo.DadosJogo;
 
 public class AguardaInicio extends EstadoAdapter
 {
     
-    public AguardaInicio(Jogo jogo) 
+    public AguardaInicio(DadosJogo jogo) 
     {
         super(jogo);
     }

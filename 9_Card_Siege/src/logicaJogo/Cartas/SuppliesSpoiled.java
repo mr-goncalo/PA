@@ -1,30 +1,32 @@
 
 package logicaJogo.Cartas;
 
-import logicaJogo.Jogo;
+import logicaJogo.DadosJogo;
 
 
 public class SuppliesSpoiled extends Card
 {
 
-    public SuppliesSpoiled(String eventDesc, String eventName, int actionPoint) {
-        super(eventDesc, eventName, actionPoint);
+    public SuppliesSpoiled(String eventName, String eventDesc, int actionPoint) {
+        super(eventName, eventDesc, actionPoint);
     }
 
+    
+
     @Override
-    public void ApplyEvent(Jogo j) {
-        j.playerSupplies--;
+    public void ApplyEvent(DadosJogo j) {
+        j.setPlayerSupplies(j.getPlayerSupplies() - 1);
      }
 
     @Override
-    public void AdvanceEnemies(Jogo j) {
+    public void AdvanceEnemies(DadosJogo j) {
          // avança os enimigos
-         j.enemiesLaddersLocation--;
+         j.setEnemiesLaddersLocation(j.getEnemiesLaddersLocation() - 1);
     }
 
     @Override
-    public void TurnActionPoints(Jogo j) {
-        j.turnActionPoints = super.getActionPoint();
+    public void TurnActionPoints(DadosJogo j) {
+        j.setTurnActionPoints(j.getTurnActionPoints() + super.getActionPoint());
      } 
     
 }
