@@ -24,7 +24,7 @@ public class EnemyFatigue extends Card
 
     @Override
     public void RemoveEventBonus(DadosJogo j) {
-         j.setCoupureBonus(0);
+        j.setCoupureBonus(0);
         j.setRaidBonus(0);
         j.setSabotageBonus(0);
      }

@@ -25,7 +25,7 @@ public class MaquinaEstados implements Serializable
     {
         return estado;
     }
-    
+        
     public void defineNomeJogador(String nome)
     {
         setEstado(estado.defineNomeJogador(nome));
@@ -35,6 +35,10 @@ public class MaquinaEstados implements Serializable
     {
         setEstado(estado.comecarJogo());
     }
-    
+
+    public void retirarCarta() 
+    {
+        setEstado(estado.retirarCarta());
+    }
     
 }

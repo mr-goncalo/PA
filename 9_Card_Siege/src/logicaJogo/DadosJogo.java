@@ -12,6 +12,7 @@ public class DadosJogo implements Constantes, Serializable {
 
     //Variaveis de Motor dejogo
     private int dia;
+    private int ronda;
     private ArrayList<ArrayList<Card>> deck;
     private ArrayList<ArrayList<Card>> originalDeck;
     private int turnActionPoints;
@@ -49,6 +50,7 @@ public class DadosJogo implements Constantes, Serializable {
     public DadosJogo() {
         jog = new Jogador("DEFAULT", this);
         dia = 1;
+        ronda = 1;
         moraleBonus = 0;
         //playerSupplies = 0; 
         enemiesLaddersLocation = 2;
@@ -119,6 +121,7 @@ public class DadosJogo implements Constantes, Serializable {
     @Override
     public String toString() {
         String s = new String();
+
         s += "\n Todos os elemtnos";
         for (ArrayList<Card> c : deck) {
             for (Card cIner : c) {
@@ -140,6 +143,18 @@ public class DadosJogo implements Constantes, Serializable {
         return s;
     }
 
+    
+    public String getDadosJogador()
+    {
+        // ----- DEVOLVER DADOS ACTUALIZADOS 
+        String s = new String();
+        s += "\n Variaveis de jogo \n";
+        s += " Jogador moraleBonus: " + moraleBonus + " sabotage: " + sabotageBonus + " morale: " + playerMorale
+                + " Supplies: " + playerSupplies + " Wall strength: " + playerWallStrength;
+        s += "\n Enimigos battLocation: " + enemiesBattRamLocation + " ladders Loc: " + enemiesLaddersLocation
+                + " siegeTower Location " + enemiesSiegeTowerLocation + " trebuchet Count: " + enemiesTrebuchetCount;
+        return s;
+    }
     ///////////// funções do jogo 
     public void AvancaMaisLonge() {
         int maisLonge;
@@ -234,6 +249,18 @@ public class DadosJogo implements Constantes, Serializable {
 
     public void setDia(int dia) {
         this.dia = dia;
+    }
+    
+    public int getRonda() {
+        return ronda;
+    }
+
+    public void setRonda(int ronda) 
+    {
+        if(ronda==8)
+            this.ronda=1;
+        else
+            this.ronda = ronda;
     }
 
     public int getTurnActionPoints() {
@@ -419,5 +446,4 @@ public class DadosJogo implements Constantes, Serializable {
     public void setRaidBonus(int raidBonus) {
         this.raidBonus = raidBonus;
     }
-
 }

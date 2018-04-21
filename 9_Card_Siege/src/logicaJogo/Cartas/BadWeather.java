@@ -27,7 +27,7 @@ public class BadWeather extends Card{
     @Override
     public void RemoveEventBonus(DadosJogo j) {
         j.setBadWheather(false);
-     }
+    }
 
      
     

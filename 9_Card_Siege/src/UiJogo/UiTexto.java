@@ -11,6 +11,7 @@ import logicaJogo.MaquinaEstados;
 public class UiTexto 
 {        
     private MaquinaEstados jogo;
+    private DadosJogo j;
     boolean sair = false;
     
     public UiTexto(MaquinaEstados jogo)
@@ -20,8 +21,8 @@ public class UiTexto
     
     void iuAguardaInicio()
     {
-        DadosJogo j = new DadosJogo();
-        System.out.println( j.toString());
+         j = new DadosJogo();
+        //System.out.println( j.toString());
         
         System.out.println("1 - Novo Jogo\n2 - Sair");
         char c = ' ';
@@ -45,7 +46,34 @@ public class UiTexto
     
     void iuAguardaCarta()
     {
-         System.out.println("aguarda carta..."); 
+         //System.out.println("A mostrar carta...");
+        String s = new String();
+        s = j.getDadosJogador();
+        System.out.println("Ronda "+j.getRonda()+": "+s+"");
+        jogo.retirarCarta();       
+        s = j.getDadosJogador();
+        System.out.println(s);
+        
+        System.out.println("1 - Acções\n2 - Outra Carta\n3 - Sair");
+        char c = ' ';
+        Scanner sc = new Scanner(System.in);
+        c = sc.next().charAt(0);
+        if(c=='1')
+        {
+            //jogo.escolherAccao();
+            System.out.println("Ações ainda por fazer...");
+            sair = true;
+            return;
+        }
+        if(c=='2')
+        {
+            return;
+        }      
+        if(c=='3')
+        {
+            sair = true;
+            return;
+        }   
     }
     
     void iuAguardaAccao()
