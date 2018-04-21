@@ -11,8 +11,6 @@ public class SuppliesSpoiled extends Card
         super(eventName, eventDesc, actionPoint);
     }
 
-    
-
     @Override
     public void ApplyEvent(DadosJogo j) {
         j.setPlayerSupplies(j.getPlayerSupplies() - 1);

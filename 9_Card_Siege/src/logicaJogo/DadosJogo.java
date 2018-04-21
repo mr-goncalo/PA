@@ -1,8 +1,4 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
+
 package logicaJogo;
 
 import java.io.Serializable;
@@ -13,11 +9,9 @@ import java.util.List;
 import java.util.Set;
 import logicaJogo.Cartas.*;
 
-/**
- *
- * @author eu
- */
-public class DadosJogo implements Constantes, Serializable {
+
+public class DadosJogo implements Constantes, Serializable 
+{
 
     //Variaveis de Motor dejogo
     private int dia;
@@ -54,11 +48,12 @@ public class DadosJogo implements Constantes, Serializable {
 
     private Jogador jog;
 
-    public DadosJogo() {
+    public DadosJogo() 
+    {
         jog = new Jogador("DEFAULT", this);
         dia = 1;
         moraleBonus = 0;
-        playerSupplies = 0;
+        //playerSupplies = 0; 
         enemiesLaddersLocation = 2;
         enemiesSiegeTowerLocation = 4;
         enemiesTrebuchetCount = 3;
@@ -82,9 +77,9 @@ public class DadosJogo implements Constantes, Serializable {
         List<Card> card6 = new ArrayList<>();
         List<Card> card7 = new ArrayList<>();
 
-        card1.add(new TrebuchetAttack("Trebuchet Attack", "3T -2 Damage to wall \n\t| 2T - 1 Damage to wall \n\t| 1T - 1 Damage to wall on Dice roll of 4,5,6", 3));
-        card1.add(new TrebuchetAttack("Trebuchet Attack", "3T -2 Damage to wall \n\t| 2T - 1 Damage to wall \n\t| 1T - 1 Damage to wall on Dice roll of 4,5,6", 2));
-        card1.add(new TrebuchetAttack("Trebuchet Attack", "3T -2 Damage to wall \n\t| 2T - 1 Damage to wall \n\t| 1T - 1 Damage to wall on Dice roll of 4,5,6", 1));
+        card1.add(new TrebuchetAttack("Trebuchet Attack", "3T - 2 Damage to wall \n\t| 2T - 1 Damage to wall \n\t| 1T - 1 Damage to wall on Dice roll of 4,5,6", 3));
+        card1.add(new TrebuchetAttack("Trebuchet Attack", "3T - 2 Damage to wall \n\t| 2T - 1 Damage to wall \n\t| 1T - 1 Damage to wall on Dice roll of 4,5,6", 2));
+        card1.add(new TrebuchetAttack("Trebuchet Attack", "3T - 2 Damage to wall \n\t| 2T - 1 Damage to wall \n\t| 1T - 1 Damage to wall on Dice roll of 4,5,6", 1));
 
         card2.add(new Illness("Illness", "Reduce morale by 1 \n\t| Reduce supplies by 1", 2));
         card2.add(new GuardsDistracted("Guards Distracted", "+1 to sabotage action \n\t| +1 to morale action", 2));
@@ -98,6 +93,14 @@ public class DadosJogo implements Constantes, Serializable {
         card4.add(new GateFortified("Gate Fortified", "+1 attacks on the Battering Ram", 2));
         card4.add(new FlamingArrows("Flaming Arrows", "+1 to attacks on the Siege Engine", 3));
 
+        card5.add(new VolleyOfArrows("Volley of Arrows", "+1 to all attacks", 3));
+        card5.add(new Collapsed("Collapsed", "Siege Tower removed from game if on starting space", 2));
+        card5.add(new RepairedTrebuchet("Repaired Trebuchet", "Add 1 Trebuchet (max 3) \n\t| +1 to Coupure action", 2));
+        
+        card6.add(new CoverOfDarkness("Cover of Darkness", "+1 to Raid and Sabotade actions", 3));
+        card6.add(new EnemyFatigue("Enemy Fatigue","+1 to Coupure, Raid and Sabotage actions",3));
+        card6.add(new Rally("Rally","+1 to attacks on Close Combant or Circle Spaces",3));
+        
         deck.add((ArrayList<Card>) card1);
         deck.add((ArrayList<Card>) card2);
         deck.add((ArrayList<Card>) card3);

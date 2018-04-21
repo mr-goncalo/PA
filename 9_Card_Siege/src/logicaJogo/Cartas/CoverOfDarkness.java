@@ -3,28 +3,26 @@ package logicaJogo.Cartas;
 
 import logicaJogo.DadosJogo;
 
-
-public class Illness extends Card 
+public class CoverOfDarkness extends Card
 {
-
-    public Illness(String eventName, String eventDesc, int actionPoint) {
+    
+    public CoverOfDarkness(String eventName, String eventDesc, int actionPoint) {
         super(eventName, eventDesc, actionPoint);
     }
-  
+ 
     @Override
     public void AdvanceEnemies(DadosJogo j) {
-        j.AdvanceSiegeTower(1);
+        j.AvancaMaisLonge();
     }
-
+    
     @Override
     public void ApplyEvent(DadosJogo j) {
-        j.setPlayerSupplies(j.getPlayerSupplies() - 1);
-        j.setPlayerMorale(j.getPlayerMorale() - 1);
+        j.setSabotageBonus(j.getSabotageBonus() + 1);
+        j.setPlayerSupplies(j.getPlayerSupplies() +1);
     }
-
+    
     @Override
     public void TurnActionPoints(DadosJogo j) {
         j.setTurnActionPoints(j.getTurnActionPoints() + super.getActionPoint());
     }
-
 }
