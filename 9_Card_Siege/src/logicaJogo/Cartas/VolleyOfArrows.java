@@ -38,10 +38,6 @@ public class VolleyOfArrows extends Card {
         j.setSiegeTowerBonus(0);
     }
 
-    @Override
-    public void TurnActionPoints(DadosJogo j) {
-        j.setTurnActionPoints(j.getTurnActionPoints() + super.getActionPoint());
-
-    }
+  
 
 }

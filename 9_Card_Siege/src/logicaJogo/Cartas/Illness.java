@@ -22,9 +22,5 @@ public class Illness extends Card
         j.setPlayerMorale(j.getPlayerMorale() - 1);
     }
 
-    @Override
-    public void TurnActionPoints(DadosJogo j) {
-        j.setTurnActionPoints(j.getTurnActionPoints() + super.getActionPoint());
-    }
-
+    
 }

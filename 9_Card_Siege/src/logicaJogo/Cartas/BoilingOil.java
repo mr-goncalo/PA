@@ -34,9 +34,6 @@ public class BoilingOil extends Card {
         j.setCircleSpacesBonus(0);
      }
 
-    @Override
-    public void TurnActionPoints(DadosJogo j) {
-        j.setTurnActionPoints(j.getTurnActionPoints() + 2);
-     }
+   
     
 }

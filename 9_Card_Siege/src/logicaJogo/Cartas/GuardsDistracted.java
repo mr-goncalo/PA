@@ -29,10 +29,7 @@ public class GuardsDistracted extends Card {
         j.setSabotageBonus(j.getSabotageBonus() + 1);
     }
 
-    @Override
-    public void TurnActionPoints(DadosJogo j) {
-        j.setTurnActionPoints(super.getActionPoint() + j.getTurnActionPoints());
-    }
+     
 
     @Override
     public void RemoveEventBonus(DadosJogo j) {

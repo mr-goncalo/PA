@@ -32,9 +32,6 @@ public class FlamingArrows extends Card {
         super.RemoveEventBonus(j); //To change body of generated methods, choose Tools | Templates.
     }
 
-    @Override
-    public void TurnActionPoints(DadosJogo j) {
-        super.TurnActionPoints(j); //To change body of generated methods, choose Tools | Templates.
-    }
+    
 
 }

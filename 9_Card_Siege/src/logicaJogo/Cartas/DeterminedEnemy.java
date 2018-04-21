@@ -11,29 +11,27 @@ import logicaJogo.DadosJogo;
  *
  * @author eu
  */
-public class GateFortified extends Card {
-
-    public GateFortified(String eventName, String eventDesc, int actionPoint) {
+public class DeterminedEnemy extends Card{
+    
+    public DeterminedEnemy(String eventName, String eventDesc, int actionPoint) {
         super(eventName, eventDesc, actionPoint);
     }
 
     @Override
     public void AdvanceEnemies(DadosJogo j) {
-        j.setEnemiesBattRamLocation(j.getEnemiesBattRamLocation() - 1);
-        j.setEnemiesLaddersLocation(j.getEnemiesLaddersLocation() - 1);
-
-    }
+        j.AdvanceBattRam(1);
+     }
 
     @Override
     public void ApplyEvent(DadosJogo j) {
-        j.setBattRamBonus(1);
-    }
+        j.setBattRamBonus(-1);
+     }
 
     @Override
     public void RemoveEventBonus(DadosJogo j) {
-        j.setBattRamBonus(0);
-    }
+         j.setBattRamBonus(0);
+     }
 
     
-
+    
 }
