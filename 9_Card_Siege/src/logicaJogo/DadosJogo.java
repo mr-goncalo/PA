@@ -297,7 +297,7 @@ public class DadosJogo implements Constantes, Serializable {
         //Copia o deck original para o de jogo e baralha 
         deck.addAll(originalDeck);
         Collections.shuffle(deck);
-
+        turnActionPoints=0; // não deve ser necessario pois depois sai uma carta e volta a colocar o action point
         //Aumenta o dia 
         dia++;
         //reduz o supplies by 1 os aldeoes precisam de comer
@@ -595,7 +595,5 @@ public class DadosJogo implements Constantes, Serializable {
     public void setSiegeTowerInCircleSpace(boolean SiegeTowerInCircleSpace) {
         this.SiegeTowerInCircleSpace = SiegeTowerInCircleSpace;
     }
-
-
 
 }

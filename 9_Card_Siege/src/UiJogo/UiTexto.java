@@ -46,15 +46,12 @@ public class UiTexto
     
     void iuAguardaCarta()
     {
-         //System.out.println("A mostrar carta...");
         String s = new String(); 
-         //System.out.println(jogo.DrawedCardToString());
         System.out.println("\n");
         
         if(primeiraJogada)
         {         
             jogo.retirarCarta();  
-            
             primeiraJogada=false;
             System.out.println(jogo.toStringCarta());
             System.out.println(jogo.toStringDados());
@@ -65,25 +62,28 @@ public class UiTexto
         char c = ' ';
         Scanner sc = new Scanner(System.in);
         c = sc.next().charAt(0);
-       //c='2';
+        
         if(c=='1')
         {
-            //jogo.playerAction();
-            System.out.println("Ações ainda por fazer...");
-            sair = true;
-            return;
+            int n;
+            do
+            {
+                System.out.println("\n1 - Archers Attack\n2 - Boiling Water Attack\n3 - Close Combat Attack\n"
+                + "4 - Coupure\n5 - Rally Troops\n6 - Tunnel Movement\n7 - Supply Raid\n8 - Sabotage\n9 - Voltar Atrás\n");         
+                n = sc.nextInt();
+            }while(n>9 || n<1);
+ 
+            if(n!=9)
+                jogo.realizarAccao(n);   
+            
+            return;                         
         }
         if(c=='2')
         {       
             jogo.retirarCarta(); 
-            
-            //if(!jogo.deckEmpty())
-            {
-                System.out.println(jogo.toStringCarta());
-                System.out.println(jogo.toStringDados());
-            } 
+            System.out.println(jogo.toStringCarta());
+            System.out.println(jogo.toStringDados());
             jogo.mudarTurno();
-            //jogo.retirarCarta();
             return;
         }      
         if(c=='3')

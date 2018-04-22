@@ -36,18 +36,12 @@ public class Jogo implements Serializable
     {
         setEstado(estado.comecarJogo());
     }
-
-    public void retirarCarta() 
-    {
+          
+    public void retirarCarta() {
         setEstado(estado.retirarCarta());
     }
-    
-    public void playerAction() {
-        setEstado(estado.playerAction());
-    }
-        
-    public void playerAction(int action){
-        setEstado(estado.playerAction(action));
+    public void realizarAccao(int n){
+        setEstado(estado.realizarAccao(n));
     }
     
     public void mudarTurno(){
@@ -61,5 +55,6 @@ public class Jogo implements Serializable
     public String toStringCarta() {
         return jogo.toStringCarta();
     }
+
     
 }

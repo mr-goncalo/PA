@@ -22,7 +22,8 @@ public class Card implements Serializable{
     };
     
     public void TurnActionPoints(DadosJogo j) {
-        j.setTurnActionPoints(j.getTurnActionPoints() + this.actionPoint);
+        //j.setTurnActionPoints(j.getTurnActionPoints() + this.actionPoint);
+        j.setTurnActionPoints(this.actionPoint); //nao acumulador
     };
     
     public void RemoveEventBonus(DadosJogo j) {

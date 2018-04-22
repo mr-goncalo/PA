@@ -21,13 +21,7 @@ public class AguardaInicio extends EstadoAdapter implements IEstado
     @Override
     public IEstado comecarJogo()
     {
-//        if(getJogo().inicializa())
-//        {
-//            return new AguardaColocacao(getJogoDados());
-//        }
         return new AguardaCarta(getJogo());
-      //return this; 
     } 
-
      
 }
