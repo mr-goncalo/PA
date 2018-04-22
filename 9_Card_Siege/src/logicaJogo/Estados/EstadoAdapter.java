@@ -42,5 +42,10 @@ public abstract class EstadoAdapter implements IEstado, Serializable
         getJogo().AdvanceTurn();
         return new AguardaCarta(jogo);
     }
+
+    @Override
+    public IEstado playerAction(int action) {
+        return this;
+     }
     
 }

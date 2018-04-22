@@ -45,6 +45,9 @@ public class Jogo implements Serializable
     public void mudarTurno(){
         setEstado(estado.mudarTurno());
     }
+    public void playerACtion(int action){
+        setEstado(estado.playerAction(action));
+    }
     @Override
     public String toString() {
          return jogo.toString();

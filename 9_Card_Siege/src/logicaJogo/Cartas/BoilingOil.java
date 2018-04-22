@@ -20,8 +20,8 @@ public class BoilingOil extends Card {
 
     @Override
     public void AdvanceEnemies(DadosJogo j) {
-        j.setEnemiesBattRamLocation(j.getEnemiesBattRamLocation() - 1);
-        j.setEnemiesLaddersLocation(j.getEnemiesLaddersLocation()- 1);
+        j.AdvanceBattRam(1);
+        j.AdvanceLadders(1);
      }
 
     @Override

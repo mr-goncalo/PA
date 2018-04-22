@@ -19,7 +19,7 @@ public class VolleyOfArrows extends Card {
 
     @Override
     public void AdvanceEnemies(DadosJogo j) {
-        j.setEnemiesBattRamLocation(j.getEnemiesBattRamLocation() - 1);
+        j.AdvanceBattRam(1);
     }
 
     @Override

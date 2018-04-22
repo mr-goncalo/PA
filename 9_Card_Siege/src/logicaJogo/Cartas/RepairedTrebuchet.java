@@ -19,8 +19,23 @@ public class RepairedTrebuchet extends Card{
  
     @Override
     public void ApplyEvent(DadosJogo j) {
-        super.ApplyEvent(j); //To change body of generated methods, choose Tools | Templates.
+        
+        j.AddTrabuchet(1); 
+        j.setCoupureBonus(j.getCoupureBonus()+1);
+        
     }
+
+    @Override
+    public void AdvanceEnemies(DadosJogo j) {
+        j.AdvanceLadders(1);
+     }
+
+    @Override
+    public void RemoveEventBonus(DadosJogo j) {
+         j.setCoupureBonus(0);
+     }
+
+    
 
      
     

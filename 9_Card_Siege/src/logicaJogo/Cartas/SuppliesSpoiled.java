@@ -19,7 +19,7 @@ public class SuppliesSpoiled extends Card
     @Override
     public void AdvanceEnemies(DadosJogo j) {
          // avança os enimigos
-         j.setEnemiesLaddersLocation(j.getEnemiesLaddersLocation() - 1);
+         j.AdvanceLadders(1);
     }
 
     

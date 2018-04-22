@@ -14,14 +14,12 @@ public class AguardaCarta extends EstadoAdapter implements IEstado {
         if (!getJogo().DeckEmpty()) {
             getJogo().EnemyLineCheck();
             getJogo().DrawCard();
-            getJogo().setRonda(getJogo().getRonda() + 1);
-            return this;
-        }else
-        { 
+            return new AguardaAccao(getJogo());
+        } else {
             getJogo().EndOfDay();
             return this;
         }
-        
+
     }
 
 }

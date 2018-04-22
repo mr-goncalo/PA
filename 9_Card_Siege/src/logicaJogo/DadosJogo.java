@@ -65,7 +65,7 @@ public class DadosJogo implements Constantes, Serializable {
         this.LaddersInCircleSpace = false;
         this.BattRamInCircleSpace = false;
         this.SiegeTowerInCircleSpace = false;
-        this.closeCombatUnits = new int[3];
+        this.closeCombatUnits = new int[]{0,0,0};
         this.laddersBonus = 0;
         this.battRamBonus = 0;
         this.siegeTowerBonus = 0;
@@ -158,7 +158,7 @@ public class DadosJogo implements Constantes, Serializable {
 
         s += "\nEnemies Locations:";
         s += (CountEnemiesInCloseCombat() > 0 ? " Enemies in Close Combat: " + CountEnemiesInCloseCombat() : "");
-        s += (hasBattRam ? "B attering Ram: " + enemiesBattRamLocation : "");
+        s += (hasBattRam ? " Battering Ram: " + enemiesBattRamLocation : "");
         s += (hasLadderns ? " Ladders Location: " + enemiesLaddersLocation : "");
         s += (hasSiegeTower ? " SiegeTower Location: " + enemiesSiegeTowerLocation : "");
         s += " Trebuchet Count: " + enemiesTrebuchetCount;
@@ -179,6 +179,7 @@ public class DadosJogo implements Constantes, Serializable {
         }
     }
 
+    //Conta quantos inimigos estão no close combat area e retorna o numero.
     public int CountEnemiesInCloseCombat() {
         int cont = 0;
         for (int i = 0; i < closeCombatUnits.length; i++) {
@@ -189,10 +190,7 @@ public class DadosJogo implements Constantes, Serializable {
         return cont;
     }
 
-    public String DrawedCardToString() {
-        return deck.get(0).get(dia - 1).toString();
-    }
-
+    // procura qual dos 3 está mais longe, caso haja empate avamçam todos os empatados
     public void AvancaMaisLonge() {
         int maisLonge;
 
@@ -202,7 +200,7 @@ public class DadosJogo implements Constantes, Serializable {
             maisLonge = this.enemiesLaddersLocation;
         }
 
-        if (maisLonge < this.enemiesSiegeTowerLocation && hasSiegeTower) {
+        if (maisLonge < this.enemiesSiegeTowerLocation && hasSiegeTower) {//A siege tower pode ser destruida logo ao inicio faz a verificação 
             maisLonge = this.enemiesSiegeTowerLocation;
         }
 
@@ -218,23 +216,28 @@ public class DadosJogo implements Constantes, Serializable {
     }
 
     public void AdvanceSiegeTower(int v) {
-        if (hasSiegeTower) {
+        if (this.hasSiegeTower) {
+            
             this.enemiesSiegeTowerLocation -= v;
+
             if (this.enemiesSiegeTowerLocation == 0) {//se está a 0 vai para o close combat
-                this.hasSiegeTower = false;
+                this.hasSiegeTower = false; // a siege tower desaparece do tabuleiro e vai poara o close combat
                 AdvanceToCloseCombat(SIEGETOWERID);
             } else if (this.enemiesSiegeTowerLocation == 1) {
-                this.SiegeTowerInCircleSpace = true;
+                this.SiegeTowerInCircleSpace = true;//mete a flag que a siege Tower está no circle spaces 
             }
 
             if (this.enemiesSiegeTowerLocation > 4) {
                 this.enemiesSiegeTowerLocation = 4;
             }
+            if (this.enemiesSiegeTowerLocation < 0) {
+                this.enemiesSiegeTowerLocation = 0;
+            }
         }
     }
 
     public void AdvanceLadders(int v) {
-        if (hasLadderns) {
+        if (this.hasLadderns) {
             this.enemiesLaddersLocation -= v;
             if (this.enemiesLaddersLocation == 0) {//se está a 0 vai para o close combat
                 this.hasLadderns = false;
@@ -246,11 +249,14 @@ public class DadosJogo implements Constantes, Serializable {
             if (this.enemiesLaddersLocation > 4) {
                 this.enemiesLaddersLocation = 4;
             }
+            if (this.enemiesLaddersLocation < 0) {
+                this.enemiesLaddersLocation = 0;
+            }
         }
     }
 
     public void AdvanceBattRam(int v) {
-        if (hasBattRam) {
+        if (this.hasBattRam) {
             this.enemiesBattRamLocation -= v;
             if (this.enemiesBattRamLocation == 0) {//se está a 0 vai para o close combat
                 this.hasBattRam = false;
@@ -260,6 +266,9 @@ public class DadosJogo implements Constantes, Serializable {
             }
             if (this.enemiesBattRamLocation > 4) {
                 this.enemiesBattRamLocation = 4;
+            }
+            if (this.enemiesBattRamLocation < 0) {
+                this.enemiesBattRamLocation = 0;
             }
         }
     }
@@ -322,8 +331,7 @@ public class DadosJogo implements Constantes, Serializable {
         try {
             this.closeCombatUnits[i] = id;
         } catch (ArrayIndexOutOfBoundsException e) {
-            System.out.println("perdeu");
-            //perde automaticamente 
+             //perde automaticamente 
         }
     }
 
@@ -535,6 +543,46 @@ public class DadosJogo implements Constantes, Serializable {
 
     public boolean DeckEmpty() {
         return deck.isEmpty();
+    }
+
+    public boolean isHasLadderns() {
+        return hasLadderns;
+    }
+
+    public void setHasLadderns(boolean hasLadderns) {
+        this.hasLadderns = hasLadderns;
+    }
+
+    public boolean isHasBattRam() {
+        return hasBattRam;
+    }
+
+    public void setHasBattRam(boolean hasBattRam) {
+        this.hasBattRam = hasBattRam;
+    }
+
+    public boolean isLaddersInCircleSpace() {
+        return LaddersInCircleSpace;
+    }
+
+    public void setLaddersInCircleSpace(boolean LaddersInCircleSpace) {
+        this.LaddersInCircleSpace = LaddersInCircleSpace;
+    }
+
+    public boolean isBattRamInCircleSpace() {
+        return BattRamInCircleSpace;
+    }
+
+    public void setBattRamInCircleSpace(boolean BattRamInCircleSpace) {
+        this.BattRamInCircleSpace = BattRamInCircleSpace;
+    }
+
+    public boolean isSiegeTowerInCircleSpace() {
+        return SiegeTowerInCircleSpace;
+    }
+
+    public void setSiegeTowerInCircleSpace(boolean SiegeTowerInCircleSpace) {
+        this.SiegeTowerInCircleSpace = SiegeTowerInCircleSpace;
     }
 
 }

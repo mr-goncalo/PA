@@ -7,5 +7,6 @@ public interface IEstado
     IEstado comecarJogo();
     IEstado retirarCarta();
     IEstado mudarTurno();
+    IEstado playerAction(int action);
 
 }
