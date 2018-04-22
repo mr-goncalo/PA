@@ -10,7 +10,7 @@ public class DadosJogo implements Constantes, Serializable {
 
     //Variaveis de Motor dejogo
     private int dia;
-    private int ronda;
+    private int turno;
     private ArrayList<ArrayList<Card>> deck;
     private ArrayList<ArrayList<Card>> originalDeck;
     private int turnActionPoints;
@@ -54,7 +54,7 @@ public class DadosJogo implements Constantes, Serializable {
         jog = new Jogador("DEFAULT", this);
         suppliesCarried = 0;
         this.dia = 1;
-        this.ronda = 0;
+        this.turno = 1;
         this.turnActionPoints = 0;
         this.badWheather = false;
         this.hasSiegeTower = true;
@@ -135,11 +135,11 @@ public class DadosJogo implements Constantes, Serializable {
 
     }
 
-    @Override
-    public String toString() {
+    
+    public String toStringDados() {
         String s = new String();
-        s += "Dia: " + dia;
-        s += deck.get(0).get(dia - 1).toString();
+        //s += "Dia: " + dia + " - Turno: " + turno;
+       // s += deck.get(0).get(dia - 1).toString();
 
         //Mostra apenas os bonus que tem para o turno
         s += "Player Action Points: " + turnActionPoints;
@@ -166,6 +166,14 @@ public class DadosJogo implements Constantes, Serializable {
         return s;
     }
 
+    public String toStringCarta() 
+    {
+        String s = new String();
+        s += "\nDia: " + dia + " - Turno: " + turno;
+        s += deck.get(0).get(dia - 1).toString();
+        return s;
+    }
+        
     ///////////// funções do jogo 
     public void EnemyLineCheck() {
 
@@ -273,16 +281,18 @@ public class DadosJogo implements Constantes, Serializable {
         }
     }
 
-    public void AdvanceTurn() {
+    public void AdvanceTurn() 
+    {
         Card c = deck.get(0).get(dia - 1);
         c.RemoveEventBonus(this);
         turnActionPoints = 0;
         deck.remove(0);
-
+        turno++;
         //Check enemie lines etc etc -.....
     }
 
-    public void EndOfDay() {
+    public void EndOfDay() 
+    {
 
         //Copia o deck original para o de jogo e baralha 
         deck.addAll(originalDeck);
@@ -292,7 +302,7 @@ public class DadosJogo implements Constantes, Serializable {
         dia++;
         //reduz o supplies by 1 os aldeoes precisam de comer
         playerSupplies--;
-
+        turno=0;
         //os soldados no tunel voltam para o castelo. 
         //Ainda por implementar
         //se os soldados estiveram na linha dos enimigos são capturados
@@ -300,7 +310,8 @@ public class DadosJogo implements Constantes, Serializable {
         // se o dia == 4 é porque sobrevivemos os 3 dias e ganhamos os jogo
     }
 
-    public void DrawCard() {
+    public void DrawCard() 
+    {
         Card c = deck.get(0).get(dia - 1);
         c.AdvanceEnemies(this);
         c.ApplyEvent(this);
@@ -353,15 +364,15 @@ public class DadosJogo implements Constantes, Serializable {
         this.dia = dia;
     }
 
-    public int getRonda() {
-        return ronda;
+    public int getTurno() {
+        return turno;
     }
 
-    public void setRonda(int ronda) {
-        if (ronda == 8) {
-            this.ronda = 1;
+    public void setTurno(int turno) {
+        if (turno == 8) {
+            this.turno = 1;
         } else {
-            this.ronda = ronda;
+            this.turno = turno;
         }
     }
 
@@ -584,5 +595,7 @@ public class DadosJogo implements Constantes, Serializable {
     public void setSiegeTowerInCircleSpace(boolean SiegeTowerInCircleSpace) {
         this.SiegeTowerInCircleSpace = SiegeTowerInCircleSpace;
     }
+
+
 
 }

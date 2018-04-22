@@ -41,17 +41,25 @@ public class Jogo implements Serializable
     {
         setEstado(estado.retirarCarta());
     }
-
+    
+    public void playerAction() {
+        setEstado(estado.playerAction());
+    }
+        
+    public void playerAction(int action){
+        setEstado(estado.playerAction(action));
+    }
+    
     public void mudarTurno(){
         setEstado(estado.mudarTurno());
     }
-    public void playerACtion(int action){
-        setEstado(estado.playerAction(action));
-    }
-    @Override
-    public String toString() {
-         return jogo.toString();
-    }
     
+    public String toStringDados() {
+         return jogo.toStringDados();
+    }  
+
+    public String toStringCarta() {
+        return jogo.toStringCarta();
+    }
     
 }

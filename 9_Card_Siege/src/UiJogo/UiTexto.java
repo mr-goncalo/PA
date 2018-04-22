@@ -11,7 +11,7 @@ import logicaJogo.Jogo;
 public class UiTexto 
 {        
     private Jogo jogo;
-    private DadosJogo j;
+    boolean primeiraJogada = true;
     boolean sair = false;
     
     public UiTexto(Jogo jogo)
@@ -21,9 +21,7 @@ public class UiTexto
     
     void iuAguardaInicio()
     {
-        
-        //System.out.println( j.toString());
-        
+                
         System.out.println("1 - Novo Jogo\n2 - Sair");
         char c = ' ';
         Scanner sc = new Scanner(System.in);
@@ -35,6 +33,7 @@ public class UiTexto
             jogo.defineNomeJogador(nome);
             System.out.println("Nome: " + nome);
             jogo.comecarJogo();
+            System.out.println("Valores iniciais:\n"+jogo.toStringDados());
             return;
         }
         if(c=='2')
@@ -44,30 +43,47 @@ public class UiTexto
         }        
     }
     
+    
     void iuAguardaCarta()
     {
          //System.out.println("A mostrar carta...");
         String s = new String(); 
          //System.out.println(jogo.DrawedCardToString());
         System.out.println("\n");
-        jogo.retirarCarta();        
-        System.out.println(jogo.toString());
         
+        if(primeiraJogada)
+        {         
+            jogo.retirarCarta();  
+            
+            primeiraJogada=false;
+            System.out.println(jogo.toStringCarta());
+            System.out.println(jogo.toStringDados());
+            jogo.mudarTurno();
+        }
         
-        System.out.println("1 - Acções\n2 - Outra Carta\n3 - Sair");
+        System.out.println("1 - Acções\n2 - Retirar Carta\n3 - Sair");
         char c = ' ';
         Scanner sc = new Scanner(System.in);
         c = sc.next().charAt(0);
+       //c='2';
         if(c=='1')
         {
-            //jogo.escolherAccao();
+            //jogo.playerAction();
             System.out.println("Ações ainda por fazer...");
             sair = true;
             return;
         }
         if(c=='2')
-        {
+        {       
+            jogo.retirarCarta(); 
+            
+            //if(!jogo.deckEmpty())
+            {
+                System.out.println(jogo.toStringCarta());
+                System.out.println(jogo.toStringDados());
+            } 
             jogo.mudarTurno();
+            //jogo.retirarCarta();
             return;
         }      
         if(c=='3')

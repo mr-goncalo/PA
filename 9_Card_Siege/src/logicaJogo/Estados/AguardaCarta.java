@@ -10,16 +10,34 @@ public class AguardaCarta extends EstadoAdapter implements IEstado {
     }
 
     @Override
-    public IEstado retirarCarta() {
-        if (!getJogo().DeckEmpty()) {
+    public IEstado retirarCarta() 
+    {
+        if (!getJogo().DeckEmpty()) 
+        {
             getJogo().EnemyLineCheck();
             getJogo().DrawCard();
-            return new AguardaAccao(getJogo());
-        } else {
+           // getJogo().AdvanceTurn();
+            return this;//new AguardaAccao(getJogo());
+        } 
+        else
+        {
             getJogo().EndOfDay();
             return this;
         }
 
     }
+    
+//    @Override
+//    public IEstado mudarTurno() {
+//        getJogo().AdvanceTurn();
+//        return new AguardaCarta(getJogo());
+//        //return this;
+//    }
 
+    @Override
+    public IEstado mudarTurno() 
+    {
+        getJogo().AdvanceTurn();
+        return this;// new AguardaCarta(jogo);
+    }
 }

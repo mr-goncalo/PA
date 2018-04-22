@@ -8,5 +8,5 @@ public interface IEstado
     IEstado retirarCarta();
     IEstado mudarTurno();
     IEstado playerAction(int action);
-
+    IEstado playerAction();
 }
