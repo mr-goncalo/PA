@@ -39,6 +39,8 @@ public class DadosJogo implements Constantes, Serializable {
     private int playerSupplies;
     private int playerMorale;
     private int playerWallStrength;
+    private int[] tunnel;
+    private int suppliesCarried;
 
     // Variaveis Tracks cards dos enimigos
     private int enemiesLaddersLocation;
@@ -50,7 +52,7 @@ public class DadosJogo implements Constantes, Serializable {
 
     public DadosJogo() {
         jog = new Jogador("DEFAULT", this);
-
+        suppliesCarried = 0;
         this.dia = 1;
         this.ronda = 0;
         this.turnActionPoints = 0;
@@ -58,7 +60,7 @@ public class DadosJogo implements Constantes, Serializable {
         this.hasSiegeTower = true;
         this.hasLadderns = true;
         this.hasBattRam = true;
-
+        this.tunnel = new int[]{0, 0, 0, 0};
         this.unusedBoilingWater = true;
         this.LaddersInCircleSpace = false;
         this.BattRamInCircleSpace = false;
@@ -140,7 +142,7 @@ public class DadosJogo implements Constantes, Serializable {
         s += deck.get(0).get(dia - 1).toString();
 
         //Mostra apenas os bonus que tem para o turno
-        s += "Player Action Points: " +turnActionPoints;
+        s += "Player Action Points: " + turnActionPoints;
         s += "\nPlayer Bonus: ";
         s += (moraleBonus != 0 ? "Morale Actions Bonus : " + moraleBonus : "");
         s += (sabotageBonus != 0 ? " Sabotage Bonus: " + sabotageBonus : "");
@@ -160,8 +162,21 @@ public class DadosJogo implements Constantes, Serializable {
         s += (hasLadderns ? " Ladders Location: " + enemiesLaddersLocation : "");
         s += (hasSiegeTower ? " SiegeTower Location: " + enemiesSiegeTowerLocation : "");
         s += " Trebuchet Count: " + enemiesTrebuchetCount;
-                
+
         return s;
+    }
+
+    ///////////// funções do jogo 
+    public void EnemyLineCheck() {
+
+        // tunel array a primeira posição é o castelo a ultima é a linha do inimigo
+        if (tunnel[tunnel.length - 1] == 1) {
+            if (lancaDado() == 1) {
+                tunnel[tunnel.length - 1] = 0;
+                suppliesCarried = 0;
+                playerMorale--;
+            }
+        }
     }
 
     public int CountEnemiesInCloseCombat() {
@@ -178,7 +193,6 @@ public class DadosJogo implements Constantes, Serializable {
         return deck.get(0).get(dia - 1).toString();
     }
 
-    ///////////// funções do jogo 
     public void AvancaMaisLonge() {
         int maisLonge;
 

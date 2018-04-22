@@ -12,6 +12,7 @@ public class AguardaCarta extends EstadoAdapter implements IEstado {
     @Override
     public IEstado retirarCarta() {
         if (!getJogo().DeckEmpty()) {
+            getJogo().EnemyLineCheck();
             getJogo().DrawCard();
             getJogo().setRonda(getJogo().getRonda() + 1);
             return this;
