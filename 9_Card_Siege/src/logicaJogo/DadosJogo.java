@@ -56,6 +56,7 @@ public class DadosJogo implements Constantes, Serializable {
     Action archersAttack;
     Action boilingWaterAttack;
     Action closeCombatAttack;
+    Action coupureAction;
 
     public DadosJogo() {
         jog = new Jogador("DEFAULT", this);
@@ -93,7 +94,7 @@ public class DadosJogo implements Constantes, Serializable {
         archersAttack = new ArchersAttack("Archers Attack", 1);
         boilingWaterAttack = new BoilingWaterAttack("Boiling Water Attack", 1);
         closeCombatAttack = new CloseCombatAttack("Close Combat Attack", 1);
-
+        coupureAction = new Coupure("Coupure", 1);
         deck = new ArrayList<>();
         originalDeck = new ArrayList<>();
 
@@ -367,6 +368,12 @@ public class DadosJogo implements Constantes, Serializable {
     }
 
     // funbçoes das açoes
+    public void repairWall() {// coupure
+        coupureAction.ApplyRules(this);
+        this.turnActionPoints -= archersAttack.getCost();
+        
+    }
+
     public boolean ArchersAttack(int pista) {
 
         if (pista >= 1 && pista <= 3) {

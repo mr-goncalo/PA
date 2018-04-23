@@ -14,7 +14,7 @@ import logicaJogo.Jogo;
 -Evento archers Attack -> feito
 -Evento Boiling water -> feito * pode haver bugs 
 -Evento Close Combat -> feito * pode haver bugs 
--Evento Coupure
+-Evento Coupure - feito * falta testes intensivos
 -Evento Rally troops
 -Evento Tunnel Movement
 -Evento Supply raid
@@ -160,7 +160,7 @@ public class UiTexto {
             System.out.println("1 - Archers Attack \t"
                     + (jogo.troopsInCircleSpaces() && jogo.unusedBoilingWater() ? "2 - Boilling Water Attack\t " : "")
                     + (jogo.troopsIncloseCombat() ? " 3 - CloseCombat Attack" : ""));
-            System.out.println("4 - Coupure\t 5 - Rally Troops\t  6 - Tunnel Movement\t 7 - Supply Raid");
+            System.out.println((jogo.wallStrg() < 4 ? "4 - Coupure\t" : "" ) +"5 - Rally Troops\t  6 - Tunnel Movement\t 7 - Supply Raid");
             System.out.println("8 - Sabotage\t 9 - Mudar de Turno\t 0 - Sair");
 
             Scanner sc = new Scanner(System.in);

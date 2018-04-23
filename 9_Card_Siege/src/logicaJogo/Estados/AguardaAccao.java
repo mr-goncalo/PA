@@ -28,7 +28,10 @@ public class AguardaAccao extends EstadoAdapter implements IEstado {
                     }
                     return this;
                 case 4://coupure
-                    break;
+                    if(getJogo().getPlayerWallStrength() < 4 ){
+                        return realizarCoupure();
+                    }
+                    return this;
                 case 5://rally Troops
                     break;
                 case 6://Tunnel movement

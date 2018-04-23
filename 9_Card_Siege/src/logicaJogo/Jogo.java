@@ -121,4 +121,7 @@ public class Jogo implements Serializable {
     public int[] closeCombatUnits() {
         return jogo.getCloseCombatUnits();
     }
+    public int wallStrg(){
+        return jogo.getPlayerWallStrength();
+    }
 }

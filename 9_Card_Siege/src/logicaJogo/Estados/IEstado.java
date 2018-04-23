@@ -16,4 +16,6 @@ public interface IEstado
     
     IEstado realizarCloseCombatAttack(int track);//este é quando estão lá 2
     IEstado realizarCloseCombatAttack(); //Este é quando está só um espaço ocupado
+    
+    IEstado realizarCoupure();
 }

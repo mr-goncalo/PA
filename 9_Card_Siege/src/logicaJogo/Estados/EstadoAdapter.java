@@ -76,4 +76,10 @@ public abstract class EstadoAdapter implements IEstado, Serializable {
         return this;
     }
 
+    @Override
+    public IEstado realizarCoupure() {
+        getJogo().repairWall();
+        return new AguardaAccao(jogo);
+    }
+
 }
