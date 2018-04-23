@@ -4,11 +4,13 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import logicaJogo.Actions.*;
 import logicaJogo.Cartas.*;
 
 public class DadosJogo implements Constantes, Serializable {
 
     //Variaveis de Motor dejogo
+    private String log;
     private int dia;
     private int turno;
     private ArrayList<ArrayList<Card>> deck;
@@ -50,6 +52,11 @@ public class DadosJogo implements Constantes, Serializable {
 
     private Jogador jog;
 
+    //objectos das açoes
+    Action archersAttack;
+    Action boilingWaterAttack;
+    Action closeCombatAttack;
+
     public DadosJogo() {
         jog = new Jogador("DEFAULT", this);
         suppliesCarried = 0;
@@ -65,7 +72,7 @@ public class DadosJogo implements Constantes, Serializable {
         this.LaddersInCircleSpace = false;
         this.BattRamInCircleSpace = false;
         this.SiegeTowerInCircleSpace = false;
-        this.closeCombatUnits = new int[]{0,0,0};
+        this.closeCombatUnits = new int[]{0, 0};
         this.laddersBonus = 0;
         this.battRamBonus = 0;
         this.siegeTowerBonus = 0;
@@ -78,10 +85,14 @@ public class DadosJogo implements Constantes, Serializable {
         this.playerSupplies = 4;
         this.playerMorale = 4;
         this.playerWallStrength = 4;
-        this.enemiesLaddersLocation = 4;
-        this.enemiesSiegeTowerLocation = 4;
-        this.enemiesTrebuchetCount = 3;
+        this.enemiesLaddersLocation = 1;
+        this.enemiesSiegeTowerLocation = 1;
+        this.enemiesTrebuchetCount = 1;
         this.enemiesBattRamLocation = 4;
+
+        archersAttack = new ArchersAttack("Archers Attack", 1);
+        boilingWaterAttack = new BoilingWaterAttack("Boiling Water Attack", 1);
+        closeCombatAttack = new CloseCombatAttack("Close Combat Attack", 1);
 
         deck = new ArrayList<>();
         originalDeck = new ArrayList<>();
@@ -135,11 +146,10 @@ public class DadosJogo implements Constantes, Serializable {
 
     }
 
-    
     public String toStringDados() {
         String s = new String();
         //s += "Dia: " + dia + " - Turno: " + turno;
-       // s += deck.get(0).get(dia - 1).toString();
+        // s += deck.get(0).get(dia - 1).toString();
 
         //Mostra apenas os bonus que tem para o turno
         s += "Player Action Points: " + turnActionPoints;
@@ -158,22 +168,21 @@ public class DadosJogo implements Constantes, Serializable {
 
         s += "\nEnemies Locations:";
         s += (CountEnemiesInCloseCombat() > 0 ? " Enemies in Close Combat: " + CountEnemiesInCloseCombat() : "");
-        s += (hasBattRam ? " Battering Ram: " + enemiesBattRamLocation : "");
         s += (hasLadderns ? " Ladders Location: " + enemiesLaddersLocation : "");
+        s += (hasBattRam ? " Battering Ram: " + enemiesBattRamLocation : "");
         s += (hasSiegeTower ? " SiegeTower Location: " + enemiesSiegeTowerLocation : "");
         s += " Trebuchet Count: " + enemiesTrebuchetCount;
 
         return s;
     }
 
-    public String toStringCarta() 
-    {
+    public String toStringCarta() {
         String s = new String();
         s += "\nDia: " + dia + " - Turno: " + turno;
         s += deck.get(0).get(dia - 1).toString();
         return s;
     }
-        
+
     ///////////// funções do jogo 
     public void EnemyLineCheck() {
 
@@ -225,16 +234,19 @@ public class DadosJogo implements Constantes, Serializable {
 
     public void AdvanceSiegeTower(int v) {
         if (this.hasSiegeTower) {
-            
+
             this.enemiesSiegeTowerLocation -= v;
 
             if (this.enemiesSiegeTowerLocation == 0) {//se está a 0 vai para o close combat
                 this.hasSiegeTower = false; // a siege tower desaparece do tabuleiro e vai poara o close combat
+                this.SiegeTowerInCircleSpace = false;
                 AdvanceToCloseCombat(SIEGETOWERID);
             } else if (this.enemiesSiegeTowerLocation == 1) {
                 this.SiegeTowerInCircleSpace = true;//mete a flag que a siege Tower está no circle spaces 
             }
-
+            if (this.enemiesSiegeTowerLocation > 1) {
+                this.SiegeTowerInCircleSpace = false;
+            }
             if (this.enemiesSiegeTowerLocation > 4) {
                 this.enemiesSiegeTowerLocation = 4;
             }
@@ -249,11 +261,14 @@ public class DadosJogo implements Constantes, Serializable {
             this.enemiesLaddersLocation -= v;
             if (this.enemiesLaddersLocation == 0) {//se está a 0 vai para o close combat
                 this.hasLadderns = false;
+                this.LaddersInCircleSpace = false;
                 AdvanceToCloseCombat(LADDERSID);
             } else if (this.enemiesLaddersLocation == 1) {
                 this.LaddersInCircleSpace = true;
             }
-
+            if (this.enemiesLaddersLocation > 1) {
+                this.LaddersInCircleSpace = false;
+            }
             if (this.enemiesLaddersLocation > 4) {
                 this.enemiesLaddersLocation = 4;
             }
@@ -268,9 +283,13 @@ public class DadosJogo implements Constantes, Serializable {
             this.enemiesBattRamLocation -= v;
             if (this.enemiesBattRamLocation == 0) {//se está a 0 vai para o close combat
                 this.hasBattRam = false;
+                this.BattRamInCircleSpace = false;
                 AdvanceToCloseCombat(BATTRAMID);
             } else if (this.enemiesBattRamLocation == 1) {
                 this.BattRamInCircleSpace = true;
+            }
+            if (this.enemiesBattRamLocation > 1) {
+                this.BattRamInCircleSpace = false;
             }
             if (this.enemiesBattRamLocation > 4) {
                 this.enemiesBattRamLocation = 4;
@@ -281,28 +300,26 @@ public class DadosJogo implements Constantes, Serializable {
         }
     }
 
-    public void AdvanceTurn() 
-    {
+    public void AdvanceTurn() {
         Card c = deck.get(0).get(dia - 1);
         c.RemoveEventBonus(this);
-        turnActionPoints = 0;
+        this.turnActionPoints = 0;
+        this.unusedBoilingWater = true;
         deck.remove(0);
         turno++;
-        //Check enemie lines etc etc -.....
     }
 
-    public void EndOfDay() 
-    {
+    public void EndOfDay() {
 
         //Copia o deck original para o de jogo e baralha 
         deck.addAll(originalDeck);
         Collections.shuffle(deck);
-        turnActionPoints=0; // não deve ser necessario pois depois sai uma carta e volta a colocar o action point
+        turnActionPoints = 0; // não deve ser necessario pois depois sai uma carta e volta a colocar o action point
         //Aumenta o dia 
         dia++;
         //reduz o supplies by 1 os aldeoes precisam de comer
         playerSupplies--;
-        turno=0;
+        turno = 0;
         //os soldados no tunel voltam para o castelo. 
         //Ainda por implementar
         //se os soldados estiveram na linha dos enimigos são capturados
@@ -310,13 +327,16 @@ public class DadosJogo implements Constantes, Serializable {
         // se o dia == 4 é porque sobrevivemos os 3 dias e ganhamos os jogo
     }
 
-    public void DrawCard() 
-    {
+    public void DrawCard() {
         Card c = deck.get(0).get(dia - 1);
         c.AdvanceEnemies(this);
         c.ApplyEvent(this);
         c.TurnActionPoints(this);
 
+    }
+
+    public boolean troopsInCircleSpaces() {
+        return this.LaddersInCircleSpace || this.BattRamInCircleSpace || this.SiegeTowerInCircleSpace;
     }
 
     public void RemoveSiegeTower() {
@@ -342,8 +362,55 @@ public class DadosJogo implements Constantes, Serializable {
         try {
             this.closeCombatUnits[i] = id;
         } catch (ArrayIndexOutOfBoundsException e) {
-             //perde automaticamente 
+            //perde automaticamente 
         }
+    }
+
+    // funbçoes das açoes
+    public boolean ArchersAttack(int pista) {
+
+        if (pista >= 1 && pista <= 3) {
+            if (archersAttack.ApplyRules(this, pista) == -1) {
+                return false;
+            }
+            this.turnActionPoints -= archersAttack.getCost();
+            return true;
+        } else {
+            log = "Track selection error!";
+            return false;
+        }
+    }
+
+    public boolean boilingWaterAttack(int pista) {
+        if (pista >= 1 && pista <= 3) {
+            if (boilingWaterAttack.ApplyRules(this, pista) == -1) {
+                return false;
+            }
+            this.turnActionPoints -= archersAttack.getCost();
+            return true;
+        } else {
+            log = "Track selection error!";
+            return false;
+        }
+    }
+
+    public boolean closeCombatAttack(int track) {
+        if (track == 0 || track == 1) {
+            if (closeCombatAttack.ApplyRules(this, track) == -1) {
+                return false;
+            }
+            this.turnActionPoints -= closeCombatAttack.getCost();
+            return true;
+        } else {
+            log = "Track selection error!";
+            return false;
+        }
+    }
+
+    public boolean closeCombatAttack() {
+        closeCombatAttack.ApplyRules(this);
+        this.turnActionPoints -= closeCombatAttack.getCost();
+        return true;
     }
 
     public int lancaDado() {
@@ -594,6 +661,38 @@ public class DadosJogo implements Constantes, Serializable {
 
     public void setSiegeTowerInCircleSpace(boolean SiegeTowerInCircleSpace) {
         this.SiegeTowerInCircleSpace = SiegeTowerInCircleSpace;
+    }
+
+    public String getLog() {
+        return log;
+    }
+
+    public void setLog(String log) {
+        this.log = log;
+    }
+
+    public int[] getCloseCombatUnits() {
+        return closeCombatUnits;
+    }
+
+    public void setCloseCombatUnits(int[] closeCombatUnits) {
+        this.closeCombatUnits = closeCombatUnits;
+    }
+
+    public int[] getTunnel() {
+        return tunnel;
+    }
+
+    public void setTunnel(int[] tunnel) {
+        this.tunnel = tunnel;
+    }
+
+    public int getSuppliesCarried() {
+        return suppliesCarried;
+    }
+
+    public void setSuppliesCarried(int suppliesCarried) {
+        this.suppliesCarried = suppliesCarried;
     }
 
 }

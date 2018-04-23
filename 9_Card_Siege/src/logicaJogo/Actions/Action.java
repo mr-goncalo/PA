@@ -14,9 +14,9 @@ public class Action implements Constantes,Serializable
         this.cost = cost;
     }
 
-    public void ApplyRules(DadosJogo j,int track){}
+    public int ApplyRules(DadosJogo j,int track){return 0;}
     
-    public void ApplyRules(DadosJogo j){}
+    public int ApplyRules(DadosJogo j){return 0;}
     
     public String getName() {
         return name;

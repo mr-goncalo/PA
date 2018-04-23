@@ -11,33 +11,66 @@ import logicaJogo.DadosJogo;
  *
  * @author eu
  */
-public class BoilingWaterAttack extends Action{
-    
+public class BoilingWaterAttack extends Action {
+
     public BoilingWaterAttack(String name, int cost) {
         super(name, cost);
     }
 
     @Override
-    public void ApplyRules(DadosJogo j, int track) {
+    public int ApplyRules(DadosJogo j, int track) {
         int rol = j.lancaDado();
+        // Caso role 1 a ação falha e baixa a morale by 1, caso haja um bonus que torne o role > 1 nao tira morale
+
         switch (track) {
             case LADDER_TRACK:
-                if (rol + j.getCircleSpacesBonus() + j.getLaddersBonus()> LADDER_STRG) {
-                    j.AdvanceLadders(-1);
+                if (j.isLaddersInCircleSpace()) {
+                    if (rol == 1) { // Caso role 1 a ação falha e baixa a morale by 1, caso haja um bonus que torne o role > 1 nao tira morale
+                        if (rol + j.getLaddersBonus() < 1) {
+                            j.setLog("Bad luck you rolled 1, morale reduced by 1");
+                            j.setPlayerMorale(j.getPlayerMorale() - 1);
+                        } else {
+                            j.setLog("Bad luck you rolled 1, but your morale is intact");
+                        }
+                        return 0;
+                    }
+                    if (rol + j.getCircleSpacesBonus() + j.getLaddersBonus() > LADDER_STRG) {
+                        j.AdvanceLadders(-1);
+                        j.setLog("Attack Successful!");
+                        return 1;
+                    }
+                    j.setLog("Attack failed!");
+                    return 0;
                 }
-                break;
+                j.setLog("Track selected not in circle space");
+                return -1;
             case BATT_RAM_TRACK:
-                if (rol + j.getCircleSpacesBonus() + j.getBattRamBonus() > BATT_RAM_STRG) {
-                    j.AdvanceBattRam(-1);
+                if (j.isBattRamInCircleSpace()) {
+                    if (rol + j.getCircleSpacesBonus() + j.getBattRamBonus() > BATT_RAM_STRG && j.isBattRamInCircleSpace()) {
+                        j.AdvanceBattRam(-1);
+                        j.setLog("Attack Successful!");
+                        return 1;
+                    }
+                    j.setLog("Attack failed!");
+                    return 0;
                 }
-                break;
+                j.setLog("Track selected not valid");
+                return -1;
             case SIEGE_TOWER_TRACK:
-                if (rol + j.getCircleSpacesBonus() + j.getSiegeTowerBonus()> SIEGE_TOWER_STRG) {
-                    j.AdvanceSiegeTower(-1);
+                if (j.isSiegeTowerInCircleSpace()) {
+                    if (rol + j.getCircleSpacesBonus() + j.getSiegeTowerBonus() > SIEGE_TOWER_STRG) {
+                        j.AdvanceSiegeTower(-1);
+                        j.setLog("Attack Successful!");
+                        return 1;
+                    }
+                    j.setLog("Attack failed!");
+                    return 0;
                 }
-                break;
+                j.setLog("Track selected not valid");
+                return -1;
 
         }
-     }
-    
+        return 0;
+    }
+
 }

@@ -1,120 +1,208 @@
 package UiJogo;
 
 import java.util.Scanner;
-import logicaJogo.Estados.AguardaAccao;
-import logicaJogo.Estados.AguardaCarta;
-import logicaJogo.Estados.AguardaInicio;
+import logicaJogo.Estados.*;
+
 import logicaJogo.Estados.IEstado;
 import logicaJogo.DadosJogo;
 import logicaJogo.Jogo;
 
-public class UiTexto 
-{        
+
+/*
+
+    TODO LIST
+-Evento archers Attack -> feito
+-Evento Boiling water -> feito * pode haver bugs 
+-Evento Close Combat -> feito * pode haver bugs 
+-Evento Coupure
+-Evento Rally troops
+-Evento Tunnel Movement
+-Evento Supply raid
+-Evento Sabotage
+
+-Evento perder instantaneamente 
+-Evento ganhar 
+-Evento perder no fim de turno
+
+
+-falta fazer o tunel
+-falta fazer o movimento das tropas no tunel
+-falta 1 ou outro evento das cartas 
+
+-correção de bugs
+-melhroar USER INTERFACE 
+
+-testar 
+
+ */
+public class UiTexto {
+
     private Jogo jogo;
     boolean primeiraJogada = true;
     boolean sair = false;
-    
-    public UiTexto(Jogo jogo)
-    {
+
+    public UiTexto(Jogo jogo) {
         this.jogo = jogo;
     }
-    
-    void iuAguardaInicio()
-    {
-                
+
+    void iuAguardaInicio() {
+
         System.out.println("1 - Novo Jogo\n2 - Sair");
         char c = ' ';
         Scanner sc = new Scanner(System.in);
         c = sc.next().charAt(0);
-        if(c=='1')
-        {
-            System.out.println("Insira o nome do jogador: ");           
+        if (c == '1') {
+            System.out.println("Insira o nome do jogador: ");
             String nome = sc.next();
             jogo.defineNomeJogador(nome);
             System.out.println("Nome: " + nome);
             jogo.comecarJogo();
-            System.out.println("Valores iniciais:\n"+jogo.toStringDados());
+            System.out.println("Valores iniciais:\n" + jogo.toStringDados());
             return;
         }
-        if(c=='2')
-        {
+        if (c == '2') {
             sair = true;
             return;
-        }        
-    }
-    
-    
-    void iuAguardaCarta()
-    {
-        String s = new String(); 
-        System.out.println("\n");
-        
-        if(primeiraJogada)
-        {         
-            jogo.retirarCarta();  
-            primeiraJogada=false;
-            System.out.println(jogo.toStringCarta());
-            System.out.println(jogo.toStringDados());
-            jogo.mudarTurno();
         }
-        
-        System.out.println("1 - Acções\n2 - Retirar Carta\n3 - Sair");
-        char c = ' ';
-        Scanner sc = new Scanner(System.in);
-        c = sc.next().charAt(0);
-        
-        if(c=='1')
-        {
-            int n;
-            do
-            {
-                System.out.println("\n1 - Archers Attack\n2 - Boiling Water Attack\n3 - Close Combat Attack\n"
-                + "4 - Coupure\n5 - Rally Troops\n6 - Tunnel Movement\n7 - Supply Raid\n8 - Sabotage\n9 - Voltar Atrás\n");         
-                n = sc.nextInt();
-            }while(n>9 || n<1);
- 
-            if(n!=9)
-                jogo.realizarAccao(n);   
-            
-            return;                         
-        }
-        if(c=='2')
-        {       
-            jogo.retirarCarta(); 
-            System.out.println(jogo.toStringCarta());
-            System.out.println(jogo.toStringDados());
-            jogo.mudarTurno();
-            return;
-        }      
-        if(c=='3')
-        {
-            sair = true;
-            return;
-        }   
     }
-    
-    void iuAguardaAccao()
-    {
-        
+
+    void baseUi() {
+        String s = new String();
+
+        System.out.println(jogo.getLog());
+        jogo.setLog("");
+        System.out.println(jogo.toStringCarta());
+        System.out.println(jogo.toStringDados());
     }
-    
-    void corre()
-    {
-        while (!sair) 
-        {
-            IEstado estado = jogo.getEstado();
-            if (estado instanceof AguardaInicio)
-            {
-                iuAguardaInicio();
+
+    void uiArchersAttack() {
+        int c = -1;
+        while (true) {
+            baseUi();
+            System.out.println("Choosed Action: Archers Attack");
+            System.out.println("Choose Track: " + (jogo.hasLadders() ? "1 - Ladders\t" : "")
+                    + (jogo.hasBattRam() ? "2 - Battering Ram\t" : "")
+                    + (jogo.hasSiegeTower() ? "3 - Siege Tower\t" : "")
+                    + "4 - voltar");
+
+            Scanner sc = new Scanner(System.in);
+            try {
+
+                c = sc.nextInt();
+                if (c == 4) {
+                    jogo.voltarAcao();
+                    return;
+                }
+                jogo.realizarArchersAttack(c);
+                return;
+            } catch (java.util.InputMismatchException e) {
+                System.out.println("Opção Invalida!");
             }
-            else if (estado instanceof AguardaCarta) 
-            {
-                iuAguardaCarta();
-            } 
-            else if (estado instanceof AguardaAccao) 
-            {
-                iuAguardaAccao();
-            } 
+        }
+
+    }
+
+    void uiBoilingWater() {
+        int c = -1;
+        while (true) {
+            baseUi();
+            System.out.println("Choosed Action: Boiling Water Attack");
+            System.out.println("Choose Track: " + (jogo.laddersIncircle() ? "1 - Ladders\t" : "")
+                    + (jogo.battRamInCircle() ? "2 - Battering Ram\t" : "")
+                    + (jogo.siegeTowerInCircle() ? "3 - Siege Tower\t" : "")
+                    + "4 - voltar");
+
+            Scanner sc = new Scanner(System.in);
+            try {
+
+                c = sc.nextInt();
+                if (c == 4) {
+                    jogo.voltarAcao();
+                    return;
+                }
+                jogo.realizarBoilingWaterAttack(c);
+                return;
+            } catch (java.util.InputMismatchException e) {
+                System.out.println("Opção Invalida!");
+            }
+        }
+    }
+
+    void uiCloseCombatAttack() {
+        int c = -1;
+        while (true) {
+            baseUi();
+            System.out.println("Choosed Action: Close Combat Attack");
+            System.out.println("Choose Track: " + (jogo.closeCombatUnits()[0] != 0 ? "0 - 1º Space \t" : "")
+                    + (jogo.closeCombatUnits()[1] != 0 ? "1 - 2º Space\t" : "")
+                    + "2 - voltar");
+
+            Scanner sc = new Scanner(System.in);
+            try {
+
+                c = sc.nextInt();
+                if (c == 2) {
+                    jogo.voltarAcao();
+                    return;
+                }
+                jogo.realizarCloseCombatAttack(c);
+                return;
+            } catch (java.util.InputMismatchException e) {
+                System.out.println("Opção Invalida!");
+            }
+        }
+    }
+
+    void iuAguardaAcao() {
+        int c = -1;
+        while (true) {
+            baseUi();
+            System.out.println("1 - Archers Attack \t"
+                    + (jogo.troopsInCircleSpaces() && jogo.unusedBoilingWater() ? "2 - Boilling Water Attack\t " : "")
+                    + (jogo.troopsIncloseCombat() ? " 3 - CloseCombat Attack" : ""));
+            System.out.println("4 - Coupure\t 5 - Rally Troops\t  6 - Tunnel Movement\t 7 - Supply Raid");
+            System.out.println("8 - Sabotage\t 9 - Mudar de Turno\t 0 - Sair");
+
+            Scanner sc = new Scanner(System.in);
+            try {
+                c = sc.nextInt();
+                if (c == 0) {
+                    return;
+                } else if (c >= 1 && c <= 8) {
+                    jogo.realizarAccao(c);
+                    return;
+                } else if (c == 9) {
+                    jogo.mudarTurno();
+                    return;
+                }
+
+            } catch (java.util.InputMismatchException e) {
+                System.out.println("Opção Invalida!");
+            }
+        }
+    }
+
+    void corre() {
+        while (!sair) {
+            IEstado estado = jogo.getEstado();
+            if (estado instanceof AguardaInicio) {
+                iuAguardaInicio();
+            } else if (estado instanceof AguardaCarta) {
+                jogo.retirarCarta();
+            } else if (estado instanceof AguardaAccao) {
+                iuAguardaAcao();
+            } else if (estado instanceof AguardaArchersAttack) {
+                uiArchersAttack();
+            } else if (estado instanceof AguardaBoilingWaterAttack) {
+                uiBoilingWater();
+            } else if (estado instanceof AguardaCloseCombatAttack) {
+                if (jogo.troopsIncloseCombatCount() > 1) {
+                    uiCloseCombatAttack();
+                } else {
+                    jogo.realizarCloseCombatAttack();
+                }
+
+            }
         }
     }
 }
