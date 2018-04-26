@@ -13,6 +13,12 @@ public class AguardaAccao extends EstadoAdapter implements IEstado {
         //ter em cuidado o numero de accoes permitidas por turno (1 a 3)
         if (getJogo().getTurnActionPoints() > 0) {
             switch (action) {
+                case 0:// Extra action point
+                    if (!getJogo().isExtraPointUsed()) {
+                        return new AguardaExtraPoint(getJogo());
+                    }
+                    getJogo().setLog("Extra point already used!");
+                    return this;
                 case 1://Archers attack
                     return new AguardaArchersAttack(getJogo());
                 case 2://Boiling water attack (!APENAS 1 VEZ POR TURNO!)
@@ -35,9 +41,10 @@ public class AguardaAccao extends EstadoAdapter implements IEstado {
                 case 5://rally Troops
                     if (getJogo().getPlayerMorale() < 4) {
                         return new AguardaRallyTroops(getJogo());
+
                     } else {
                         getJogo().setLog("Invalid Option!");
-                        return this; 
+                        return this;
                     }
                 case 6://Tunnel movement
                     if (!getJogo().troopsInsideTunnel()) {
@@ -46,10 +53,24 @@ public class AguardaAccao extends EstadoAdapter implements IEstado {
                         return new AguardaTunnelMovement(getJogo());
                     }
                 case 7://supply raid
-                    break;
+                    if (getJogo().troopsInEnemyLines()) {
+                        if (getJogo().getSupplyRaid().ApplyRules(getJogo()) == 1) {
+                            getJogo().setTurnActionPoints(getJogo().getTurnActionPoints() - getJogo().getSupplyRaid().getCost());
+                        }
+
+                        return this;
+                    }
                 case 8://Sabotage
-                    break;
+                    if (getJogo().troopsInEnemyLines()) {
+                        if (getJogo().getSabotage().ApplyRules(getJogo()) == 1) {
+                            getJogo().setTurnActionPoints(getJogo().getTurnActionPoints() - getJogo().getSabotage().getCost());
+                        }
+                        return this;
+                    }
+                    getJogo().setLog("Invalid Option!");
+                    return this;
                 default:
+                    getJogo().setLog("Invalid Option!");
                     return this;
             }
         }

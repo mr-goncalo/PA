@@ -97,5 +97,10 @@ public abstract class EstadoAdapter implements IEstado, Serializable {
         return this;
      }
 
+    @Override
+    public IEstado realizarExtraPoint(int c) {
+        return this;
+     }
+
     
 }

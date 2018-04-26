@@ -15,19 +15,19 @@ import logicaJogo.Jogo;
 -Evento Boiling water -> feito * pode haver bugs 
 -Evento Close Combat -> feito * pode haver bugs 
 -Evento Coupure - feito * falta testes intensivos
--Evento Rally troops
--Evento Tunnel Movement
--Evento Supply raid
--Evento Sabotage
+-Evento Rally troops - done
+-Evento Tunnel Movement - done
+-Evento Supply raid - done
+-Evento Sabotage - done
+-Evento trocar 1 de morale ou 1 supply por 1 action point - done
 
+
+-Recuar as tropas para o castelo
 -Evento perder instantaneamente 
 -Evento ganhar 
 -Evento perder no fim de turno
-
-
--falta fazer o tunel
--falta fazer o movimento das tropas no tunel
--falta 1 ou outro evento das cartas 
+ 
+-falta o evento Bad weather
 
 -correção de bugs
 -melhroar USER INTERFACE 
@@ -196,23 +196,46 @@ public class UiTexto {
         }
     }
 
+    void uiExtraPoints() {
+        int c = -1;
+        while (true) {
+            baseUi();
+            System.out.println("Choosed Action: Extra Action Point");
+            System.out.println("Choose to lower: 1 - Morale  2 - Supplies 3 - Back");
+            Scanner sc = new Scanner(System.in);
+            try {
+
+                c = sc.nextInt();
+                if (c == 3) {
+                    jogo.voltarAcao();
+                    return;
+                }
+                jogo.realizarExtraPoint(c);
+                return;
+            } catch (java.util.InputMismatchException e) {
+                System.out.println("Opção Invalida!");
+            }
+        }
+    }
+
     void iuAguardaAcao() {
         int c = -1;
         while (true) {
             baseUi();
-            System.out.println("1 - Archers Attack \t"
-                    + (jogo.troopsInCircleSpaces() && jogo.unusedBoilingWater() ? "2 - Boilling Water Attack\t " : "")
+            System.out.println("0 - Extra Action point\t 1 - Archers Attack \t"
+                    + (jogo.troopsInCircleSpaces() && jogo.unusedBoilingWater() ? "2 - Boilling Water Attack\t" : "")
                     + (jogo.troopsIncloseCombat() ? " 3 - CloseCombat Attack" : ""));
-            System.out.println((jogo.wallStrg() < 4 ? "4 - Coupure\t" : "")
-                    + (jogo.playerMorale() < 4 ? "5 - Rally Troops\t" : "") + "  6 - Tunnel Movement\t 7 - Supply Raid");
-            System.out.println("8 - Sabotage\t 9 - Mudar de Turno\t 0 - Sair");
+            System.out.println((jogo.wallStrg() < 4 ? " 4 - Coupure\t" : "")
+                    + (jogo.playerMorale() < 4 ? "5 - Rally Troops\t" : "") + " 6 - Tunnel Movement\t 7 - Supply Raid");
+            System.out.println("8 - Sabotage\t 9 - Mudar de Turno\t 10 - Sair");
 
             Scanner sc = new Scanner(System.in);
             try {
                 c = sc.nextInt();
-                if (c == 0) {
+                if (c == 10) {
+                    System.out.println("SAir");
                     return;
-                } else if (c >= 1 && c <= 8) {
+                } else if (c >= 0 && c <= 8) {
                     jogo.realizarAccao(c);
                     return;
                 } else if (c == 9) {
@@ -249,6 +272,8 @@ public class UiTexto {
                 uiRallyTroops();
             } else if (estado instanceof AguardaTunnelMovement) {
                 uiTunnelMovement();
+            }else if (estado instanceof AguardaExtraPoint) {
+                uiExtraPoints();
             }
         }
     }

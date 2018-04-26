@@ -28,6 +28,7 @@ public class DadosJogo implements Constantes, Serializable {
     private boolean troopsStartedInCastle;
     private boolean troopsStartedInEnemyLines;
     private boolean troopsEnteredInThisTurn;
+    private boolean extraPointUsed;
 
     private boolean troopsFreeMovement;
     //Variaveis de Bonus
@@ -57,11 +58,13 @@ public class DadosJogo implements Constantes, Serializable {
     private Jogador jog;
 
     //objectos das açoes
-    Action archersAttack;
-    Action boilingWaterAttack;
-    Action closeCombatAttack;
-    Action coupureAction;
-    Action rallyTroops;
+    private Action archersAttack;
+    private Action boilingWaterAttack;
+    private Action closeCombatAttack;
+    private Action coupureAction;
+    private Action rallyTroops;
+    private Action supplyRaid;
+    private Action sabotage;
 
     public DadosJogo() {
         jog = new Jogador("DEFAULT", this);
@@ -99,11 +102,16 @@ public class DadosJogo implements Constantes, Serializable {
         this.troopsStartedInEnemyLines = false;
         this.troopsEnteredInThisTurn = false;
         this.troopsFreeMovement = false;
+
+        extraPointUsed = false;
+
         archersAttack = new ArchersAttack("Archers Attack", 1);
         boilingWaterAttack = new BoilingWaterAttack("Boiling Water Attack", 1);
         closeCombatAttack = new CloseCombatAttack("Close Combat Attack", 1);
         coupureAction = new Coupure("Coupure", 1);
         rallyTroops = new RallyTroops("Rally Troops", 1);
+        supplyRaid = new SupplyRaid("Supply Raid", 1);
+        sabotage = new Sabotage("Sabotage", 1);
         this.log = "";
         deck = new ArrayList<>();
         originalDeck = new ArrayList<>();
@@ -187,7 +195,7 @@ public class DadosJogo implements Constantes, Serializable {
         s += "\nTunnel\t|" + (tunnel[0] == 1 ? " # " : "   ") + "|"
                 + (tunnel[1] == 1 ? " # " : "   ") + "|"
                 + (tunnel[2] == 1 ? " # " : "   ") + "|"
-                + (tunnel[3] == 1 ? " #" : "  ") + "|";
+                + (tunnel[3] == 1 ? " #" : "  ") + "| \t Supplies Carried: " + suppliesCarried;
         s += "\n      \t|--------------|";
         return s;
     }
@@ -199,15 +207,20 @@ public class DadosJogo implements Constantes, Serializable {
         return s;
     }
 
+    public boolean troopsInEnemyLines() {
+        return tunnel[tunnel.length - 1] == 1;
+    }
+
     ///////////// funções do jogo 
-    public void EnemyLineCheck() { 
+    public void EnemyLineCheck() {
         // tunel array a primeira posição é o castelo a ultima é a linha do inimigo
         if (tunnel[tunnel.length - 1] == 1) {
             if (lancaDado() == 1) {
                 tunnel[tunnel.length - 1] = 0;
-                tunnel[0] = 1; 
+                tunnel[0] = 1;
                 suppliesCarried = 0;
                 playerMorale--;
+                log = "Your Troops have been captured!";
             }
         }
     }
@@ -325,6 +338,7 @@ public class DadosJogo implements Constantes, Serializable {
         if (troopsFreeMovement) {
             tunnelFreeMovement();
         }
+        extraPointUsed = false;
         deck.remove(0);
         turno++;
 
@@ -428,6 +442,18 @@ public class DadosJogo implements Constantes, Serializable {
         }
     }
 
+    public void extraActionPoint(int v) {
+        if (v == 1) {
+            playerMorale--;
+            turnActionPoints++;
+            extraPointUsed = true;
+        } else if (v == 2) {
+            playerSupplies--;
+            turnActionPoints++;
+            extraPointUsed = true;
+        }
+    }
+
     @SuppressWarnings("empty-statement")
     public void tunnelFastMovement() {
         int i;
@@ -447,7 +473,7 @@ public class DadosJogo implements Constantes, Serializable {
         if (tunnel[0] == 1) {
             tunnel[0] = 0;
             tunnel[1] = 1;
-            troopsStartedInEnemyLines = false; 
+            troopsStartedInEnemyLines = false;
             troopsStartedInCastle = true;
         } else if (tunnel[tunnel.length - 1] == 1) {
             tunnel[tunnel.length - 1] = 0;
@@ -820,6 +846,30 @@ public class DadosJogo implements Constantes, Serializable {
 
     public void setTroopsFreeMovement(boolean troopsFreeMovement) {
         this.troopsFreeMovement = troopsFreeMovement;
+    }
+
+    public Action getSupplyRaid() {
+        return supplyRaid;
+    }
+
+    public void setSupplyRaid(Action supplyRaid) {
+        this.supplyRaid = supplyRaid;
+    }
+
+    public Action getSabotage() {
+        return sabotage;
+    }
+
+    public void setSabotage(Action sabotage) {
+        this.sabotage = sabotage;
+    }
+
+    public boolean isExtraPointUsed() {
+        return extraPointUsed;
+    }
+
+    public void setExtraPointUsed(boolean extraPointUsed) {
+        this.extraPointUsed = extraPointUsed;
     }
 
 }

@@ -22,4 +22,6 @@ public interface IEstado
     
     IEstado realizarTunnelMovement();
     IEstado realizarTunnelMovement(int move);
+    
+    IEstado realizarExtraPoint(int c);
 }

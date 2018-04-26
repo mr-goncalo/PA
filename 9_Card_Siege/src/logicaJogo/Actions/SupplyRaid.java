@@ -5,10 +5,40 @@
  */
 package logicaJogo.Actions;
 
+import logicaJogo.DadosJogo;
+
 /**
  *
  * @author eu
  */
-public class SupplyRaid {
-    
+public class SupplyRaid extends Action {
+
+    public SupplyRaid(String name, int cost) {
+        super(name, cost);
+    }
+
+    @Override
+    public int ApplyRules(DadosJogo j) {
+        int roll = j.lancaDado() + j.getRaidBonus();
+        if (roll == 6) {
+            j.setSuppliesCarried(2);
+            j.setLog("Sucessfull! You raided 2 supply");
+            return 1;
+        } else if (roll > 2 && roll < 6) {
+            if (j.getSuppliesCarried() < 2) {
+                j.setSuppliesCarried(j.getSuppliesCarried() + 1);
+                j.setLog("Sucessfull! You raided 1 supply");
+                return 1;
+            }
+            j.setLog("Supplies Carried Full!");
+            return 0;
+        } else if (roll == 1) {
+            j.EnemyLineCheck();
+            return 1;
+        } else {
+            j.setLog("Supply Raid failed!"); 
+            return 1;
+        }
+    }
+
 }
