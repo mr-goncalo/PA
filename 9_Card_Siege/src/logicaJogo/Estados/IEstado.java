@@ -18,4 +18,8 @@ public interface IEstado
     IEstado realizarCloseCombatAttack(); //Este é quando está só um espaço ocupado
     
     IEstado realizarCoupure();
+    IEstado realizarRallyTroops(int bonus);
+    
+    IEstado realizarTunnelMovement();
+    IEstado realizarTunnelMovement(int move);
 }

@@ -82,4 +82,20 @@ public abstract class EstadoAdapter implements IEstado, Serializable {
         return new AguardaAccao(jogo);
     }
 
+    @Override
+    public IEstado realizarRallyTroops(int bonus) {
+        return this;
+     }
+
+    @Override
+    public IEstado realizarTunnelMovement() {
+        return this;
+     }
+
+    @Override
+    public IEstado realizarTunnelMovement(int move) {
+        return this;
+     }
+
+    
 }

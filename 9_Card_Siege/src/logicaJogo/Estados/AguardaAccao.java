@@ -28,14 +28,23 @@ public class AguardaAccao extends EstadoAdapter implements IEstado {
                     }
                     return this;
                 case 4://coupure
-                    if(getJogo().getPlayerWallStrength() < 4 ){
+                    if (getJogo().getPlayerWallStrength() < 4) {
                         return realizarCoupure();
                     }
                     return this;
                 case 5://rally Troops
-                    break;
+                    if (getJogo().getPlayerMorale() < 4) {
+                        return new AguardaRallyTroops(getJogo());
+                    } else {
+                        getJogo().setLog("Invalid Option!");
+                        return this; 
+                    }
                 case 6://Tunnel movement
-                    break;
+                    if (!getJogo().troopsInsideTunnel()) {
+                        return new AguardaTunnelMovement(getJogo()).realizarTunnelMovement();
+                    } else {
+                        return new AguardaTunnelMovement(getJogo());
+                    }
                 case 7://supply raid
                     break;
                 case 8://Sabotage

@@ -57,7 +57,6 @@ public class UiTexto {
             jogo.defineNomeJogador(nome);
             System.out.println("Nome: " + nome);
             jogo.comecarJogo();
-            System.out.println("Valores iniciais:\n" + jogo.toStringDados());
             return;
         }
         if (c == '2') {
@@ -153,6 +152,50 @@ public class UiTexto {
         }
     }
 
+    void uiRallyTroops() {
+        int c = -1;
+        while (true) {
+            baseUi();
+            System.out.println("Choosed Action: Rally Troops");
+            System.out.println("Reduce Supplies for Bonus?: 1 - Yes  2 - No 3 - Back");
+            Scanner sc = new Scanner(System.in);
+            try {
+
+                c = sc.nextInt();
+                if (c == 3) {
+                    jogo.voltarAcao();
+                    return;
+                }
+                jogo.realizarRallyTroops(c);
+                return;
+            } catch (java.util.InputMismatchException e) {
+                System.out.println("Opção Invalida!");
+            }
+        }
+    }
+
+    void uiTunnelMovement() {
+        int c = -1;
+        while (true) {
+            baseUi();
+            System.out.println("Choosed Action: Tunnel Movement");
+            System.out.println("Choose Movement : 1 - Free Movement  2 - Fast Movement 3 - Back");
+            Scanner sc = new Scanner(System.in);
+            try {
+
+                c = sc.nextInt();
+                if (c == 3) {
+                    jogo.voltarAcao();
+                    return;
+                }
+                jogo.realizarTunnelMovement(c);
+                return;
+            } catch (java.util.InputMismatchException e) {
+                System.out.println("Opção Invalida!");
+            }
+        }
+    }
+
     void iuAguardaAcao() {
         int c = -1;
         while (true) {
@@ -160,7 +203,8 @@ public class UiTexto {
             System.out.println("1 - Archers Attack \t"
                     + (jogo.troopsInCircleSpaces() && jogo.unusedBoilingWater() ? "2 - Boilling Water Attack\t " : "")
                     + (jogo.troopsIncloseCombat() ? " 3 - CloseCombat Attack" : ""));
-            System.out.println((jogo.wallStrg() < 4 ? "4 - Coupure\t" : "" ) +"5 - Rally Troops\t  6 - Tunnel Movement\t 7 - Supply Raid");
+            System.out.println((jogo.wallStrg() < 4 ? "4 - Coupure\t" : "")
+                    + (jogo.playerMorale() < 4 ? "5 - Rally Troops\t" : "") + "  6 - Tunnel Movement\t 7 - Supply Raid");
             System.out.println("8 - Sabotage\t 9 - Mudar de Turno\t 0 - Sair");
 
             Scanner sc = new Scanner(System.in);
@@ -201,7 +245,10 @@ public class UiTexto {
                 } else {
                     jogo.realizarCloseCombatAttack();
                 }
-
+            } else if (estado instanceof AguardaRallyTroops) {
+                uiRallyTroops();
+            } else if (estado instanceof AguardaTunnelMovement) {
+                uiTunnelMovement();
             }
         }
     }

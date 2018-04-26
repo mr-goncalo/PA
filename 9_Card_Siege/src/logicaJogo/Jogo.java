@@ -62,6 +62,17 @@ public class Jogo implements Serializable {
         setEstado(estado.realizarCloseCombatAttack(track));
     }
 
+    public void realizarRallyTroops(int bonus) {
+        setEstado(estado.realizarRallyTroops(bonus));
+    }
+
+    public void realizarTunnelMovement(int mov) {
+        setEstado(estado.realizarTunnelMovement(mov));
+    }
+    public void realizarTunnelMovement() {
+        setEstado(estado.realizarTunnelMovement());
+    }
+
     // Outras funçºoes 
     public String toStringDados() {
         return jogo.toStringDados();
@@ -84,8 +95,9 @@ public class Jogo implements Serializable {
     }
 
     public int troopsIncloseCombatCount() {
-        return jogo.CountEnemiesInCloseCombat() ;
+        return jogo.CountEnemiesInCloseCombat();
     }
+
     public boolean troopsInCircleSpaces() {
         return jogo.troopsInCircleSpaces();
     }
@@ -121,7 +133,12 @@ public class Jogo implements Serializable {
     public int[] closeCombatUnits() {
         return jogo.getCloseCombatUnits();
     }
-    public int wallStrg(){
+
+    public int wallStrg() {
         return jogo.getPlayerWallStrength();
+    }
+
+    public int playerMorale() {
+        return jogo.getPlayerMorale();
     }
 }

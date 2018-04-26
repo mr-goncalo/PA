@@ -25,7 +25,11 @@ public class DadosJogo implements Constantes, Serializable {
     private boolean BattRamInCircleSpace;
     private boolean SiegeTowerInCircleSpace;
     private int[] closeCombatUnits;
+    private boolean troopsStartedInCastle;
+    private boolean troopsStartedInEnemyLines;
+    private boolean troopsEnteredInThisTurn;
 
+    private boolean troopsFreeMovement;
     //Variaveis de Bonus
     private int laddersBonus;
     private int battRamBonus;
@@ -57,6 +61,7 @@ public class DadosJogo implements Constantes, Serializable {
     Action boilingWaterAttack;
     Action closeCombatAttack;
     Action coupureAction;
+    Action rallyTroops;
 
     public DadosJogo() {
         jog = new Jogador("DEFAULT", this);
@@ -68,7 +73,7 @@ public class DadosJogo implements Constantes, Serializable {
         this.hasSiegeTower = true;
         this.hasLadderns = true;
         this.hasBattRam = true;
-        this.tunnel = new int[]{0, 0, 0, 0};
+        this.tunnel = new int[]{1, 0, 0, 0};
         this.unusedBoilingWater = true;
         this.LaddersInCircleSpace = false;
         this.BattRamInCircleSpace = false;
@@ -90,11 +95,16 @@ public class DadosJogo implements Constantes, Serializable {
         this.enemiesSiegeTowerLocation = 1;
         this.enemiesTrebuchetCount = 1;
         this.enemiesBattRamLocation = 4;
-
+        this.troopsStartedInCastle = true;
+        this.troopsStartedInEnemyLines = false;
+        this.troopsEnteredInThisTurn = false;
+        this.troopsFreeMovement = false;
         archersAttack = new ArchersAttack("Archers Attack", 1);
         boilingWaterAttack = new BoilingWaterAttack("Boiling Water Attack", 1);
         closeCombatAttack = new CloseCombatAttack("Close Combat Attack", 1);
         coupureAction = new Coupure("Coupure", 1);
+        rallyTroops = new RallyTroops("Rally Troops", 1);
+        this.log = "";
         deck = new ArrayList<>();
         originalDeck = new ArrayList<>();
 
@@ -173,7 +183,12 @@ public class DadosJogo implements Constantes, Serializable {
         s += (hasBattRam ? " Battering Ram: " + enemiesBattRamLocation : "");
         s += (hasSiegeTower ? " SiegeTower Location: " + enemiesSiegeTowerLocation : "");
         s += " Trebuchet Count: " + enemiesTrebuchetCount;
-
+        s += "\n      \t|--------------|";
+        s += "\nTunnel\t|" + (tunnel[0] == 1 ? " # " : "   ") + "|"
+                + (tunnel[1] == 1 ? " # " : "   ") + "|"
+                + (tunnel[2] == 1 ? " # " : "   ") + "|"
+                + (tunnel[3] == 1 ? " #" : "  ") + "|";
+        s += "\n      \t|--------------|";
         return s;
     }
 
@@ -185,12 +200,12 @@ public class DadosJogo implements Constantes, Serializable {
     }
 
     ///////////// funções do jogo 
-    public void EnemyLineCheck() {
-
+    public void EnemyLineCheck() { 
         // tunel array a primeira posição é o castelo a ultima é a linha do inimigo
         if (tunnel[tunnel.length - 1] == 1) {
             if (lancaDado() == 1) {
                 tunnel[tunnel.length - 1] = 0;
+                tunnel[0] = 1; 
                 suppliesCarried = 0;
                 playerMorale--;
             }
@@ -306,8 +321,13 @@ public class DadosJogo implements Constantes, Serializable {
         c.RemoveEventBonus(this);
         this.turnActionPoints = 0;
         this.unusedBoilingWater = true;
+        this.troopsEnteredInThisTurn = false;
+        if (troopsFreeMovement) {
+            tunnelFreeMovement();
+        }
         deck.remove(0);
         turno++;
+
     }
 
     public void EndOfDay() {
@@ -367,11 +387,79 @@ public class DadosJogo implements Constantes, Serializable {
         }
     }
 
+    public boolean troopsInsideTunnel() {
+        return tunnel[0] == 0 && tunnel[tunnel.length - 1] == 0;
+    }
+
     // funbçoes das açoes
     public void repairWall() {// coupure
         coupureAction.ApplyRules(this);
         this.turnActionPoints -= archersAttack.getCost();
-        
+
+    }
+
+    public void tunnelFreeMovement() {
+        int i;
+        for (i = 1; i < this.tunnel.length - 2; i++) {
+            if (tunnel[i] == 1) {
+                break;
+            }
+        }
+        if (isTroopsInCastle()) { // As tropas estão a ir do castelo para as linhas enimigas 
+            if (i == tunnel.length - 2) {
+                troopsStartedInCastle = false;
+                troopsStartedInEnemyLines = false;
+                tunnel[i] = 0;
+                tunnel[i + 1] = 1;
+            } else {
+                tunnel[i] = 0;
+                tunnel[i + 1] = 1;
+            }
+        } else if (troopsStartedInEnemyLines) {// das linhas enimigas para o castelo 
+            if (i == 1) {
+                troopsStartedInEnemyLines = false;
+                troopsStartedInCastle = false;
+                tunnel[i] = 0;
+                tunnel[i - 1] = 1;
+            } else {
+                tunnel[i] = 0;
+                tunnel[i - 1] = 1;
+            }
+        }
+    }
+
+    @SuppressWarnings("empty-statement")
+    public void tunnelFastMovement() {
+        int i;
+        for (i = 1; i < this.tunnel.length - 2 && tunnel[i] == 0; i++)
+             ;
+        if (troopsStartedInCastle) {
+            tunnel[i] = 0;
+            tunnel[tunnel.length - 1] = 1;
+        } else {
+            tunnel[i] = 0;
+            tunnel[0] = 1;
+        }
+
+    }
+
+    public void advanceTotunnel() {
+        if (tunnel[0] == 1) {
+            tunnel[0] = 0;
+            tunnel[1] = 1;
+            troopsStartedInEnemyLines = false; 
+            troopsStartedInCastle = true;
+        } else if (tunnel[tunnel.length - 1] == 1) {
+            tunnel[tunnel.length - 1] = 0;
+            tunnel[tunnel.length - 2] = 1;
+            troopsStartedInEnemyLines = true;
+            troopsStartedInCastle = false;
+
+        }
+    }
+
+    public void performRallyTroops(int bonus) {
+        rallyTroops.ApplyRules(this, bonus);
     }
 
     public boolean ArchersAttack(int pista) {
@@ -700,6 +788,38 @@ public class DadosJogo implements Constantes, Serializable {
 
     public void setSuppliesCarried(int suppliesCarried) {
         this.suppliesCarried = suppliesCarried;
+    }
+
+    public boolean isTroopsInCastle() {
+        return troopsStartedInCastle;
+    }
+
+    public void setTroopsInCastle(boolean troopsInCastle) {
+        this.troopsStartedInCastle = troopsInCastle;
+    }
+
+    public boolean isTroopsInEnemyLines() {
+        return troopsStartedInEnemyLines;
+    }
+
+    public void setTroopsInEnemyLines(boolean troopsInEnemyLines) {
+        this.troopsStartedInEnemyLines = troopsInEnemyLines;
+    }
+
+    public boolean isTroopsEnteredInThisTurn() {
+        return troopsEnteredInThisTurn;
+    }
+
+    public void setTroopsEnteredInThisTurn(boolean troopsEnteredInThisTurn) {
+        this.troopsEnteredInThisTurn = troopsEnteredInThisTurn;
+    }
+
+    public boolean isTroopsFreeMovement() {
+        return troopsFreeMovement;
+    }
+
+    public void setTroopsFreeMovement(boolean troopsFreeMovement) {
+        this.troopsFreeMovement = troopsFreeMovement;
     }
 
 }
