@@ -19,8 +19,9 @@ public class BoilingWaterAttack extends Action {
 
     @Override
     public int ApplyRules(DadosJogo j, int track) {
-        int rol = j.lancaDado();
-        // Caso role 1 a ação falha e baixa a morale by 1, caso haja um bonus que torne o role > 1 nao tira morale
+        //rolar dados + 1 do bónus do ataque mais o bónus do espaço de circulo 
+        int rol = j.lancaDado() + 1 + j.getCircleSpacesBonus();
+                // Caso role 1 a ação falha e baixa a morale by 1, caso haja um bonus que torne o role > 1 nao tira morale
 
         switch (track) {
             case LADDER_TRACK:
@@ -34,7 +35,7 @@ public class BoilingWaterAttack extends Action {
                         }
                         return 0;
                     }
-                    if (rol + j.getCircleSpacesBonus() + j.getLaddersBonus() > LADDER_STRG) {
+                    if (rol + j.getLaddersBonus() > LADDER_STRG) {
                         j.AdvanceLadders(-1);
                         j.setLog("Attack Successful!");
                         return 1;
@@ -46,7 +47,7 @@ public class BoilingWaterAttack extends Action {
                 return -1;
             case BATT_RAM_TRACK:
                 if (j.isBattRamInCircleSpace()) {
-                    if (rol + j.getCircleSpacesBonus() + j.getBattRamBonus() > BATT_RAM_STRG && j.isBattRamInCircleSpace()) {
+                    if (rol + j.getBattRamBonus() > BATT_RAM_STRG && j.isBattRamInCircleSpace()) {
                         j.AdvanceBattRam(-1);
                         j.setLog("Attack Successful!");
                         return 1;
@@ -58,7 +59,7 @@ public class BoilingWaterAttack extends Action {
                 return -1;
             case SIEGE_TOWER_TRACK:
                 if (j.isSiegeTowerInCircleSpace()) {
-                    if (rol + j.getCircleSpacesBonus() + j.getSiegeTowerBonus() > SIEGE_TOWER_STRG) {
+                    if (rol + j.getSiegeTowerBonus() > SIEGE_TOWER_STRG) {
                         j.AdvanceSiegeTower(-1);
                         j.setLog("Attack Successful!");
                         return 1;

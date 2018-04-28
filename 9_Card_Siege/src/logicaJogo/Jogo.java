@@ -7,7 +7,7 @@ public class Jogo implements Serializable {
     
     private DadosJogo jogo;
     private IEstado estado;
-    
+       
     public Jogo() {
         
         this.jogo = new DadosJogo();
@@ -26,6 +26,9 @@ public class Jogo implements Serializable {
         setEstado(estado.defineNomeJogador(nome));
     }
     
+    public void novoJogo() {
+        setEstado(estado.novoJogo());
+    }
     public void comecarJogo() {
         setEstado(estado.comecarJogo());
     }
@@ -145,5 +148,15 @@ public class Jogo implements Serializable {
     
     public int playerMorale() {
         return jogo.getPlayerMorale();
+    }
+    
+    public boolean checkTwoEnemiesCloseCombat()
+    {
+        return jogo.checkTwoEnemiesCloseCombat();
+    }
+    
+    public int getTurnActionPoints()
+    {
+        return jogo.getTurnActionPoints();
     }
 }

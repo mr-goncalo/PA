@@ -21,16 +21,20 @@ import logicaJogo.Jogo;
 -Evento Sabotage - done
 -Evento trocar 1 de morale ou 1 supply por 1 action point - done
 
-
--Recuar as tropas para o castelo
--Evento perder instantaneamente 
--Evento ganhar 
--Evento perder no fim de turno
- 
+jp - o que fiz / o que falta fazer/testar
+-Recuar as tropas para o castelo - done +/- : no endOfDay(recolher mantimentos e soma à var supplies no máx até 4) : 
+                                - checkar ainda poia meti as posiçoes do array a 0 à excepção da 1º, ver se é isso
+                                - ver também se o ponto 13 do enunciado está feito
+-Evento perder instantaneamente - função checkEnemiesCloseCombat , se retornar true no fim do turno é pq existem 2 enimigos da close combat e perde
+                                - fiz também código para obrigar a jogar quando existem 2 enimigos da close combat
+-Evento ganhar - ganha se passar os 3 dias: feito no endOfDay : novo estado FimJogo para poder começar novo jogo
+-Evento perder no fim de turno : descrito em cima + validação quando algum recurso no fim do turno é = 0
+                                - verificar também quando um terceiro elemento do inimigo vai para a close combat, assim perde logo e o array é só de 2 posições
 -falta o evento Bad weather
 
 -correção de bugs
--melhroar USER INTERFACE 
+-ter em cuidado valores negativos: ex.: Siege Tower Bonus: -1
+-melhorar USER INTERFACE 
 
 -testar 
 
@@ -40,18 +44,31 @@ public class UiTexto {
     private Jogo jogo;
     boolean primeiraJogada = true;
     boolean sair = false;
-
+    
+    
     public UiTexto(Jogo jogo) {
         this.jogo = jogo;
     }
 
-    void iuAguardaInicio() {
-
+    void iuFimJogo()
+    {
+        String s = new String();
+        s=jogo.getLog();
+        System.out.println("\n----------------------- "+s+" -----------------------\n");
+        jogo.novoJogo();
+        jogo = new Jogo();
+       // iuAguardaInicio();
+    }
+    
+    void iuAguardaInicio() 
+    {
+        
         System.out.println("1 - Novo Jogo\n2 - Sair");
         char c = ' ';
         Scanner sc = new Scanner(System.in);
         c = sc.next().charAt(0);
-        if (c == '1') {
+        if (c == '1') 
+        {
             System.out.println("Insira o nome do jogador: ");
             String nome = sc.next();
             jogo.defineNomeJogador(nome);
@@ -233,13 +250,25 @@ public class UiTexto {
             try {
                 c = sc.nextInt();
                 if (c == 10) {
-                    System.out.println("SAir");
+                    System.out.println("A sair do jogo");
+                    sair=true;
                     return;
                 } else if (c >= 0 && c <= 8) {
                     jogo.realizarAccao(c);
                     return;
-                } else if (c == 9) {
-                    jogo.mudarTurno();
+                } else if (c == 9) 
+                {
+                    //obrigar jogador a combater inimigos quando existe 2 na linha de combate
+                    if(jogo.checkTwoEnemiesCloseCombat() && jogo.getTurnActionPoints()>0)
+                    {
+                        String s = new String();
+                        s=jogo.getLog();
+                        System.out.println("\n----------------------- "+s+" -----------------------\n");
+                    }
+                    else// if(jogo.checkTwoEnemiesCloseCombat() && jogo.getTurnActionPoints()==0)
+                    {
+                       jogo.mudarTurno(); 
+                    }                  
                     return;
                 }
 
@@ -274,6 +303,9 @@ public class UiTexto {
                 uiTunnelMovement();
             }else if (estado instanceof AguardaExtraPoint) {
                 uiExtraPoints();
+            }
+            else if(estado instanceof FimJogo){
+                iuFimJogo();
             }
         }
     }

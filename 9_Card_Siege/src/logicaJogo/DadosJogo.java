@@ -94,10 +94,10 @@ public class DadosJogo implements Constantes, Serializable {
         this.playerSupplies = 4;
         this.playerMorale = 4;
         this.playerWallStrength = 4;
-        this.enemiesLaddersLocation = 1;
-        this.enemiesSiegeTowerLocation = 1;
+        this.enemiesLaddersLocation = 4;//1;
+        this.enemiesSiegeTowerLocation = 4;//1;
         this.enemiesTrebuchetCount = 1;
-        this.enemiesBattRamLocation = 4;
+        this.enemiesBattRamLocation = 4; 
         this.troopsStartedInCastle = true;
         this.troopsStartedInEnemyLines = false;
         this.troopsEnteredInThisTurn = false;
@@ -180,10 +180,10 @@ public class DadosJogo implements Constantes, Serializable {
         s += (siegeTowerBonus != 0 ? " Siege Tower Bonus: " + siegeTowerBonus : "");
         s += (closeCombatAttBonus != 0 ? " Close Combat Bonus: " + closeCombatAttBonus : "");
         s += (raidBonus != 0 ? " Raid Bonus" + raidBonus : "");
-        s += (coupureBonus != 0 ? "Coupure Bonus: " + coupureBonus : "");
+        s += (coupureBonus != 0 ? " Coupure Bonus: " + coupureBonus : "");
         s += (circleSpacesBonus != 0 ? " Circle Space Bonus: " + circleSpacesBonus : "");
 
-        s += "\nPlayer Status: morale: " + playerMorale + " Supplies: " + playerSupplies + " Wall strength: " + playerWallStrength;
+        s += "\nPlayer Status: Morale: " + playerMorale + " Supplies: " + playerSupplies + " Wall strength: " + playerWallStrength;
 
         s += "\nEnemies Locations:";
         s += (CountEnemiesInCloseCombat() > 0 ? " Enemies in Close Combat: " + CountEnemiesInCloseCombat() : "");
@@ -329,7 +329,7 @@ public class DadosJogo implements Constantes, Serializable {
         }
     }
 
-    public void AdvanceTurn() {
+    public boolean AdvanceTurn() {
         Card c = deck.get(0).get(dia - 1);
         c.RemoveEventBonus(this);
         this.turnActionPoints = 0;
@@ -341,11 +341,23 @@ public class DadosJogo implements Constantes, Serializable {
         extraPointUsed = false;
         deck.remove(0);
         turno++;
-
+        
+        if(closeCombatUnits[0]!=0 && closeCombatUnits[1]!=0)
+        {
+            log = "Dois enimigos chegaram à área de combate, perdeu o jogo!";
+            return true;
+        }  
+        if(playerMorale==0 || playerSupplies==0 || playerWallStrength==0)
+        {
+            log = "Um dos seus recursos chegou a zero, perdeu o jogo!";
+            return true;
+        }           
+        
+        return false;
     }
 
-    public void EndOfDay() {
-
+    public boolean EndOfDay() 
+    {
         //Copia o deck original para o de jogo e baralha 
         deck.addAll(originalDeck);
         Collections.shuffle(deck);
@@ -354,12 +366,40 @@ public class DadosJogo implements Constantes, Serializable {
         dia++;
         //reduz o supplies by 1 os aldeoes precisam de comer
         playerSupplies--;
-        turno = 0;
-        //os soldados no tunel voltam para o castelo. 
-        //Ainda por implementar
+        //reset ao turno
+        turno = 1;
+        
+        //se no fim do dia existerem soldados no tunel adicionarmos os mantimentos
+        if(tunnel[1]==1 || tunnel[2]==1)
+            playerSupplies=playerSupplies+getSuppliesCarried();
+        if(playerSupplies>4) //até no máximo 4
+            playerSupplies=4;
+        
+        
+        //os soldados no tunel voltam para o castelo
         //se os soldados estiveram na linha dos enimigos são capturados
-        //ainda por implementar
-        // se o dia == 4 é porque sobrevivemos os 3 dias e ganhamos os jogo
+        tunnel[0]=1;
+        tunnel[1]=0;
+        tunnel[2]=0;
+        tunnel[3]=0;
+        
+        if(dia==4) 
+        {
+            log = "Fim dos 3 dias, ganhou o jogo!";
+            return true;
+        }
+        return false; 
+    }
+    
+    public boolean checkTwoEnemiesCloseCombat()
+    {
+        //verificar se existem inimigos na linha de combate para obrigar o jogador a combater no caso de haver 2
+        if(closeCombatUnits[0]!=0 && closeCombatUnits[1]!=0)
+        {
+            log = "Existem dois enimigos na área de combate, deve combate-los!";
+            return true;
+        }
+        return false;
     }
 
     public void DrawCard() {
@@ -871,5 +911,4 @@ public class DadosJogo implements Constantes, Serializable {
     public void setExtraPointUsed(boolean extraPointUsed) {
         this.extraPointUsed = extraPointUsed;
     }
-
 }
