@@ -1,10 +1,13 @@
 package UiJogo;
 
+import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.util.Scanner;
 import logicaJogo.Estados.*;
 
 import logicaJogo.Estados.IEstado;
 import logicaJogo.DadosJogo;
+import logicaJogo.GereFicheirosJogo;
 import logicaJogo.Jogo;
 
 
@@ -23,7 +26,7 @@ import logicaJogo.Jogo;
 
 jp - o que fiz / o que falta fazer/testar
 -Recuar as tropas para o castelo - done +/- : no endOfDay(recolher mantimentos e soma à var supplies no máx até 4) : 
-                                - checkar ainda poia meti as posiçoes do array a 0 à excepção da 1º, ver se é isso
+                                - checkar ainda pois meti as posiçoes do array a 0 à excepção da 1º, ver se é isso
                                 - ver também se o ponto 13 do enunciado está feito
 -Evento perder instantaneamente - função checkEnemiesCloseCombat , se retornar true no fim do turno é pq existem 2 enimigos da close combat e perde
                                 - fiz também código para obrigar a jogar quando existem 2 enimigos da close combat
@@ -35,7 +38,7 @@ jp - o que fiz / o que falta fazer/testar
 -correção de bugs
 -ter em cuidado valores negativos: ex.: Siege Tower Bonus: -1
 -melhorar USER INTERFACE 
-
+-guardar/carregar jogo - funções na classe GereFicheiroJogo mas ainda não associadas ao jogo
 -testar 
 
  */
@@ -57,13 +60,12 @@ public class UiTexto {
         System.out.println("\n----------------------- "+s+" -----------------------\n");
         jogo.novoJogo();
         jogo = new Jogo();
-       // iuAguardaInicio();
     }
     
-    void iuAguardaInicio() 
+    void iuAguardaInicio() throws IOException, FileNotFoundException, ClassNotFoundException 
     {
         
-        System.out.println("1 - Novo Jogo\n2 - Sair");
+        System.out.println("1 - Novo Jogo\n2 - Carregar Jogo\n3 - Sair");
         char c = ' ';
         Scanner sc = new Scanner(System.in);
         c = sc.next().charAt(0);
@@ -76,7 +78,17 @@ public class UiTexto {
             jogo.comecarJogo();
             return;
         }
-        if (c == '2') {
+        if(c=='2')
+        {
+            //nao testado
+            System.out.println("Insira o nome do jogo a carregar: ");
+            String nomeFicheiro = sc.next();  
+            //pedir nome de jogador ou carregar também
+            jogo = GereFicheirosJogo.carregaJogo(nomeFicheiro);
+            jogo.comecarJogo();
+            return;
+        }
+        if (c == '3') {
             sair = true;
             return;
         }
@@ -244,12 +256,21 @@ public class UiTexto {
                     + (jogo.troopsIncloseCombat() ? " 3 - CloseCombat Attack" : ""));
             System.out.println((jogo.wallStrg() < 4 ? " 4 - Coupure\t" : "")
                     + (jogo.playerMorale() < 4 ? "5 - Rally Troops\t" : "") + " 6 - Tunnel Movement\t 7 - Supply Raid");
-            System.out.println("8 - Sabotage\t 9 - Mudar de Turno\t 10 - Sair");
+            System.out.println("8 - Sabotage\t 9 - Mudar de Turno\t 10 - Guardar\t 11 - Sair ");
 
             Scanner sc = new Scanner(System.in);
             try {
                 c = sc.nextInt();
-                if (c == 10) {
+                if(c==10)
+                {
+                    //falta testar
+                    System.out.println("Insira o nome do jogo a guardar: ");
+                    String nomeFicheiro = sc.next();
+                    System.out.println("A guardar jogo");
+                    GereFicheirosJogo.guardaJogo(jogo, nomeFicheiro);
+                    return;
+                }
+                if (c == 11) {
                     System.out.println("A sair do jogo");
                     sair=true;
                     return;
@@ -278,7 +299,7 @@ public class UiTexto {
         }
     }
 
-    void corre() {
+    void corre() throws IOException, FileNotFoundException, ClassNotFoundException {
         while (!sair) {
             IEstado estado = jogo.getEstado();
             if (estado instanceof AguardaInicio) {
