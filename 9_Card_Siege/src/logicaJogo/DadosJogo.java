@@ -344,12 +344,12 @@ public class DadosJogo implements Constantes, Serializable {
         
         if(closeCombatUnits[0]!=0 && closeCombatUnits[1]!=0)
         {
-            log = "Dois enimigos chegaram à área de combate, perdeu o jogo!";
+            log = "Dois enimigos chegaram à área de combate! O jogador "+jog.getNomeJogador()+" perdeu o jogo!";
             return true;
         }  
         if(playerMorale==0 || playerSupplies==0 || playerWallStrength==0)
         {
-            log = "Um dos seus recursos chegou a zero, perdeu o jogo!";
+            log = "Um dos seus recursos chegou a zero! O jogador "+jog.getNomeJogador()+" perdeu o jogo!";
             return true;
         }           
         
@@ -385,7 +385,7 @@ public class DadosJogo implements Constantes, Serializable {
         
         if(dia==4) 
         {
-            log = "Fim dos 3 dias, ganhou o jogo!";
+            log = "Fim dos 3 dias! O jogador "+jog.getNomeJogador()+" ganhou o jogo!";
             return true;
         }
         return false; 

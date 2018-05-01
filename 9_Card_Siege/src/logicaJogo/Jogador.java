@@ -21,5 +21,10 @@ public class Jogador implements Constantes, Serializable
         this.nome = nome;
     }
     
+    public String getNomeJogador()
+    {
+        return nome;
+    }
+    
     
 }

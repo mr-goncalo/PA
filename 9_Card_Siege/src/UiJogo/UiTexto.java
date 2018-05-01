@@ -25,6 +25,7 @@ import logicaJogo.Jogo;
 -Evento trocar 1 de morale ou 1 supply por 1 action point - done
 
 jp - o que fiz / o que falta fazer/testar
+-guardar/carregar jogo - done(pelo menos parece)
 -Recuar as tropas para o castelo - done +/- : no endOfDay(recolher mantimentos e soma à var supplies no máx até 4) : 
                                 - checkar ainda pois meti as posiçoes do array a 0 à excepção da 1º, ver se é isso
                                 - ver também se o ponto 13 do enunciado está feito
@@ -38,7 +39,6 @@ jp - o que fiz / o que falta fazer/testar
 -correção de bugs
 -ter em cuidado valores negativos: ex.: Siege Tower Bonus: -1
 -melhorar USER INTERFACE 
--guardar/carregar jogo - funções na classe GereFicheiroJogo mas ainda não associadas ao jogo
 -testar 
 
  */
@@ -256,7 +256,7 @@ public class UiTexto {
                     + (jogo.troopsIncloseCombat() ? " 3 - CloseCombat Attack" : ""));
             System.out.println((jogo.wallStrg() < 4 ? " 4 - Coupure\t" : "")
                     + (jogo.playerMorale() < 4 ? "5 - Rally Troops\t" : "") + " 6 - Tunnel Movement\t 7 - Supply Raid");
-            System.out.println("8 - Sabotage\t 9 - Mudar de Turno\t 10 - Guardar\t 11 - Sair ");
+            System.out.println("8 - Sabotage\t 9 - Mudar de Turno\t 10 - Guardar\t 11 - Menu\t 12 - Sair ");
 
             Scanner sc = new Scanner(System.in);
             try {
@@ -270,7 +270,13 @@ public class UiTexto {
                     GereFicheirosJogo.guardaJogo(jogo, nomeFicheiro);
                     return;
                 }
-                if (c == 11) {
+                if(c==11)
+                {
+                    jogo.novoJogo();
+                    jogo = new Jogo();
+                    return;
+                }
+                if (c == 12) {
                     System.out.println("A sair do jogo");
                     sair=true;
                     return;
@@ -286,7 +292,7 @@ public class UiTexto {
                         s=jogo.getLog();
                         System.out.println("\n----------------------- "+s+" -----------------------\n");
                     }
-                    else// if(jogo.checkTwoEnemiesCloseCombat() && jogo.getTurnActionPoints()==0)
+                    else
                     {
                        jogo.mudarTurno(); 
                     }                  
