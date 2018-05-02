@@ -26,7 +26,7 @@ public class Sabotage extends Action {
                 j.setLog("Sabotage Sucessfull!");
                 return 1;
             } else {
-                j.setLog("Sabotage Failed!");
+                j.setLog("You Rolled " + roll + " Attack failed!");
                 return 1;
             }
         }

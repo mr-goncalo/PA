@@ -11,25 +11,21 @@ import logicaJogo.DadosJogo;
  *
  * @author eu
  */
-public class TrebuchetAttack extends  Card{
+public class TrebuchetAttack extends Card {
 
     public TrebuchetAttack(String eventName, String eventDesc, int actionPoint) {
         super(eventName, eventDesc, actionPoint);
     }
-    
-    
 
     @Override
-    public void ApplyEvent(DadosJogo j) { 
-        if(j.getEnemiesTrebuchetCount()  == 3)
+    public void ApplyEvent(DadosJogo j) {
+        if (j.getEnemiesTrebuchetCount() == 3) {
             j.setPlayerWallStrength(j.getPlayerWallStrength() - 2);
-        else if (j.getEnemiesTrebuchetCount()  == 2)
+        } else if (j.getEnemiesTrebuchetCount() == 2) {
             j.setPlayerWallStrength(j.getPlayerWallStrength() - 1);
-        else{
-            //Rolar o dado
-            //if(j.rollDice > 3)
-            j.setPlayerWallStrength(j.getPlayerWallStrength() -1);
+        } else if (j.getEnemiesTrebuchetCount() == 1 && j.lancaDado() > 3) {
+            j.setPlayerWallStrength(j.getPlayerWallStrength() - 1);
         }
     }
- 
+
 }

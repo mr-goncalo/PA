@@ -20,19 +20,19 @@ public class RallyTroops extends Action {
     @Override
     public int ApplyRules(DadosJogo j, int bonus) {
 
-        int roll = j.lancaDado();
+        int roll = j.lancaDado()+ j.getMoraleBonus();
 
         if (bonus == 1) {
 
             j.setPlayerSupplies(j.getPlayerSupplies() - 1);
             roll += 1;
         }
-        if (roll + j.getMoraleBonus() > 4) {
+        if (roll  > 4) {
             j.setPlayerMorale(j.getPlayerMorale() + 1);
             j.setLog("Morale Raised!");
             return 0;
         }
-        j.setLog("Morale Raise Failed!");
+        j.setLog("You Rolled " + roll + " Attack failed!");
         return 0;
     }
 

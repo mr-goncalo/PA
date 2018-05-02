@@ -36,7 +36,7 @@ public class SupplyRaid extends Action {
             j.EnemyLineCheck();
             return 1;
         } else {
-            j.setLog("Supply Raid failed!"); 
+            j.setLog("You Rolled " + roll + " Attack failed!");
             return 1;
         }
     }

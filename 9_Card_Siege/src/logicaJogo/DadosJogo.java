@@ -30,7 +30,7 @@ public class DadosJogo implements Constantes, Serializable {
     private boolean troopsEnteredInThisTurn;
     private boolean extraPointUsed;
 
-    private boolean troopsFreeMovement;
+    private boolean usedFreeMovement;
     //Variaveis de Bonus
     private int laddersBonus;
     private int battRamBonus;
@@ -96,12 +96,12 @@ public class DadosJogo implements Constantes, Serializable {
         this.playerWallStrength = 4;
         this.enemiesLaddersLocation = 4;//1;
         this.enemiesSiegeTowerLocation = 4;//1;
-        this.enemiesTrebuchetCount = 1;
-        this.enemiesBattRamLocation = 4; 
+        this.enemiesTrebuchetCount = 3;
+        this.enemiesBattRamLocation = 4;
         this.troopsStartedInCastle = true;
         this.troopsStartedInEnemyLines = false;
         this.troopsEnteredInThisTurn = false;
-        this.troopsFreeMovement = false;
+        this.usedFreeMovement = false;
 
         extraPointUsed = false;
 
@@ -335,29 +335,25 @@ public class DadosJogo implements Constantes, Serializable {
         this.turnActionPoints = 0;
         this.unusedBoilingWater = true;
         this.troopsEnteredInThisTurn = false;
-        if (troopsFreeMovement) {
-            tunnelFreeMovement();
-        }
+
+        usedFreeMovement = false;
         extraPointUsed = false;
         deck.remove(0);
         turno++;
-        
-        if(closeCombatUnits[0]!=0 && closeCombatUnits[1]!=0)
-        {
-            log = "Dois enimigos chegaram à área de combate! O jogador "+jog.getNomeJogador()+" perdeu o jogo!";
+
+        if (closeCombatUnits[0] != 0 && closeCombatUnits[1] != 0) {
+            log = "Dois enimigos chegaram à área de combate! O jogador " + jog.getNomeJogador() + " perdeu o jogo!";
             return true;
-        }  
-        if(playerMorale==0 || playerSupplies==0 || playerWallStrength==0)
-        {
-            log = "Um dos seus recursos chegou a zero! O jogador "+jog.getNomeJogador()+" perdeu o jogo!";
+        }
+        if (playerMorale == 0 || playerSupplies == 0 || playerWallStrength == 0) {
+            log = "Um dos seus recursos chegou a zero! O jogador " + jog.getNomeJogador() + " perdeu o jogo!";
             return true;
-        }           
-        
+        }
+
         return false;
     }
 
-    public boolean EndOfDay() 
-    {
+    public boolean EndOfDay() {
         //Copia o deck original para o de jogo e baralha 
         deck.addAll(originalDeck);
         Collections.shuffle(deck);
@@ -368,34 +364,33 @@ public class DadosJogo implements Constantes, Serializable {
         playerSupplies--;
         //reset ao turno
         turno = 1;
-        
+
         //se no fim do dia existerem soldados no tunel adicionarmos os mantimentos
-        if(tunnel[1]==1 || tunnel[2]==1)
-            playerSupplies=playerSupplies+getSuppliesCarried();
-        if(playerSupplies>4) //até no máximo 4
-            playerSupplies=4;
-        
-        
+        if (tunnel[1] == 1 || tunnel[2] == 1) {
+            playerSupplies = playerSupplies + getSuppliesCarried();
+        }
+        if (playerSupplies > 4) //até no máximo 4
+        {
+            playerSupplies = 4;
+        }
+
         //os soldados no tunel voltam para o castelo
         //se os soldados estiveram na linha dos enimigos são capturados
-        tunnel[0]=1;
-        tunnel[1]=0;
-        tunnel[2]=0;
-        tunnel[3]=0;
-        
-        if(dia==4) 
-        {
-            log = "Fim dos 3 dias! O jogador "+jog.getNomeJogador()+" ganhou o jogo!";
+        tunnel[0] = 1;
+        tunnel[1] = 0;
+        tunnel[2] = 0;
+        tunnel[3] = 0;
+
+        if (dia == 4) {
+            log = "Fim dos 3 dias! O jogador " + jog.getNomeJogador() + " ganhou o jogo!";
             return true;
         }
-        return false; 
+        return false;
     }
-    
-    public boolean checkTwoEnemiesCloseCombat()
-    {
+
+    public boolean checkTwoEnemiesCloseCombat() {
         //verificar se existem inimigos na linha de combate para obrigar o jogador a combater no caso de haver 2
-        if(closeCombatUnits[0]!=0 && closeCombatUnits[1]!=0)
-        {
+        if (closeCombatUnits[0] != 0 && closeCombatUnits[1] != 0) {
             log = "Existem dois enimigos na área de combate, deve combate-los!";
             return true;
         }
@@ -475,6 +470,11 @@ public class DadosJogo implements Constantes, Serializable {
                 troopsStartedInCastle = false;
                 tunnel[i] = 0;
                 tunnel[i - 1] = 1;
+                playerSupplies += suppliesCarried;
+                if (playerSupplies > 4) {
+                    playerSupplies = 4;
+                }
+                suppliesCarried = 0;
             } else {
                 tunnel[i] = 0;
                 tunnel[i - 1] = 1;
@@ -503,6 +503,11 @@ public class DadosJogo implements Constantes, Serializable {
             tunnel[i] = 0;
             tunnel[tunnel.length - 1] = 1;
         } else {
+            playerSupplies += suppliesCarried;
+            if (playerSupplies > 4) {
+                playerSupplies = 4;
+            }
+            suppliesCarried = 0;
             tunnel[i] = 0;
             tunnel[0] = 1;
         }
@@ -880,12 +885,12 @@ public class DadosJogo implements Constantes, Serializable {
         this.troopsEnteredInThisTurn = troopsEnteredInThisTurn;
     }
 
-    public boolean isTroopsFreeMovement() {
-        return troopsFreeMovement;
+    public boolean isUsedFreeMovement() {
+        return usedFreeMovement;
     }
 
-    public void setTroopsFreeMovement(boolean troopsFreeMovement) {
-        this.troopsFreeMovement = troopsFreeMovement;
+    public void setUsedFreeMovement(boolean usedFreeMovement) {
+        this.usedFreeMovement = usedFreeMovement;
     }
 
     public Action getSupplyRaid() {

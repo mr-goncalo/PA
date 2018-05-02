@@ -25,7 +25,7 @@ public class Coupure extends Action {
             j.setLog("Attack Successful!");
             return 1;
         }
-        j.setLog("Attack failed!");
+        j.setLog("You Rolled " + roll + " Attack failed!");
         return 0;
     }
 

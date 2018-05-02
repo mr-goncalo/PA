@@ -21,50 +21,56 @@ public class BoilingWaterAttack extends Action {
     public int ApplyRules(DadosJogo j, int track) {
         //rolar dados + 1 do bónus do ataque mais o bónus do espaço de circulo 
         int rol = j.lancaDado() + 1 + j.getCircleSpacesBonus();
-                // Caso role 1 a ação falha e baixa a morale by 1, caso haja um bonus que torne o role > 1 nao tira morale
+        // Caso role 1 a ação falha e baixa a morale by 1, caso haja um bonus que torne o role > 1 nao tira morale
 
         switch (track) {
             case LADDER_TRACK:
                 if (j.isLaddersInCircleSpace()) {
-                    if (rol == 1) { // Caso role 1 a ação falha e baixa a morale by 1, caso haja um bonus que torne o role > 1 nao tira morale
-                        if (rol + j.getLaddersBonus() < 1) {
-                            j.setLog("Bad luck you rolled 1, morale reduced by 1");
-                            j.setPlayerMorale(j.getPlayerMorale() - 1);
-                        } else {
-                            j.setLog("Bad luck you rolled 1, but your morale is intact");
-                        }
+                    if (rol + j.getLaddersBonus() == 1) { // Caso role 1 a ação falha e baixa a morale by 1, caso haja um bonus que torne o role > 1 nao tira morale
+
+                        j.setLog("Bad luck you rolled 1, morale reduced by 1");
+
                         return 0;
-                    }
-                    if (rol + j.getLaddersBonus() > LADDER_STRG) {
+                    } else if (rol + j.getLaddersBonus() > LADDER_STRG) {
                         j.AdvanceLadders(-1);
                         j.setLog("Attack Successful!");
                         return 1;
                     }
-                    j.setLog("Attack failed!");
+                     j.setLog("You Rolled " + rol + " Attack failed!");
                     return 0;
                 }
                 j.setLog("Track selected not in circle space");
                 return -1;
             case BATT_RAM_TRACK:
                 if (j.isBattRamInCircleSpace()) {
-                    if (rol + j.getBattRamBonus() > BATT_RAM_STRG && j.isBattRamInCircleSpace()) {
+                    if (rol + j.getBattRamBonus() == 1) { // Caso role 1 a ação falha e baixa a morale by 1, caso haja um bonus que torne o role > 1 nao tira morale
+
+                        j.setLog("Bad luck you rolled 1, morale reduced by 1");
+                        j.setPlayerMorale(j.getPlayerMorale() - 1);
+                        return 0;
+                    } else if (rol + j.getBattRamBonus() > BATT_RAM_STRG) {
                         j.AdvanceBattRam(-1);
                         j.setLog("Attack Successful!");
                         return 1;
                     }
-                    j.setLog("Attack failed!");
+                    j.setLog("You Rolled " + rol + " Attack failed!");
                     return 0;
                 }
                 j.setLog("Track selected not valid");
                 return -1;
             case SIEGE_TOWER_TRACK:
                 if (j.isSiegeTowerInCircleSpace()) {
-                    if (rol + j.getSiegeTowerBonus() > SIEGE_TOWER_STRG) {
+                    if (rol + j.getSiegeTowerBonus() == 1) { // Caso role 1 a ação falha e baixa a morale by 1, caso haja um bonus que torne o role > 1 nao tira morale
+
+                        j.setLog("Bad luck you rolled 1, morale reduced by 1");
+                        j.setPlayerMorale(j.getPlayerMorale() - 1);
+                        return 0;
+                    } else if (rol + j.getSiegeTowerBonus() > SIEGE_TOWER_STRG) {
                         j.AdvanceSiegeTower(-1);
                         j.setLog("Attack Successful!");
                         return 1;
                     }
-                    j.setLog("Attack failed!");
+                     j.setLog("You Rolled " + rol + " Attack failed!");
                     return 0;
                 }
                 j.setLog("Track selected not valid");

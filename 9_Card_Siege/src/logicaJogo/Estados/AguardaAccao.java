@@ -11,34 +11,46 @@ public class AguardaAccao extends EstadoAdapter implements IEstado {
     @Override
     public IEstado realizarAccao(int action) {
         //ter em cuidado o numero de accoes permitidas por turno (1 a 3)
-        if (getJogo().getTurnActionPoints() > 0) {
-            switch (action) {
-                case 0:// Extra action point
-                    if (!getJogo().isExtraPointUsed()) {
-                        return new AguardaExtraPoint(getJogo());
-                    }
-                    getJogo().setLog("Extra point already used!");
-                    return this;
-                case 1://Archers attack
+
+        switch (action) {
+            case 0:// Extra action point
+                if (!getJogo().isExtraPointUsed()) {
+                    return new AguardaExtraPoint(getJogo());
+                }
+                getJogo().setLog("Extra point already used!");
+                return this;
+            case 1://Archers attack
+                if (getJogo().getTurnActionPoints() > 0) {
                     return new AguardaArchersAttack(getJogo());
-                case 2://Boiling water attack (!APENAS 1 VEZ POR TURNO!)
-                    // a variavel unusedBoilingWater é que vai controlar isso
+                }
+                return this;
+            case 2://Boiling water attack (!APENAS 1 VEZ POR TURNO!)
+                // a variavel unusedBoilingWater é que vai controlar isso
+                if (getJogo().getTurnActionPoints() > 0) {
                     if (getJogo().isUnusedBoilingWater() && getJogo().troopsInCircleSpaces()) {
                         getJogo().setUnusedBoilingWater(false); //action points a 0 para não ser possivel fazer mais vezes no turno
                         return new AguardaBoilingWaterAttack(getJogo());
                     }
-                    return this;
-                case 3://Close Combat attack
+                }
+                return this;
+            case 3://Close Combat attack
+                if (getJogo().getTurnActionPoints() > 0) {
                     if (getJogo().CountEnemiesInCloseCombat() != 0) {
                         return new AguardaCloseCombatAttack(getJogo());
                     }
-                    return this;
-                case 4://coupure
+                }
+                return this;
+            case 4://coupure
+                if (getJogo().getTurnActionPoints() > 0) {
+
                     if (getJogo().getPlayerWallStrength() < 4) {
                         return realizarCoupure();
                     }
-                    return this;
-                case 5://rally Troops
+                }
+                return this;
+            case 5://rally Troops
+                if (getJogo().getTurnActionPoints() > 0) {
+
                     if (getJogo().getPlayerMorale() < 4) {
                         return new AguardaRallyTroops(getJogo());
 
@@ -46,13 +58,21 @@ public class AguardaAccao extends EstadoAdapter implements IEstado {
                         getJogo().setLog("Invalid Option!");
                         return this;
                     }
-                case 6://Tunnel movement
-                    if (!getJogo().troopsInsideTunnel()) {
+                }
+                return this;
+
+            case 6://Tunnel movement
+                if (!getJogo().troopsInsideTunnel()) {
+                    if (getJogo().getTurnActionPoints() > 0) {
                         return new AguardaTunnelMovement(getJogo()).realizarTunnelMovement();
-                    } else {
-                        return new AguardaTunnelMovement(getJogo());
                     }
-                case 7://supply raid
+                    return this;
+                } else {
+                    return new AguardaTunnelMovement(getJogo());
+                }
+            case 7://supply raid
+                if (getJogo().getTurnActionPoints() > 0) {
+
                     if (getJogo().troopsInEnemyLines()) {
                         if (getJogo().getSupplyRaid().ApplyRules(getJogo()) == 1) {
                             getJogo().setTurnActionPoints(getJogo().getTurnActionPoints() - getJogo().getSupplyRaid().getCost());
@@ -60,21 +80,22 @@ public class AguardaAccao extends EstadoAdapter implements IEstado {
 
                         return this;
                     }
-                case 8://Sabotage
+                }
+                return this;
+            case 8://Sabotage
+                if (getJogo().getTurnActionPoints() > 0) {
                     if (getJogo().troopsInEnemyLines()) {
                         if (getJogo().getSabotage().ApplyRules(getJogo()) == 1) {
                             getJogo().setTurnActionPoints(getJogo().getTurnActionPoints() - getJogo().getSabotage().getCost());
                         }
                         return this;
                     }
-                    getJogo().setLog("Invalid Option!");
-                    return this;
-                default:
-                    getJogo().setLog("Invalid Option!");
-                    return this;
-            }
-        }
-        return this;
-    }
+                }
+                return this;
+            default:
+                getJogo().setLog("Invalid Option!");
+                return this;
 
+        }
+    }
 }

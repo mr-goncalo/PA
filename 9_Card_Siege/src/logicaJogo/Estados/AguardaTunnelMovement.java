@@ -18,7 +18,7 @@ public class AguardaTunnelMovement extends EstadoAdapter {
     }
 
     @Override
-    public IEstado realizarTunnelMovement() {
+    public IEstado realizarTunnelMovement() { 
         getJogo().advanceTotunnel();
         getJogo().setTurnActionPoints(getJogo().getTurnActionPoints() - 1); 
         getJogo().setTroopsEnteredInThisTurn(true);
@@ -27,12 +27,14 @@ public class AguardaTunnelMovement extends EstadoAdapter {
 
     @Override
     public IEstado realizarTunnelMovement(int move) {
+        
         if (move == 1)//Free movement
         {
-            if (!getJogo().isTroopsEnteredInThisTurn()) {
-                getJogo().setTroopsFreeMovement(true);
+            if (!getJogo().isTroopsEnteredInThisTurn() && !getJogo().isUsedFreeMovement()) {
+                getJogo().tunnelFreeMovement();
+                getJogo().setUsedFreeMovement(true);
             } else {
-                getJogo().setLog("You can use thuis movement in the same turn");
+                getJogo().setLog("You can use this in the same turn that troops entered in tunnel,or more than once");
                 return this;
             }
         } else if (move == 2) {//fast movement

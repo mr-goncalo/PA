@@ -6,7 +6,6 @@ import java.util.Scanner;
 import logicaJogo.Estados.*;
 
 import logicaJogo.Estados.IEstado;
-import logicaJogo.DadosJogo;
 import logicaJogo.GereFicheirosJogo;
 import logicaJogo.Jogo;
 
@@ -47,30 +46,26 @@ public class UiTexto {
     private Jogo jogo;
     boolean primeiraJogada = true;
     boolean sair = false;
-    
-    
+
     public UiTexto(Jogo jogo) {
         this.jogo = jogo;
     }
 
-    void iuFimJogo()
-    {
+    void iuFimJogo() {
         String s = new String();
-        s=jogo.getLog();
-        System.out.println("\n----------------------- "+s+" -----------------------\n");
+        s = jogo.getLog();
+        System.out.println("\n----------------------- " + s + " -----------------------\n");
         jogo.novoJogo();
         jogo = new Jogo();
     }
-    
-    void iuAguardaInicio() throws IOException, FileNotFoundException, ClassNotFoundException 
-    {
-        
+
+    void iuAguardaInicio() throws IOException, FileNotFoundException, ClassNotFoundException {
+
         System.out.println("1 - Novo Jogo\n2 - Carregar Jogo\n3 - Sair");
         char c = ' ';
         Scanner sc = new Scanner(System.in);
         c = sc.next().charAt(0);
-        if (c == '1') 
-        {
+        if (c == '1') {
             System.out.println("Insira o nome do jogador: ");
             String nome = sc.next();
             jogo.defineNomeJogador(nome);
@@ -78,11 +73,10 @@ public class UiTexto {
             jogo.comecarJogo();
             return;
         }
-        if(c=='2')
-        {
+        if (c == '2') {
             //nao testado
             System.out.println("Insira o nome do jogo a carregar: ");
-            String nomeFicheiro = sc.next();  
+            String nomeFicheiro = sc.next();
             //pedir nome de jogador ou carregar também
             jogo = GereFicheirosJogo.carregaJogo(nomeFicheiro);
             jogo.comecarJogo();
@@ -261,8 +255,7 @@ public class UiTexto {
             Scanner sc = new Scanner(System.in);
             try {
                 c = sc.nextInt();
-                if(c==10)
-                {
+                if (c == 10) {
                     //falta testar
                     System.out.println("Insira o nome do jogo a guardar: ");
                     String nomeFicheiro = sc.next();
@@ -270,32 +263,27 @@ public class UiTexto {
                     GereFicheirosJogo.guardaJogo(jogo, nomeFicheiro);
                     return;
                 }
-                if(c==11)
-                {
+                if (c == 11) {
                     jogo.novoJogo();
                     jogo = new Jogo();
                     return;
                 }
                 if (c == 12) {
                     System.out.println("A sair do jogo");
-                    sair=true;
+                    sair = true;
                     return;
                 } else if (c >= 0 && c <= 8) {
                     jogo.realizarAccao(c);
                     return;
-                } else if (c == 9) 
-                {
+                } else if (c == 9) {
                     //obrigar jogador a combater inimigos quando existe 2 na linha de combate
-                    if(jogo.checkTwoEnemiesCloseCombat() && jogo.getTurnActionPoints()>0)
-                    {
+                    if (jogo.checkTwoEnemiesCloseCombat() && jogo.getTurnActionPoints() > 0) {
                         String s = new String();
-                        s=jogo.getLog();
-                        System.out.println("\n----------------------- "+s+" -----------------------\n");
+                        s = jogo.getLog();
+                        System.out.println("\n----------------------- " + s + " -----------------------\n");
+                    } else {
+                        jogo.mudarTurno();
                     }
-                    else
-                    {
-                       jogo.mudarTurno(); 
-                    }                  
                     return;
                 }
 
@@ -328,10 +316,9 @@ public class UiTexto {
                 uiRallyTroops();
             } else if (estado instanceof AguardaTunnelMovement) {
                 uiTunnelMovement();
-            }else if (estado instanceof AguardaExtraPoint) {
+            } else if (estado instanceof AguardaExtraPoint) {
                 uiExtraPoints();
-            }
-            else if(estado instanceof FimJogo){
+            } else if (estado instanceof FimJogo) {
                 iuFimJogo();
             }
         }

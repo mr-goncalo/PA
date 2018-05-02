@@ -22,6 +22,7 @@ public class AguardaRallyTroops extends EstadoAdapter implements IEstado {
         if (bonus == 1 || bonus == 2) {
             if (getJogo().getPlayerSupplies() > 0) {
                 getJogo().performRallyTroops(bonus);
+                getJogo().setTurnActionPoints(getJogo().getTurnActionPoints());
                 return new AguardaAccao(getJogo());
             } else { 
                 getJogo().setLog("Not enought supplies!");
