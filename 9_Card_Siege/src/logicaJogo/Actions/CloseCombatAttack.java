@@ -19,10 +19,10 @@ public class CloseCombatAttack extends Action implements logicaJogo.Constantes {
 
     @Override
     public int ApplyRules(DadosJogo j, int track) {
-        int rol = j.lancaDado();
+        int rol = j.lancaDado() + j.getCloseCombatAttBonus();
         int[] units = j.getCloseCombatUnits();
         if (track == 0 || track == 1) {
-            if (rol + j.getCloseCombatAttBonus() > CLOSE_COMBAT_STRG) {
+            if (rol > CLOSE_COMBAT_STRG) {
                 if (units[track] == LADDERSID) { // procura qual é a que está a ocupar 
                     j.setHasLadderns(true); //volta a por a flag hasLadders a true para saber que elas voltaram ao tabuleiro
                     j.AdvanceLadders(-1);// recua 1 espaço
@@ -63,9 +63,9 @@ public class CloseCombatAttack extends Action implements logicaJogo.Constantes {
             }
         }
 
-        int rol = j.lancaDado();
+        int rol = j.lancaDado() + j.getCloseCombatAttBonus();
 
-        if (rol + j.getCloseCombatAttBonus() > CLOSE_COMBAT_STRG) {
+        if (rol > CLOSE_COMBAT_STRG) {
             if (j.getCloseCombatUnits()[i] == LADDERSID) {
                 j.setHasLadderns(true);
                 j.AdvanceLadders(-1);

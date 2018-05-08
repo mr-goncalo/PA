@@ -31,11 +31,8 @@ public abstract class EstadoAdapter implements IEstado, Serializable {
     }
 
     @Override
-    public IEstado mudarTurno() 
-    {
-        if(getJogo().AdvanceTurn())
-            return new FimJogo(getJogo());
-        return new AguardaCarta(jogo);
+    public IEstado mudarTurno() {
+        return this;
     }
 
     @Override
@@ -44,7 +41,47 @@ public abstract class EstadoAdapter implements IEstado, Serializable {
     }
 
     @Override
-    public IEstado realizarAccao(int action) {
+    public IEstado realizarAccaoExtraPoint() {
+        return this;
+    }
+
+    @Override
+    public IEstado realizarAccaoArchersAtt() {
+        return this;
+    }
+
+    @Override
+    public IEstado realizarAccaoBoilWater() {
+        return this;
+    }
+
+    @Override
+    public IEstado realizarAccaoCloseCombat() {
+        return this;
+    }
+
+    @Override
+    public IEstado realizarAccaoCoupure() {
+        return this;
+    }
+
+    @Override
+    public IEstado realizarAccaoRallyTroops() {
+        return this;
+    }
+
+    @Override
+    public IEstado realizarAccaoSabotage() {
+        return this;
+    }
+
+    @Override
+    public IEstado realizarAccaoSupplyRaid() {
+        return this;
+    }
+
+    @Override
+    public IEstado realizarAccaoTunnelMov() {
         return this;
     }
 
@@ -55,6 +92,11 @@ public abstract class EstadoAdapter implements IEstado, Serializable {
 
     @Override
     public IEstado realizarArchersAttack(int pista) {
+        return this;
+    }
+
+    @Override
+    public IEstado realizarArchersAtt() {
         return this;
     }
 
@@ -80,24 +122,23 @@ public abstract class EstadoAdapter implements IEstado, Serializable {
 
     @Override
     public IEstado realizarCoupure() {
-        getJogo().repairWall();
-        return new AguardaAccao(jogo);
+        return this;
     }
 
     @Override
     public IEstado realizarRallyTroops(int bonus) {
         return this;
-     }
+    }
 
     @Override
     public IEstado realizarTunnelMovement() {
         return this;
-     }
+    }
 
     @Override
     public IEstado realizarTunnelMovement(int move) {
         return this;
-     }
+    }
 
     @Override
     public IEstado realizarExtraPoint(int c) {

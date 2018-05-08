@@ -33,8 +33,11 @@ jp - o que fiz / o que falta fazer/testar
 -Evento ganhar - ganha se passar os 3 dias: feito no endOfDay : novo estado FimJogo para poder começar novo jogo
 -Evento perder no fim de turno : descrito em cima + validação quando algum recurso no fim do turno é = 0
                                 - verificar também quando um terceiro elemento do inimigo vai para a close combat, assim perde logo e o array é só de 2 posições
--falta o evento Bad weather
+-falta o evento Bad weather - Done
 
+
+Falta:
+-onde por o perder automaticamente, ele já está preparado com uma flag no Dados de jogo "perdeu" chamada atravez do metodo .isPerdeu()
 -correção de bugs
 -ter em cuidado valores negativos: ex.: Siege Tower Bonus: -1
 -melhorar USER INTERFACE 
@@ -245,46 +248,80 @@ public class UiTexto {
         int c = -1;
         while (true) {
             baseUi();
-            System.out.println("0 - Extra Action point\t 1 - Archers Attack \t"
-                    + (jogo.troopsInCircleSpaces() && jogo.unusedBoilingWater() ? "2 - Boilling Water Attack\t" : "")
-                    + (jogo.troopsIncloseCombat() ? " 3 - CloseCombat Attack" : ""));
-            System.out.println((jogo.wallStrg() < 4 ? " 4 - Coupure\t" : "")
-                    + (jogo.playerMorale() < 4 ? "5 - Rally Troops\t" : "") + " 6 - Tunnel Movement\t 7 - Supply Raid");
-            System.out.println("8 - Sabotage\t 9 - Mudar de Turno\t 10 - Guardar\t 11 - Menu\t 12 - Sair ");
 
+            if (jogo.badWeather()) {
+                System.out.println("0 - Extra Action point\t");
+                System.out.println( (jogo.TroopsInEnemyLines() ? "7 - Supply Raid" : ""));
+                System.out.println((jogo.TroopsInEnemyLines() ? "8 - Sabotage\t" : "")
+                        + "9 - Mudar de Turno\t 10 - Guardar\t 11 - Menu\t 12 - Sair ");
+            } else {
+                System.out.println("0 - Extra Action point\t 1 - Archers Attack \t"
+                        + (jogo.troopsInCircleSpaces() && jogo.unusedBoilingWater() ? "2 - Boilling Water Attack\t" : "")
+                        + (jogo.troopsIncloseCombat() ? " 3 - CloseCombat Attack" : ""));
+                System.out.println((jogo.wallStrg() < 4 ? " 4 - Coupure\t" : "")
+                        + (jogo.playerMorale() < 4 ? "5 - Rally Troops\t" : "") + " 6 - Tunnel Movement\t "
+                        + (jogo.TroopsInEnemyLines() ? "7 - Supply Raid" : ""));
+                System.out.println((jogo.TroopsInEnemyLines() ? "8 - Sabotage\t" : "")
+                        + "9 - Mudar de Turno\t 10 - Guardar\t 11 - Menu\t 12 - Sair ");
+            }
             Scanner sc = new Scanner(System.in);
             try {
                 c = sc.nextInt();
-                if (c == 10) {
-                    //falta testar
-                    System.out.println("Insira o nome do jogo a guardar: ");
-                    String nomeFicheiro = sc.next();
-                    System.out.println("A guardar jogo");
-                    GereFicheirosJogo.guardaJogo(jogo, nomeFicheiro);
-                    return;
-                }
-                if (c == 11) {
-                    jogo.novoJogo();
-                    jogo = new Jogo();
-                    return;
-                }
-                if (c == 12) {
-                    System.out.println("A sair do jogo");
-                    sair = true;
-                    return;
-                } else if (c >= 0 && c <= 8) {
-                    jogo.realizarAccao(c);
-                    return;
-                } else if (c == 9) {
-                    //obrigar jogador a combater inimigos quando existe 2 na linha de combate
-                    if (jogo.checkTwoEnemiesCloseCombat() && jogo.getTurnActionPoints() > 0) {
-                        String s = new String();
-                        s = jogo.getLog();
-                        System.out.println("\n----------------------- " + s + " -----------------------\n");
-                    } else {
-                        jogo.mudarTurno();
-                    }
-                    return;
+                switch (c) {
+                    case 0:
+                        jogo.realizarAccaoExtraPoint();
+                        return;
+                    case 1:
+                        jogo.realizarAccaoArchersAtt();
+                        return;
+                    case 2:
+                        jogo.realizarAccaoBoilWater();
+                        return;
+                    case 3:
+                        jogo.realizarAccaoCloseCombat();
+                        return;
+                    case 4:
+                        jogo.realizarAccaoCoupure();
+                        return;
+                    case 5:
+                        jogo.realizarAccaoRallyTroops();
+                        return;
+                    case 6:
+                        jogo.realizarAccaoTunnelMov();
+                        return;
+                    case 7:
+                        jogo.realizarAccaoSupplyRaid();
+                        return;
+                    case 8:
+                        jogo.realizarAccaoSabotage();
+                        return;
+                    case 9:
+                        //obrigar jogador a combater inimigos quando existe 2 na linha de combate
+                        if (jogo.checkTwoEnemiesCloseCombat() && jogo.getTurnActionPoints() > 0) {
+                            String s = new String();
+                            s = jogo.getLog();
+                            System.out.println("\n----------------------- " + s + " -----------------------\n");
+                        } else {
+                            jogo.mudarTurno();
+                        }
+                        return;
+                    case 10:
+                        //falta testar
+                        System.out.println("Insira o nome do jogo a guardar: ");
+                        String nomeFicheiro = sc.next();
+                        System.out.println("A guardar jogo");
+                        GereFicheirosJogo.guardaJogo(jogo, nomeFicheiro);
+                        return;
+                    case 11:
+                        jogo.novoJogo();
+                        jogo = new Jogo();
+                        return;
+                    case 12:
+                        System.out.println("A sair do jogo");
+                        sair = true;
+                        return;
+                    default:
+                        break;
                 }
 
             } catch (java.util.InputMismatchException e) {

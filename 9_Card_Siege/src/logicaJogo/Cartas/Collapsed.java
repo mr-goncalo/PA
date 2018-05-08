@@ -21,4 +21,6 @@ public class Collapsed extends Card {
         j.RemoveSiegeTower();
     }  
 
+    
+
 }

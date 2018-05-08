@@ -19,8 +19,8 @@ public class Coupure extends Action {
 
     @Override
     public int ApplyRules(DadosJogo j) {
-        int roll = j.lancaDado();
-        if (roll + j.getCoupureBonus() > 4) {
+        int roll = j.lancaDado() + j.getCoupureBonus();
+        if (roll > 4) {
             j.setPlayerWallStrength(j.getPlayerWallStrength() + 1);
             j.setLog("Attack Successful!");
             return 1;

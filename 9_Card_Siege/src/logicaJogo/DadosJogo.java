@@ -13,6 +13,7 @@ public class DadosJogo implements Constantes, Serializable {
     private String log;
     private int dia;
     private int turno;
+    private boolean perdeu;
     private ArrayList<ArrayList<Card>> deck;
     private ArrayList<ArrayList<Card>> originalDeck;
     private int turnActionPoints;
@@ -31,6 +32,7 @@ public class DadosJogo implements Constantes, Serializable {
     private boolean extraPointUsed;
 
     private boolean usedFreeMovement;
+
     //Variaveis de Bonus
     private int laddersBonus;
     private int battRamBonus;
@@ -71,6 +73,7 @@ public class DadosJogo implements Constantes, Serializable {
         suppliesCarried = 0;
         this.dia = 1;
         this.turno = 1;
+        this.perdeu = false;
         this.turnActionPoints = 0;
         this.badWheather = false;
         this.hasSiegeTower = true;
@@ -353,6 +356,25 @@ public class DadosJogo implements Constantes, Serializable {
         return false;
     }
 
+    public void tracksAtZero() {
+        int cont = 0;
+        if (playerMorale == 0) {
+            cont++;
+        }
+
+        if (playerSupplies == 0) {
+            cont++;
+        }
+
+        if (playerWallStrength == 0) {
+            cont++;
+        }
+
+        if (cont > 1) {
+            perdeu = true;
+        }
+    }
+
     public boolean EndOfDay() {
         //Copia o deck original para o de jogo e baralha 
         deck.addAll(originalDeck);
@@ -432,7 +454,9 @@ public class DadosJogo implements Constantes, Serializable {
         try {
             this.closeCombatUnits[i] = id;
         } catch (ArrayIndexOutOfBoundsException e) {
+
             //perde automaticamente 
+            perdeu = true;
         }
     }
 
@@ -916,4 +940,13 @@ public class DadosJogo implements Constantes, Serializable {
     public void setExtraPointUsed(boolean extraPointUsed) {
         this.extraPointUsed = extraPointUsed;
     }
+
+    public boolean isPerdeu() {
+        return perdeu;
+    }
+
+    public void setPerdeu(boolean perdeu) {
+        this.perdeu = perdeu;
+    }
+
 }

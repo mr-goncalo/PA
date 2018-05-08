@@ -28,7 +28,7 @@ public class ArchersAttack extends Action {
                         j.setLog("Attack Sucessful!");
                         return 1;
                     }
-                    j.setLog("You Rolled " + rol + " Attack failed!");
+                    j.setLog("You Rolled " + rol + j.getLaddersBonus() + " Attack failed!");
                     return 0;
                 }
                 j.setLog("Track selected not valid");
@@ -40,7 +40,7 @@ public class ArchersAttack extends Action {
                         j.setLog("Attack Sucessful!");
                         return 1;
                     }
-                    j.setLog("You Rolled " + rol + " Attack failed!");
+                    j.setLog("You Rolled " + rol + j.getBattRamBonus() + " Attack failed!");
                     return 0;
                 }
                 j.setLog("Track selected not valid");
@@ -52,7 +52,7 @@ public class ArchersAttack extends Action {
                         j.setLog("Attack Sucessful!");
                         return 1;
                     }
-                    j.setLog("You Rolled " + rol + " Attack failed!");
+                    j.setLog("You Rolled " + rol + j.getSiegeTowerBonus() + " Attack failed!");
                     return 0;
                 }
                 j.setLog("Track selected not valid");
