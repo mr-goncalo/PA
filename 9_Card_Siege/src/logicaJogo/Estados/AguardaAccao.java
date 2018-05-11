@@ -20,7 +20,8 @@ public class AguardaAccao extends EstadoAdapter implements IEstado {
 
     @Override
     public IEstado realizarAccaoExtraPoint() {
-        if (!getJogo().isExtraPointUsed()) {
+        if (!getJogo().isExtraPointUsed()) 
+        {
             return new AguardaExtraPoint(getJogo());
         }
         getJogo().setLog("Extra point already used!");
@@ -44,8 +45,10 @@ public class AguardaAccao extends EstadoAdapter implements IEstado {
         if (getJogo().isBadWheather()) {
             return this;
         }
-        if (getJogo().getTurnActionPoints() > 0) {
-            if (getJogo().isUnusedBoilingWater() && getJogo().troopsInCircleSpaces()) {
+        if (getJogo().getTurnActionPoints() > 0) 
+        {
+            if (getJogo().isUnusedBoilingWater() && getJogo().troopsInCircleSpaces())
+            {
                 getJogo().setUnusedBoilingWater(false); //action points a 0 para não ser possivel fazer mais vezes no turno
                 return new AguardaBoilingWaterAttack(getJogo());
             }
@@ -116,6 +119,10 @@ public class AguardaAccao extends EstadoAdapter implements IEstado {
                 if (getJogo().getSabotage().ApplyRules(getJogo()) == 1) {
                     getJogo().setTurnActionPoints(getJogo().getTurnActionPoints() - getJogo().getSabotage().getCost());
                 }
+                
+                if(getJogo().isPerdeu())
+                    return new FimJogo(getJogo());
+                 
                 return this;
             }
             getJogo().setLog("Your troops aren't in enemy! ");
@@ -130,13 +137,18 @@ public class AguardaAccao extends EstadoAdapter implements IEstado {
 
     @Override
     public IEstado realizarAccaoSupplyRaid() {
-        if (getJogo().getTurnActionPoints() > 0) {
-
-            if (getJogo().troopsInEnemyLines()) {
-                if (getJogo().getSupplyRaid().ApplyRules(getJogo()) == 1) {
+        if (getJogo().getTurnActionPoints() > 0) 
+        {
+            if (getJogo().troopsInEnemyLines()) 
+            {
+                if (getJogo().getSupplyRaid().ApplyRules(getJogo()) == 1) 
+                {
                     getJogo().setTurnActionPoints(getJogo().getTurnActionPoints() - getJogo().getSupplyRaid().getCost());
                 }
-
+                
+                if(getJogo().isPerdeu())
+                    return new FimJogo(getJogo());
+                
                 return this;
             }
             getJogo().setLog("Your troops aren't in enemy! ");

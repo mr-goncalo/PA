@@ -198,4 +198,10 @@ public class Jogo implements Serializable {
     public boolean badWeather(){
         return jogo.isBadWheather();
     }
+    
+    public void isPerdeu()
+    {
+        if(jogo.isPerdeu())
+            setEstado(estado.novoJogo());
+    }
 }

@@ -22,6 +22,8 @@ public class AguardaExtraPoint extends EstadoAdapter {
         if (c == 1) {
             if (getJogo().getPlayerMorale() != 0) {
                 getJogo().extraActionPoint(c);
+                if(getJogo().isPerdeu())
+                    return new FimJogo(getJogo());
                 return new AguardaAccao(getJogo());
             }
 
@@ -30,6 +32,8 @@ public class AguardaExtraPoint extends EstadoAdapter {
         } else if (c == 2) {
             if (getJogo().getPlayerSupplies() != 0) {
                 getJogo().extraActionPoint(c);
+                if(getJogo().isPerdeu())
+                    return new FimJogo(getJogo());
                 return new AguardaAccao(getJogo());
             }
             getJogo().setLog("You have 0 Supplies , you can't perform this action!");

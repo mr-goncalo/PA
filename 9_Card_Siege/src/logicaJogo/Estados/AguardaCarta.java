@@ -15,6 +15,8 @@ public class AguardaCarta extends EstadoAdapter implements IEstado {
         {
             getJogo().EnemyLineCheck();
             getJogo().DrawCard(); 
+            if(getJogo().isPerdeu())
+                return new FimJogo(getJogo());
             return new AguardaAccao(getJogo());
         } 
         else 

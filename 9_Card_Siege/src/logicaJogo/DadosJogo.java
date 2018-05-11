@@ -419,12 +419,12 @@ public class DadosJogo implements Constantes, Serializable {
         return false;
     }
 
-    public void DrawCard() {
+    public void DrawCard() 
+    {
         Card c = deck.get(0).get(dia - 1);
         c.AdvanceEnemies(this);
         c.ApplyEvent(this);
-        c.TurnActionPoints(this);
-
+        c.TurnActionPoints(this);         
     }
 
     public boolean troopsInCircleSpaces() {
@@ -941,7 +941,10 @@ public class DadosJogo implements Constantes, Serializable {
         this.extraPointUsed = extraPointUsed;
     }
 
-    public boolean isPerdeu() {
+    public boolean isPerdeu() 
+    {
+        if(perdeu)
+            log = "Existem mais de dois status a zero ou mais de dois inimigos na área de combate! O jogador "+jog.getNomeJogador()+" perdeu o jogo!";
         return perdeu;
     }
 

@@ -18,9 +18,16 @@ public class AguardaBoilingWaterAttack extends EstadoAdapter implements IEstado 
     }
 
     @Override
-    public IEstado realizarBoilingWaterAttack(int pista) {
-        return getJogo().ArchersAttack(pista) ? new AguardaAccao(getJogo()) : this;
+    public IEstado realizarBoilingWaterAttack(int pista) 
+    {
+        // return getJogo().ArchersAttack(pista) ? new AguardaAccao(getJogo()) : this;
+        boolean accao = getJogo().ArchersAttack(pista);
+      
+        if(getJogo().isPerdeu())
+            return new FimJogo(getJogo());
 
+        return accao ? new AguardaAccao(getJogo()) : this;
+  
     }
 
 }

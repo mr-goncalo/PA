@@ -18,14 +18,25 @@ public class AguardaCloseCombatAttack extends EstadoAdapter implements IEstado {
     }
 
     @Override
-    public IEstado realizarCloseCombatAttack() {
-        return getJogo().closeCombatAttack() ? new AguardaAccao(getJogo()) : this;
+    public IEstado realizarCloseCombatAttack() 
+    {
+        //return getJogo().closeCombatAttack() ? new AguardaAccao(getJogo()) : this;
+        boolean accao = getJogo().closeCombatAttack();
+        if(getJogo().isPerdeu())
+            return new FimJogo(getJogo());
+        
+        return accao ? new AguardaAccao(getJogo()) : this;
 
     }
 
     @Override
-    public IEstado realizarCloseCombatAttack(int track) {
-        return getJogo().closeCombatAttack() ? new AguardaAccao(getJogo()) : this;
+    public IEstado realizarCloseCombatAttack(int track) 
+    {
+        //return getJogo().closeCombatAttack() ? new AguardaAccao(getJogo()) : this;
+        boolean accao = getJogo().closeCombatAttack();
+        if(getJogo().isPerdeu())
+            return new FimJogo(getJogo());
+        return accao ? new AguardaAccao(getJogo()) : this;
 
     }
 

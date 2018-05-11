@@ -7,6 +7,7 @@ import logicaJogo.Estados.*;
 
 import logicaJogo.Estados.IEstado;
 import logicaJogo.GereFicheirosJogo;
+import logicaJogo.Jogador;
 import logicaJogo.Jogo;
 
 
@@ -43,6 +44,10 @@ Falta:
 -melhorar USER INTERFACE 
 -testar 
 
+alterado:
+-no perder automaticamente foi chamada a função isPerdeu nas seguintes acções/classes : AguardaBoilingWaterAttack, AguardaCloseCombatArrack, AguardaCarta(funcão retira carta),
+    AguardaAccao(realizarAccaoSupplyRaid), AguardaAccao(realizarAccaoSabotage)
+-verificar valores negativos: ex.: Siege Tower Bonus: -1, Battering Ram Bonus: -1
  */
 public class UiTexto {
 
@@ -246,9 +251,10 @@ public class UiTexto {
 
     void iuAguardaAcao() {
         int c = -1;
-        while (true) {
+        while (true) 
+        {
             baseUi();
-
+            
             if (jogo.badWeather()) {
                 System.out.println("0 - Extra Action point\t");
                 System.out.println( (jogo.TroopsInEnemyLines() ? "7 - Supply Raid" : ""));
@@ -322,11 +328,13 @@ public class UiTexto {
                         return;
                     default:
                         break;
-                }
+                        
+               }
 
             } catch (java.util.InputMismatchException e) {
                 System.out.println("Opção Invalida!");
             }
+            jogo.isPerdeu();
         }
     }
 
