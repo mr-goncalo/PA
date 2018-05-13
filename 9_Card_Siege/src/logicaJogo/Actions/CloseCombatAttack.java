@@ -85,10 +85,10 @@ public class CloseCombatAttack extends Action implements logicaJogo.Constantes {
                 units[i] = 0;
                 j.setCloseCombatUnits(units);
             }
-            j.setLog("You Rolled " + rol + " Attack failed!");
+            j.setLog("Attack Successful!");
             return 1;
         }
-        j.setLog("Attack failed!");
+        j.setLog("You Rolled " + rol + " Attack failed!");
         return 0;
 
     }

@@ -12,6 +12,10 @@ public class AguardaAccao extends EstadoAdapter implements IEstado {
 
     @Override
     public IEstado mudarTurno() {
+        if(getJogo().checkTwoEnemiesCloseCombat())
+        {
+             return this;
+        }
         if (getJogo().AdvanceTurn()) {
             return new FimJogo(getJogo());
         }
@@ -33,6 +37,10 @@ public class AguardaAccao extends EstadoAdapter implements IEstado {
         if (getJogo().isBadWheather()) {
             return this;
         }
+        if(getJogo().checkTwoEnemiesCloseCombat())
+        {
+             return this;
+        }
         if (getJogo().getTurnActionPoints() > 0) {
             return new AguardaArchersAttack(getJogo());
         }
@@ -44,6 +52,10 @@ public class AguardaAccao extends EstadoAdapter implements IEstado {
     public IEstado realizarAccaoBoilWater() {
         if (getJogo().isBadWheather()) {
             return this;
+        }
+        if(getJogo().checkTwoEnemiesCloseCombat())
+        {
+             return this;
         }
         if (getJogo().getTurnActionPoints() > 0) 
         {
@@ -63,6 +75,7 @@ public class AguardaAccao extends EstadoAdapter implements IEstado {
         if (getJogo().isBadWheather()) {
             return this;
         }
+         
         if (getJogo().getTurnActionPoints() > 0) {
             if (getJogo().CountEnemiesInCloseCombat() != 0) {
                 return new AguardaCloseCombatAttack(getJogo());
@@ -77,6 +90,10 @@ public class AguardaAccao extends EstadoAdapter implements IEstado {
     public IEstado realizarAccaoCoupure() {
         if (getJogo().isBadWheather()) {
             return this;
+        }
+        if(getJogo().checkTwoEnemiesCloseCombat())
+        {
+             return this;
         }
         if (getJogo().getTurnActionPoints() > 0) {
 
@@ -97,6 +114,10 @@ public class AguardaAccao extends EstadoAdapter implements IEstado {
         if (getJogo().isBadWheather()) {
             return this;
         }
+        if(getJogo().checkTwoEnemiesCloseCombat())
+        {
+             return this;
+        }
         if (getJogo().getTurnActionPoints() > 0) {
 
             if (getJogo().getPlayerMorale() < 4) {
@@ -114,6 +135,10 @@ public class AguardaAccao extends EstadoAdapter implements IEstado {
 
     @Override
     public IEstado realizarAccaoSabotage() {
+        if(getJogo().checkTwoEnemiesCloseCombat())
+        {
+             return this;
+        }
         if (getJogo().getTurnActionPoints() > 0) {
             if (getJogo().troopsInEnemyLines()) {
                 if (getJogo().getSabotage().ApplyRules(getJogo()) == 1) {
@@ -137,6 +162,10 @@ public class AguardaAccao extends EstadoAdapter implements IEstado {
 
     @Override
     public IEstado realizarAccaoSupplyRaid() {
+        if(getJogo().checkTwoEnemiesCloseCombat())
+        {
+             return this;
+        }
         if (getJogo().getTurnActionPoints() > 0) 
         {
             if (getJogo().troopsInEnemyLines()) 
@@ -164,6 +193,10 @@ public class AguardaAccao extends EstadoAdapter implements IEstado {
     public IEstado realizarAccaoTunnelMov() {
         if (getJogo().isBadWheather()) {
             return this;
+        }
+        if(getJogo().checkTwoEnemiesCloseCombat())
+        {
+             return this;
         }
         if (!getJogo().troopsInsideTunnel()) {
             if (getJogo().getTurnActionPoints() > 0) {

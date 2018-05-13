@@ -48,6 +48,13 @@ alterado:
 -no perder automaticamente foi chamada a função isPerdeu nas seguintes acções/classes : AguardaBoilingWaterAttack, AguardaCloseCombatArrack, AguardaCarta(funcão retira carta),
     AguardaAccao(realizarAccaoSupplyRaid), AguardaAccao(realizarAccaoSabotage)
 -verificar valores negativos: ex.: Siege Tower Bonus: -1, Battering Ram Bonus: -1
+
+alterado Gonçalo 08:10 13/05
+-melhorei o perder auto.
+-já nao existem valores negativos
+-alterei a tua maneira do close combat quando estão lá 2, não é a ui que decide é a maquina de estados de trata das verificações
+
+falta testar
  */
 public class UiTexto {
 
@@ -251,13 +258,12 @@ public class UiTexto {
 
     void iuAguardaAcao() {
         int c = -1;
-        while (true) 
-        {
+        while (true) {
             baseUi();
-            
+
             if (jogo.badWeather()) {
                 System.out.println("0 - Extra Action point\t");
-                System.out.println( (jogo.TroopsInEnemyLines() ? "7 - Supply Raid" : ""));
+                System.out.println((jogo.TroopsInEnemyLines() ? "7 - Supply Raid" : ""));
                 System.out.println((jogo.TroopsInEnemyLines() ? "8 - Sabotage\t" : "")
                         + "9 - Mudar de Turno\t 10 - Guardar\t 11 - Menu\t 12 - Sair ");
             } else {
@@ -302,14 +308,7 @@ public class UiTexto {
                         jogo.realizarAccaoSabotage();
                         return;
                     case 9:
-                        //obrigar jogador a combater inimigos quando existe 2 na linha de combate
-                        if (jogo.checkTwoEnemiesCloseCombat() && jogo.getTurnActionPoints() > 0) {
-                            String s = new String();
-                            s = jogo.getLog();
-                            System.out.println("\n----------------------- " + s + " -----------------------\n");
-                        } else {
-                            jogo.mudarTurno();
-                        }
+                        jogo.mudarTurno();
                         return;
                     case 10:
                         //falta testar
@@ -328,8 +327,8 @@ public class UiTexto {
                         return;
                     default:
                         break;
-                        
-               }
+
+                }
 
             } catch (java.util.InputMismatchException e) {
                 System.out.println("Opção Invalida!");

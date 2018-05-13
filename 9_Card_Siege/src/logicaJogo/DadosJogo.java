@@ -356,25 +356,6 @@ public class DadosJogo implements Constantes, Serializable {
         return false;
     }
 
-    public void tracksAtZero() {
-        int cont = 0;
-        if (playerMorale == 0) {
-            cont++;
-        }
-
-        if (playerSupplies == 0) {
-            cont++;
-        }
-
-        if (playerWallStrength == 0) {
-            cont++;
-        }
-
-        if (cont > 1) {
-            perdeu = true;
-        }
-    }
-
     public boolean EndOfDay() {
         //Copia o deck original para o de jogo e baralha 
         deck.addAll(originalDeck);
@@ -407,6 +388,7 @@ public class DadosJogo implements Constantes, Serializable {
             log = "Fim dos 3 dias! O jogador " + jog.getNomeJogador() + " ganhou o jogo!";
             return true;
         }
+
         return false;
     }
 
@@ -419,12 +401,11 @@ public class DadosJogo implements Constantes, Serializable {
         return false;
     }
 
-    public void DrawCard() 
-    {
+    public void DrawCard() {
         Card c = deck.get(0).get(dia - 1);
         c.AdvanceEnemies(this);
         c.ApplyEvent(this);
-        c.TurnActionPoints(this);         
+        c.TurnActionPoints(this);
     }
 
     public boolean troopsInCircleSpaces() {
@@ -457,6 +438,7 @@ public class DadosJogo implements Constantes, Serializable {
 
             //perde automaticamente 
             perdeu = true;
+            log = "You Lose, a third enemie is trying to advance to Close Combat Area!";
         }
     }
 
@@ -941,10 +923,29 @@ public class DadosJogo implements Constantes, Serializable {
         this.extraPointUsed = extraPointUsed;
     }
 
-    public boolean isPerdeu() 
-    {
-        if(perdeu)
-            log = "Existem mais de dois status a zero ou mais de dois inimigos na área de combate! O jogador "+jog.getNomeJogador()+" perdeu o jogo!";
+    public boolean isPerdeu() {
+        int cont = 0;
+        if (playerMorale == 0) {
+            cont++;
+        }
+
+        if (playerSupplies == 0) {
+            cont++;
+        }
+
+        if (playerWallStrength == 0) {
+            cont++;
+        }
+
+        if (cont > 1) {
+            perdeu = true;
+            log = "You Lose, There are more than 1 status tack at Zero!";
+        }
+        if (checkTwoEnemiesCloseCombat() && turnActionPoints == 0) {
+            perdeu = true;
+            log = "You Lose, There are 2 enemies in close Combat and you run out of action points!";
+        }
+
         return perdeu;
     }
 
