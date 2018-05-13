@@ -11,7 +11,7 @@ import logicaJogo.DadosJogo;
  *
  * @author eu
  */
-public class BadWeather extends Card{
+public class BadWeather extends CardAdapter{
 
     public BadWeather(String eventName, String eventDesc, int actionPoint) {
         super(eventName, eventDesc, actionPoint);

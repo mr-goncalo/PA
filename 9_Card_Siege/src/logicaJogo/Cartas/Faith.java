@@ -11,7 +11,7 @@ import logicaJogo.DadosJogo;
  *
  * @author eu
  */
-public class Faith extends Card {
+public class Faith extends CardAdapter {
 
     public Faith(String eventName, String eventDesc, int actionPoint) {
         super(eventName, eventDesc, actionPoint);

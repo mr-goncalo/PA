@@ -11,7 +11,7 @@ import logicaJogo.DadosJogo;
  *
  * @author eu
  */
-public class SupplyRaid extends Action {
+public class SupplyRaid extends ActionAdapter {
 
     public SupplyRaid(String name, int cost) {
         super(name, cost);

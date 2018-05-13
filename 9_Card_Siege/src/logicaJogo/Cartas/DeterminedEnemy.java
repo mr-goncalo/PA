@@ -11,7 +11,7 @@ import logicaJogo.DadosJogo;
  *
  * @author eu
  */
-public class DeterminedEnemy extends Card{
+public class DeterminedEnemy extends CardAdapter{
     
     public DeterminedEnemy(String eventName, String eventDesc, int actionPoint) {
         super(eventName, eventDesc, actionPoint);

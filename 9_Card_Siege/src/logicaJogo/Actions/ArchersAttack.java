@@ -11,7 +11,7 @@ import logicaJogo.DadosJogo;
  *
  * @author eu
  */
-public class ArchersAttack extends Action {
+public class ArchersAttack extends ActionAdapter {
 
     public ArchersAttack(String name, int cost) {
         super(name, cost);
@@ -28,7 +28,7 @@ public class ArchersAttack extends Action {
                         j.setLog("Attack Sucessful!");
                         return 1;
                     }
-                    j.setLog("You Rolled " + rol + j.getLaddersBonus() + " Attack failed!");
+                    j.setLog("You Rolled " + (rol + j.getLaddersBonus()) + " Attack failed!");
                     return 0;
                 }
                 j.setLog("Track selected not valid");
@@ -40,7 +40,7 @@ public class ArchersAttack extends Action {
                         j.setLog("Attack Sucessful!");
                         return 1;
                     }
-                    j.setLog("You Rolled " + rol + j.getBattRamBonus() + " Attack failed!");
+                    j.setLog("You Rolled " + (rol + j.getBattRamBonus()) + " Attack failed!");
                     return 0;
                 }
                 j.setLog("Track selected not valid");
@@ -52,7 +52,7 @@ public class ArchersAttack extends Action {
                         j.setLog("Attack Sucessful!");
                         return 1;
                     }
-                    j.setLog("You Rolled " + rol + j.getSiegeTowerBonus() + " Attack failed!");
+                    j.setLog("You Rolled " + (rol + j.getSiegeTowerBonus()) + " Attack failed!");
                     return 0;
                 }
                 j.setLog("Track selected not valid");

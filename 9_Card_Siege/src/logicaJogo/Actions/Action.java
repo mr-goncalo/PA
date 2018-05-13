@@ -4,7 +4,7 @@ import java.io.Serializable;
 import logicaJogo.DadosJogo;
 
 
-public class Action implements Constantes,Serializable
+public abstract class Action implements Constantes,Serializable
 {  
     private String name;
     private int cost;
@@ -14,9 +14,9 @@ public class Action implements Constantes,Serializable
         this.cost = cost;
     }
 
-    public int ApplyRules(DadosJogo j,int track){return 0;}
+    public abstract int ApplyRules(DadosJogo j,int track);
     
-    public int ApplyRules(DadosJogo j){return 0;}
+    public abstract int ApplyRules(DadosJogo j);
     
     public String getName() {
         return name;

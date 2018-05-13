@@ -4,7 +4,7 @@ package logicaJogo.Cartas;
 import logicaJogo.DadosJogo;
 
 
-public class SuppliesSpoiled extends Card
+public class SuppliesSpoiled extends CardAdapter
 {
 
     public SuppliesSpoiled(String eventName, String eventDesc, int actionPoint) {

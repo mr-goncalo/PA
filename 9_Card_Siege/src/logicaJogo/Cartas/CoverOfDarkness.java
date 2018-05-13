@@ -2,7 +2,7 @@ package logicaJogo.Cartas;
 
 import logicaJogo.DadosJogo;
 
-public class CoverOfDarkness extends Card {
+public class CoverOfDarkness extends CardAdapter {
 
     public CoverOfDarkness(String eventName, String eventDesc, int actionPoint) {
         super(eventName, eventDesc, actionPoint);

@@ -3,7 +3,7 @@ package logicaJogo.Cartas;
 
 import logicaJogo.DadosJogo;
 
-public class Collapsed extends Card {
+public class Collapsed extends CardAdapter {
 
     public Collapsed(String eventName, String eventDesc, int actionPoint) {
         super(eventName, eventDesc, actionPoint);

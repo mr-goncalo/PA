@@ -3,7 +3,7 @@ package logicaJogo.Cartas;
 import java.io.Serializable;
 import logicaJogo.DadosJogo;
 
-public class Card implements Serializable{
+public abstract class Card implements Serializable {
 
     private String eventDesc;
     private String eventName;
@@ -15,21 +15,12 @@ public class Card implements Serializable{
         this.actionPoint = actionPoint;
     }
 
-    public void ApplyEvent(DadosJogo j) {
-    };
-    
-    public void AdvanceEnemies(DadosJogo j) {
-    };
-    
-    public void TurnActionPoints(DadosJogo j) {
-        j.setTurnActionPoints(this.actionPoint);
-     };
-    
-    public void RemoveEventBonus(DadosJogo j) {
-    };
-    
     public String getEventDesc() {
         return eventDesc;
+    }
+
+    public void TurnActionPoints(DadosJogo j) {
+        j.setTurnActionPoints(this.actionPoint);
     }
 
     public String getEventName() {
@@ -64,4 +55,9 @@ public class Card implements Serializable{
         return s;
     }
 
+    public abstract void ApplyEvent(DadosJogo j);
+
+    public abstract void AdvanceEnemies(DadosJogo j);
+
+    public abstract void RemoveEventBonus(DadosJogo j);
 }

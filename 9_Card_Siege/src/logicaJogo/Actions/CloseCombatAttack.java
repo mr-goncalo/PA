@@ -11,7 +11,7 @@ import logicaJogo.DadosJogo;
  *
  * @author eu
  */
-public class CloseCombatAttack extends Action implements logicaJogo.Constantes {
+public class CloseCombatAttack extends ActionAdapter implements logicaJogo.Constantes {
 
     public CloseCombatAttack(String name, int cost) {
         super(name, cost);

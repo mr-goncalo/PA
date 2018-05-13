@@ -11,7 +11,7 @@ import logicaJogo.DadosJogo;
  *
  * @author eu
  */
-public class Rally extends Card {
+public class Rally extends CardAdapter {
 
     public Rally(String eventName, String eventDesc, int actionPoint) {
         super(eventName, eventDesc, actionPoint);

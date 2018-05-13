@@ -11,7 +11,7 @@ import logicaJogo.DadosJogo;
  *
  * @author eu
  */
-public class GateFortified extends Card {
+public class GateFortified extends CardAdapter {
 
     public GateFortified(String eventName, String eventDesc, int actionPoint) {
         super(eventName, eventDesc, actionPoint);

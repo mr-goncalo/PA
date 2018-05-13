@@ -11,7 +11,7 @@ import logicaJogo.DadosJogo;
  *
  * @author eu
  */
-public class IronShields extends Card {
+public class IronShields extends CardAdapter {
 
     public IronShields(String eventName, String eventDesc, int actionPoint) {
         super(eventName, eventDesc, actionPoint);

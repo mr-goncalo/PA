@@ -11,7 +11,7 @@ import logicaJogo.DadosJogo;
  *
  * @author eu
  */
-public class Coupure extends Action {
+public class Coupure extends ActionAdapter {
 
     public Coupure(String name, int cost) {
         super(name, cost);

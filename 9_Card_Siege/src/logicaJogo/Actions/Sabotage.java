@@ -11,7 +11,7 @@ import logicaJogo.DadosJogo;
  *
  * @author eu
  */
-public class Sabotage extends Action {
+public class Sabotage extends ActionAdapter {
 
     public Sabotage(String name, int cost) {
         super(name, cost);

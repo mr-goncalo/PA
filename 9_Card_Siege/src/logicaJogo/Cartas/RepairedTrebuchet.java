@@ -11,7 +11,7 @@ import logicaJogo.DadosJogo;
  *
  * @author eu
  */
-public class RepairedTrebuchet extends Card{
+public class RepairedTrebuchet extends CardAdapter{
     
     public RepairedTrebuchet(String eventName, String eventDesc, int actionPoint) {
         super(eventName, eventDesc, actionPoint);

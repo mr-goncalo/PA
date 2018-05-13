@@ -5,36 +5,36 @@
  */
 package logicaJogo.Cartas;
 
+import java.io.Serializable;
 import logicaJogo.DadosJogo;
 
 /**
  *
  * @author eu
  */
-public class GuardsDistracted extends CardAdapter {
+public class CardAdapter extends Card implements Serializable {
 
-    public GuardsDistracted(String eventName, String eventDesc, int actionPoint) {
+    public CardAdapter(String eventName, String eventDesc, int actionPoint) {
         super(eventName, eventDesc, actionPoint);
     }
 
-     
     @Override
-    public void AdvanceEnemies(DadosJogo j) {
-        j.AvancaMaisLonge();
+    public void TurnActionPoints(DadosJogo j) {
+        j.setTurnActionPoints(super.getActionPoint());
     }
 
     @Override
     public void ApplyEvent(DadosJogo j) {
-        j.setMoraleBonus(j.getMoraleBonus() + 1);  
-        j.setSabotageBonus(j.getSabotageBonus() + 1);
     }
 
-     
+    @Override
+    public void AdvanceEnemies(DadosJogo j) {
+        
+    }
 
     @Override
     public void RemoveEventBonus(DadosJogo j) {
-        j.setMoraleBonus(j.getMoraleBonus() - 1); 
-        j.setSabotageBonus(j.getSabotageBonus() - 1);
     }
+ 
 
 }

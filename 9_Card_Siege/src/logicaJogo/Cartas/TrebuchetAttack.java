@@ -11,7 +11,7 @@ import logicaJogo.DadosJogo;
  *
  * @author eu
  */
-public class TrebuchetAttack extends Card {
+public class TrebuchetAttack extends CardAdapter {
 
     public TrebuchetAttack(String eventName, String eventDesc, int actionPoint) {
         super(eventName, eventDesc, actionPoint);
@@ -27,5 +27,5 @@ public class TrebuchetAttack extends Card {
             j.setPlayerWallStrength(j.getPlayerWallStrength() - 1);
         }
     }
-
+ 
 }

@@ -11,7 +11,7 @@ import logicaJogo.DadosJogo;
  *
  * @author eu
  */
-public class VolleyOfArrows extends Card {
+public class VolleyOfArrows extends CardAdapter {
 
     public VolleyOfArrows(String eventName, String eventDesc, int actionPoint) {
         super(eventName, eventDesc, actionPoint);

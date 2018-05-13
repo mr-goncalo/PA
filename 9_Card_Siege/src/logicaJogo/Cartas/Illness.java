@@ -4,7 +4,7 @@ package logicaJogo.Cartas;
 import logicaJogo.DadosJogo;
 
 
-public class Illness extends Card 
+public class Illness extends CardAdapter 
 {
 
     public Illness(String eventName, String eventDesc, int actionPoint) {

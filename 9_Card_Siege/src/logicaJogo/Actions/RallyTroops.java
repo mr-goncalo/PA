@@ -11,7 +11,7 @@ import logicaJogo.DadosJogo;
  *
  * @author eu
  */
-public class RallyTroops extends Action {
+public class RallyTroops extends ActionAdapter {
 
     public RallyTroops(String name, int cost) {
         super(name, cost);

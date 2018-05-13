@@ -11,7 +11,7 @@ import logicaJogo.DadosJogo;
  *
  * @author eu
  */
-public class FlamingArrows extends Card {
+public class FlamingArrows extends CardAdapter {
 
     public FlamingArrows(String eventName, String eventDesc, int actionPoint) {
         super(eventName, eventDesc, actionPoint);
@@ -22,11 +22,7 @@ public class FlamingArrows extends Card {
         j.AdvanceSiegeTower(1);
     }
 
-    @Override
-    public void ApplyEvent(DadosJogo j) {
-        super.ApplyEvent(j); //To change body of generated methods, choose Tools | Templates.
-    }
-
+    
     @Override
     public void RemoveEventBonus(DadosJogo j) {
         super.RemoveEventBonus(j); //To change body of generated methods, choose Tools | Templates.

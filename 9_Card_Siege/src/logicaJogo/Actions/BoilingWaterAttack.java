@@ -11,7 +11,7 @@ import logicaJogo.DadosJogo;
  *
  * @author eu
  */
-public class BoilingWaterAttack extends Action {
+public class BoilingWaterAttack extends ActionAdapter {
 
     public BoilingWaterAttack(String name, int cost) {
         super(name, cost);
@@ -36,7 +36,7 @@ public class BoilingWaterAttack extends Action {
                         j.setLog("Attack Successful!");
                         return 1;
                     }
-                    j.setLog("You Rolled " + rol + j.getLaddersBonus() + " Attack failed!");
+                    j.setLog("You Rolled " + (rol + j.getLaddersBonus()) + " Attack failed!");
                     return 0;
                 }
                 j.setLog("Track selected not in circle space");
@@ -53,7 +53,7 @@ public class BoilingWaterAttack extends Action {
                         j.setLog("Attack Successful!");
                         return 1;
                     }
-                    j.setLog("You Rolled " + rol + j.getBattRamBonus() + " Attack failed!");
+                    j.setLog("You Rolled " + (rol + j.getBattRamBonus()) + " Attack failed!");
                     return 0;
                 }
                 j.setLog("Track selected not valid");
@@ -70,7 +70,7 @@ public class BoilingWaterAttack extends Action {
                         j.setLog("Attack Successful!");
                         return 1;
                     }
-                    j.setLog("You Rolled " + rol + j.getSiegeTowerBonus() + " Attack failed!");
+                    j.setLog("You Rolled " + (rol + j.getSiegeTowerBonus()) + " Attack failed!");
                     return 0;
                 }
                 j.setLog("Track selected not valid");

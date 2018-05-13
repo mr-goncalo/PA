@@ -11,7 +11,7 @@ import logicaJogo.DadosJogo;
  *
  * @author eu
  */
-public class DeathOfALeader extends Card {
+public class DeathOfALeader extends CardAdapter {
 
     public DeathOfALeader(String eventName, String eventDesc, int actionPoint) {
         super(eventName, eventDesc, actionPoint);

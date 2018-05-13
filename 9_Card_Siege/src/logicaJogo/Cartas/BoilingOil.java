@@ -11,7 +11,7 @@ import logicaJogo.DadosJogo;
  *
  * @author eu
  */
-public class BoilingOil extends Card {
+public class BoilingOil extends CardAdapter {
 
     public BoilingOil(String eventName, String eventDesc, int actionPoint) {
         super(eventName, eventDesc, actionPoint);
