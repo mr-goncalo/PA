@@ -195,12 +195,12 @@ public class UiTexto {
         while (true) {
             baseUi();
             System.out.println("Choosed Action: Rally Troops");
-            System.out.println("Reduce Supplies for Bonus?: 1 - Yes  2 - No 3 - Back");
+            System.out.println("Reduce Supplies for Bonus?: 1 - Yes  2 - No/Back");
             Scanner sc = new Scanner(System.in);
             try {
 
                 c = sc.nextInt();
-                if (c == 3) {
+                if (c == 2) {
                     jogo.voltarAcao();
                     return;
                 }
