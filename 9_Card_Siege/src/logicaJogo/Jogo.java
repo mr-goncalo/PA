@@ -76,9 +76,7 @@ public class Jogo implements Serializable {
 
     public void realizarAccaoSabotage() {
         setEstado(estado.realizarAccaoSabotage());
-    }
-
-    
+    }  
 
     public void realizarArchersAttack(int pista) {
         setEstado(estado.realizarArchersAttack(pista));

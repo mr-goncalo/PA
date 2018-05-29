@@ -34,8 +34,7 @@ public class CardSiegePrincipalPanel extends JPanel implements Observer, Constan
     {
         startPanel = new CardSiegePanelStart(game);
         gamePanel = new  CardSiegePanel(game);
-        endPanel = new CardSiegePanelEnd(game);
-        
+        endPanel = new CardSiegePanelEnd(game);        
     }
 
     private void setupLayout()
@@ -50,7 +49,7 @@ public class CardSiegePrincipalPanel extends JPanel implements Observer, Constan
     @Override
     public void update(Observable o, Object arg) 
     {
-        IEstado estado = game.getStates();
+        IEstado estado = game.getEstado();
         
         if(estado instanceof AguardaInicio )
         {

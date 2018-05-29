@@ -40,13 +40,22 @@ public class ObservableGame extends Observable
 //        return jogo.getStates();
 //    }
     
-    public void addObserver(CardSiegeFrame aThis) 
-    {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
 
-    public IEstado getStates(){
+    public IEstado getEstado(){
         return jogo.getEstado();
     }
     
+    public void Terminar()
+    {
+        //jogo.Terminar();        
+        setChanged();
+        notifyObservers();
+    }
+
+    public void novoJogo() 
+    {
+        jogo.comecarJogo();// novoJogo(); ???
+        setChanged();
+        notifyObservers();
+    }
 }
