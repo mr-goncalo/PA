@@ -4,6 +4,7 @@ package logicaJogo;
 import UiJogo.vista.gui.CardSiegeFrame;
 import java.util.List;
 import java.util.Observable;
+import logicaJogo.Cartas.Card;
 import logicaJogo.Estados.IEstado;
 
 public class ObservableGame extends Observable

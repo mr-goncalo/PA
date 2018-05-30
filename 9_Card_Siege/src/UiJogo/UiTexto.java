@@ -1,5 +1,6 @@
 package UiJogo;
 
+import UiJogo.vista.gui.CardSiegeFrame;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.Scanner;
@@ -9,6 +10,7 @@ import logicaJogo.Estados.IEstado;
 import logicaJogo.GereFicheirosJogo;
 import logicaJogo.Jogador;
 import logicaJogo.Jogo;
+import logicaJogo.ObservableGame;
 
 
 /*
@@ -56,6 +58,7 @@ alterado Gonçalo 08:10 13/05
 
 falta testar
  */
+
 public class UiTexto {
 
     private Jogo jogo;

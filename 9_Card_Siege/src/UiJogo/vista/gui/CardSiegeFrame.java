@@ -198,7 +198,6 @@ public class CardSiegeFrame extends JFrame implements Observer, ConstantesGUI
 
     class sobreObjMenuBarListener implements ActionListener 
     {
-
         @Override
         public void actionPerformed(ActionEvent e) 
         {
