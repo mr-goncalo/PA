@@ -5,8 +5,11 @@ public interface ConstantesGUI
 {
     static final int DIM_X_FRAME = 1920;
     static final int DIM_Y_FRAME = 1000;
-    static final int DIM_X_CARTA = 500;
-    static final int DIM_Y_CARTA = 700;
+    static final int DIM_X_CARTA_JOGADOR = 450;
+    static final int DIM_Y_CARTA_JOGADOR = 650;
+    static final int DIM_X_CARTA_JOGO = 250;
+    static final int DIM_Y_CARTA_JOGO = 350;
+    
     
     String CARTA1 = "carta1";
     String CARTA2 = "carta2";

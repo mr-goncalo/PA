@@ -5,6 +5,7 @@ import java.awt.CardLayout;
 import java.util.Observable;
 import java.util.Observer;
 import javax.swing.JPanel;
+import logicaJogo.Estados.AguardaAccao;
 import logicaJogo.Estados.AguardaInicio;
 import logicaJogo.Estados.FimJogo;
 import logicaJogo.ObservableGame;
@@ -51,7 +52,7 @@ public class CardSiegePrincipalPanel extends JPanel implements Observer, Constan
     {
         IEstado estado = game.getEstado();
         
-        if(estado instanceof AguardaInicio )
+        if(estado instanceof AguardaInicio)
         {
             cardManager.show(this, "start");
         }

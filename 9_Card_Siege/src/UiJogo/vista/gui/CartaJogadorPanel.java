@@ -21,16 +21,17 @@ public class CartaJogadorPanel extends JPanel implements ConstantesGUI
     
     private void setTamanho()
     {
-      setMaximumSize(new Dimension(DIM_X_CARTA, DIM_Y_CARTA));
-      setPreferredSize(new Dimension(DIM_X_CARTA, DIM_Y_CARTA));
-      setMinimumSize(new Dimension(DIM_X_CARTA, DIM_Y_CARTA));
+        setBackground(new Color(0,0,0,0));
+        setMaximumSize(new Dimension(DIM_X_CARTA_JOGADOR, DIM_Y_CARTA_JOGADOR));
+        setPreferredSize(new Dimension(DIM_X_CARTA_JOGADOR, DIM_Y_CARTA_JOGADOR));
+        setMinimumSize(new Dimension(DIM_X_CARTA_JOGADOR, DIM_Y_CARTA_JOGADOR));
     }
 
     @Override
     public void paintComponent(Graphics g)
     {
         super.paintComponent(g); 
-        g.drawImage(CardSiegePanel.getImgCartaJogador(),0, 0, DIM_X_CARTA, DIM_Y_CARTA, this);   
+        g.drawImage(CardSiegePanel.getImgCartaJogador(), 0, 0, DIM_X_CARTA_JOGADOR, DIM_Y_CARTA_JOGADOR, this);   
 //        setPosicaoSupplies(g);
 //        setPosicaoMorale(g);
 //        setPosicaoWallStrength(g);

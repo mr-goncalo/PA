@@ -202,4 +202,9 @@ public class Jogo implements Serializable {
         if(jogo.isPerdeu())
             setEstado(estado.novoJogo());
     }
+    
+    public int getTurno()
+    {
+        return jogo.getTurno();
+    }
 }

@@ -56,7 +56,66 @@ public class ObservableGame extends Observable
     public void novoJogo() 
     {
         jogo.comecarJogo();// novoJogo(); ???
+        jogo.retirarCarta();
         setChanged();
         notifyObservers();
+    }
+
+    public void passarTurno() 
+    {
+        jogo.mudarTurno();
+        jogo.retirarCarta();
+        setChanged();
+        notifyObservers();
+    }
+
+    public int getTurno() 
+    {
+        return jogo.getTurno();
+    }
+
+    public void realizarAccaoExtraPoint() 
+    {
+        jogo.realizarAccaoExtraPoint();
+    }
+
+    public void realizarAccaoArchersAtt() 
+    {
+        jogo.realizarAccaoArchersAtt();
+    }
+
+    public void realizarAccaoBoilWater() 
+    {
+        jogo.realizarAccaoBoilWater();
+    }
+
+    public void realizarAccaoCloseCombat() 
+    {
+        jogo.realizarAccaoCloseCombat();
+    }
+
+    public void realizarAccaoCoupure() 
+    {
+        jogo.realizarAccaoCoupure();
+    }
+
+    public void realizarAccaoRallyTroops() 
+    {
+        jogo.realizarAccaoRallyTroops();
+    }
+
+    public void realizarAccaoTunnelMov() 
+    {   
+        jogo.realizarAccaoTunnelMov();
+    }
+
+    public void realizarAccaoSupplyRaid() 
+    {
+        jogo.realizarAccaoSupplyRaid();
+    }
+
+    public void realizarAccaoSabotage() 
+    {
+        jogo.realizarAccaoSabotage();
     }
 }
