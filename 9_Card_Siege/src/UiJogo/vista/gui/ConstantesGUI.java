@@ -9,7 +9,10 @@ public interface ConstantesGUI
     static final int DIM_Y_CARTA_JOGADOR = 650;
     static final int DIM_X_CARTA_JOGO = 250;
     static final int DIM_Y_CARTA_JOGO = 350;
-    
+    static final int DIM_X_MARCADOR_PRINCIPAL = 40;
+    static final int DIM_Y_MARCADOR_PRINCIPAL = 65;
+    static final int DIM_X_MARCADOR_SECUNDARIO = 50;
+    static final int DIM_Y_MARCADOR_SECUNDARIO = 50;
     
     String CARTA1 = "carta1";
     String CARTA2 = "carta2";

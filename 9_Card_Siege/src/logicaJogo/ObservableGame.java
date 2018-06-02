@@ -68,7 +68,12 @@ public class ObservableGame extends Observable
         setChanged();
         notifyObservers();
     }
-
+    
+    public int getDia() 
+    {
+        return jogo.getDia();
+    }
+    
     public int getTurno() 
     {
         return jogo.getTurno();
@@ -117,5 +122,80 @@ public class ObservableGame extends Observable
     public void realizarAccaoSabotage() 
     {
         jogo.realizarAccaoSabotage();
+    }
+
+    public boolean badWeather() 
+    {
+         return jogo.badWeather();
+    }
+
+    public boolean troopsInEnemyLines() 
+    {
+        return jogo.TroopsInEnemyLines();
+    }
+
+    public boolean troopsInCircleSpaces() 
+    {
+        return jogo.troopsInCircleSpaces();
+    }
+
+    public boolean unusedBoilingWater()
+    {
+        return jogo.unusedBoilingWater();
+    }
+
+    public boolean troopsInCloseCombat() 
+    {
+        return jogo.troopsIncloseCombat();
+    }
+
+    public int wallStrg() 
+    {
+        return jogo.wallStrg();
+    }
+
+    public int playerMorale() 
+    {
+        return jogo.playerMorale();
+    }
+
+    public int getPlayerSupplies()
+    {
+        return jogo.getPlayerSupplies();
+    }
+    
+    public int[] getTunnel()
+    {
+        return jogo.getTunnel();
+    }
+    
+    public int getSuppliesCarried()
+    {
+        return jogo.getSuppliesCarried();
+    }
+    
+    public int getEnemiesLaddersLocation()
+    {
+        return jogo.getEnemiesLaddersLocation();
+    }
+        
+    public int getEnemiesBattRamLocation()
+    {
+        return jogo.getEnemiesBattRamLocation();
+    }
+    
+    public int getEnemiesSiegeTowerLocation()
+    {
+        return jogo.getEnemiesSiegeTowerLocation();
+    }
+   
+    public int getEnemiesTrebuchetCount()
+    {
+        return jogo.getEnemiesTrebuchetCount();
+    }
+    
+    public int[] closeCombatUnits()
+    {
+        return jogo.closeCombatUnits();
     }
 }

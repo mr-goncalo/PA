@@ -207,4 +207,44 @@ public class Jogo implements Serializable {
     {
         return jogo.getTurno();
     }
+
+    public int getDia() 
+    {
+        return jogo.getDia();
+    }
+    
+    public int getPlayerSupplies()
+    {
+        return jogo.getPlayerSupplies();
+    }
+    
+    public int[] getTunnel()
+    {
+        return jogo.getTunnel();
+    }
+
+    public int getSuppliesCarried() 
+    {
+        return jogo.getSuppliesCarried();
+    }
+    
+    public int getEnemiesLaddersLocation() 
+    {
+        return jogo.getEnemiesLaddersLocation();
+    }
+    
+    public int getEnemiesBattRamLocation() 
+    {
+        return jogo.getEnemiesBattRamLocation();
+    }
+        
+    public int getEnemiesSiegeTowerLocation() 
+    {
+        return jogo.getEnemiesSiegeTowerLocation();
+    }
+            
+    public int getEnemiesTrebuchetCount() 
+    {
+        return jogo.getEnemiesTrebuchetCount();
+    }
 }

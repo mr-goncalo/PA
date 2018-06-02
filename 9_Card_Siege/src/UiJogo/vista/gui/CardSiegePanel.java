@@ -38,9 +38,6 @@ import logicaJogo.ObservableGame;
 public class CardSiegePanel extends JPanel implements Observer, ConstantesGUI
 {
 
- 
-
-   
     ObservableGame game;
     CartaFundoPanel cartaFundoPanel;
     CartaJogoPanel cartaJogoPanel;
@@ -51,6 +48,10 @@ public class CardSiegePanel extends JPanel implements Observer, ConstantesGUI
     static private BufferedImage cartaJogador = null;
     static private BufferedImage cartaInimigo = null;
     static private BufferedImage cartaVerso = null;
+    static private BufferedImage marcadorJogador = null;
+    static private BufferedImage marcadorInimigo = null;
+    static private BufferedImage marcadorTunnel = null;
+    static private BufferedImage marcadorSupplies = null;
     static HashMap<String, Image> cartas;
     static ArrayList<String> nomeCartas;
  
@@ -72,50 +73,46 @@ public class CardSiegePanel extends JPanel implements Observer, ConstantesGUI
     JLabel lblDia;        
     JLabel lblTurno;
     
-    
-//    private void carregaImgCartas()
-//    {
-      
-       static
+     
+    static
+    {
+        cartas = new HashMap<String, Image>();
+        try 
         {
-            cartas = new HashMap<String, Image>();
-            try 
-            {
-                cartas.put(CARTA1, ImageIO.read(Resources.getResourceFile(PATH_IMG_CARD1)));
-                cartas.put(CARTA2, ImageIO.read(Resources.getResourceFile(PATH_IMG_CARD2)));
-                cartas.put(CARTA3, ImageIO.read(Resources.getResourceFile(PATH_IMG_CARD3)));
-                cartas.put(CARTA4, ImageIO.read(Resources.getResourceFile(PATH_IMG_CARD4)));
-                cartas.put(CARTA5, ImageIO.read(Resources.getResourceFile(PATH_IMG_CARD5)));
-                cartas.put(CARTA6, ImageIO.read(Resources.getResourceFile(PATH_IMG_CARD6)));
-                cartas.put(CARTA7, ImageIO.read(Resources.getResourceFile(PATH_IMG_CARD7)));
-                
-
-            } 
-            catch (IOException ex) 
-            {
-                Logger.getLogger(CardSiegePanel.class.getName()).log(Level.SEVERE, null, ex);
-            }   
-
-      // [...] fill the map
+            cartas.put(CARTA1, ImageIO.read(Resources.getResourceFile(PATH_IMG_CARD1)));
+            cartas.put(CARTA2, ImageIO.read(Resources.getResourceFile(PATH_IMG_CARD2)));
+            cartas.put(CARTA3, ImageIO.read(Resources.getResourceFile(PATH_IMG_CARD3)));
+            cartas.put(CARTA4, ImageIO.read(Resources.getResourceFile(PATH_IMG_CARD4)));
+            cartas.put(CARTA5, ImageIO.read(Resources.getResourceFile(PATH_IMG_CARD5)));
+            cartas.put(CARTA6, ImageIO.read(Resources.getResourceFile(PATH_IMG_CARD6)));
+            cartas.put(CARTA7, ImageIO.read(Resources.getResourceFile(PATH_IMG_CARD7)));
 
 
-            
+        } 
+        catch (IOException ex) 
+        {
+            Logger.getLogger(CardSiegePanel.class.getName()).log(Level.SEVERE, null, ex);
+        }   
+
+    }
+
+    static 
+    {
+        try 
+        {              
+            cartaJogador = ImageIO.read(Resources.getResourceFile("imagens/cartaJogador.png"));            
+            cartaInimigo = ImageIO.read(Resources.getResourceFile("imagens/cartaInimigo.png"));
+            cartaVerso = ImageIO.read(Resources.getResourceFile("imagens/cartaVerso.png"));
+            fundo = ImageIO.read(Resources.getResourceFile("imagens/fundo.png"));  
+            marcadorJogador = ImageIO.read(Resources.getResourceFile("imagens/marcadorJogador.png"));  
+            marcadorInimigo = ImageIO.read(Resources.getResourceFile("imagens/marcadorInimigo.png"));  
+            marcadorTunnel = ImageIO.read(Resources.getResourceFile("imagens/marcadorTunnel.png"));  
+            marcadorSupplies = ImageIO.read(Resources.getResourceFile("imagens/marcadorSupplies.png"));  
+        } 
+        catch (IOException e) 
+        {
+            System.out.println("Erro a carregar imagens!");
         }
-//
-        static 
-        {
-            try 
-            {              
-                cartaJogador = ImageIO.read(Resources.getResourceFile("imagens/cartaJogador.png"));            
-                cartaInimigo = ImageIO.read(Resources.getResourceFile("imagens/cartaInimigo.png"));
-                cartaVerso = ImageIO.read(Resources.getResourceFile("imagens/cartaVerso.png"));
-                fundo = ImageIO.read(Resources.getResourceFile("imagens/fundo.png"));            
-            } 
-            catch (IOException e) 
-            {
-                System.out.println("Erro a carregar imagens!");
-            }
-//        }
     }
     public CardSiegePanel(ObservableGame game) 
     {
@@ -169,7 +166,7 @@ public class CardSiegePanel extends JPanel implements Observer, ConstantesGUI
         });
         
         btnExtraActionPoint = new JButton("Extra Action Point");
-        btnExtraActionPoint.setEnabled(true);
+        btnExtraActionPoint.setEnabled(false);
         btnExtraActionPoint.addActionListener(new ActionListener() 
         {
             @Override
@@ -191,7 +188,7 @@ public class CardSiegePanel extends JPanel implements Observer, ConstantesGUI
         });
         
         btnBoillingWaterAttack = new JButton("Boilling Water Attack");
-        btnBoillingWaterAttack.setEnabled(true);
+        btnBoillingWaterAttack.setEnabled(false);
         btnBoillingWaterAttack.addActionListener(new ActionListener() 
         {
             @Override
@@ -202,7 +199,7 @@ public class CardSiegePanel extends JPanel implements Observer, ConstantesGUI
         });
         
         btnCloseCombatAttack = new JButton("Close Combat Attack");
-        btnCloseCombatAttack.setEnabled(true);
+        btnCloseCombatAttack.setEnabled(false);
         btnCloseCombatAttack.addActionListener(new ActionListener() 
         {
             @Override
@@ -213,7 +210,7 @@ public class CardSiegePanel extends JPanel implements Observer, ConstantesGUI
         });
         
         btnCoupure = new JButton("Coupure");
-        btnCoupure.setEnabled(true);
+        btnCoupure.setEnabled(false);
         btnCoupure.addActionListener(new ActionListener() 
         {
             @Override
@@ -224,7 +221,7 @@ public class CardSiegePanel extends JPanel implements Observer, ConstantesGUI
         });
          
         btnRallyTroops = new JButton("Rally Troops");
-        btnRallyTroops.setEnabled(true);
+        btnRallyTroops.setEnabled(false);
         btnRallyTroops.addActionListener(new ActionListener() 
         {
             @Override
@@ -246,7 +243,7 @@ public class CardSiegePanel extends JPanel implements Observer, ConstantesGUI
         });
         
         btnSupplyRaid = new JButton("Supply Raid");
-        btnSupplyRaid.setEnabled(true);
+        btnSupplyRaid.setEnabled(false);
         btnSupplyRaid.addActionListener(new ActionListener() 
         {
             @Override
@@ -257,7 +254,7 @@ public class CardSiegePanel extends JPanel implements Observer, ConstantesGUI
         });
 
         btnSabotage = new JButton("Sabotage");
-        btnSabotage.setEnabled(true);
+        btnSabotage.setEnabled(false);
         btnSabotage.addActionListener(new ActionListener() 
         {
             @Override
@@ -367,8 +364,39 @@ public class CardSiegePanel extends JPanel implements Observer, ConstantesGUI
     {
         
         repaint(); 
-   
-        //...
+
+        lblDia.setText("Dia: " + game.getDia());
+        lblTurno.setText("Turno: " + game.getTurno());
+        
+        if(game.badWeather())
+        {
+            btnExtraActionPoint.setEnabled(true);
+            if(game.troopsInEnemyLines())
+            {
+                btnSupplyRaid.setEnabled(true);
+                btnSabotage.setEnabled(true);
+            }
+        }
+        else
+        {
+            btnExtraActionPoint.setEnabled(true);
+            if(game.troopsInCircleSpaces() && game.unusedBoilingWater())
+                btnBoillingWaterAttack.setEnabled(true);
+            if(game.troopsInCloseCombat())
+                btnCloseCombatAttack.setEnabled(true);
+            if(game.wallStrg() < 4)
+                btnCoupure.setEnabled(true);
+            if(game.playerMorale() < 4)
+                btnRallyTroops.setEnabled(true);
+            if(game.troopsInEnemyLines())
+            {
+                btnSupplyRaid.setEnabled(true);
+                btnSabotage.setEnabled(true);
+            }
+                
+            
+        }
+
     }
     
     public static Image getImgCarta(String nomeCarta)
@@ -394,5 +422,25 @@ public class CardSiegePanel extends JPanel implements Observer, ConstantesGUI
     public static Image getImgCartaJogo(String s) 
     {
        return cartas.get(s); 
+    }
+    
+    static BufferedImage getImgMarcadorJogador() 
+    {
+        return marcadorJogador;
+    }
+    
+    static BufferedImage getImgMarcadorInimigo() 
+    {
+        return marcadorInimigo;
+    }
+    
+    static Image getImgMarcadorTunnel() 
+    {
+        return marcadorTunnel;
+    }
+    
+    static Image getImgMarcadorSupplies() 
+    {
+        return marcadorSupplies;
     }
 }

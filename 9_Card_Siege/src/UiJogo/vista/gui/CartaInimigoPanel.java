@@ -32,7 +32,155 @@ public class CartaInimigoPanel extends JPanel implements ConstantesGUI
     public void paintComponent(Graphics g)
     {
         super.paintComponent(g);
-        g.drawImage(CardSiegePanel.getImgCartaInimigo(),0, 0, DIM_X_CARTA_JOGADOR, DIM_Y_CARTA_JOGADOR, this);   
+        g.drawImage(CardSiegePanel.getImgCartaInimigo(),0, 0, DIM_X_CARTA_JOGADOR, DIM_Y_CARTA_JOGADOR, this);  
+        setPosicaoLadders(g);
+        setPosicaoSiegeTower(g);
+        setPosicaoBattRam(g);
+        setPosicaoTrebuchet(g);
     }
-    
+
+    private void setPosicaoLadders(Graphics g) 
+    {
+        int x = 47;
+        int y = 0;
+        boolean closeCombat=false;
+        switch(game.getEnemiesLaddersLocation()) 
+        { 
+            case 4:
+                y = 440;
+                break;
+            case 3:
+                y = 335;
+                break;
+            case 2:
+                y = 225;
+                break;
+            case 1:
+                y = 120;
+                break;
+            case 0:
+                closeCombat=true;
+                break;
+        }
+        if(closeCombat)
+        {
+            int cc[] = game.closeCombatUnits();
+            if(cc[0]==0)
+            {
+                x = 165;
+                y = 20;
+            }
+            else if(cc[1]==0)
+            {
+                x = 235;
+                y = 20;
+            }                
+        }
+        g.drawImage(CardSiegePanel.getImgMarcadorInimigo(),x, y, DIM_X_MARCADOR_PRINCIPAL, DIM_Y_MARCADOR_PRINCIPAL, this); 
+    }
+
+    private void setPosicaoSiegeTower(Graphics g) 
+    {
+        int x = 200;
+        int y = 0;
+        boolean closeCombat=false;
+        switch(game.getEnemiesSiegeTowerLocation()) 
+        { 
+            case 4:
+                y = 440;
+                break;
+            case 3:
+                y = 335;
+                break;
+            case 2:
+                y = 225;
+                break;
+            case 1:
+                y = 120;
+                break;
+            case 0:
+                closeCombat=true;
+                break;
+        }
+        if(closeCombat)
+        {
+            int cc[] = game.closeCombatUnits();
+            if(cc[0]==0)
+            {
+                x = 165;
+                y = 20;
+            }
+            else if(cc[1]==0)
+            {
+                x = 235;
+                y = 20;
+            }                
+        }
+        g.drawImage(CardSiegePanel.getImgMarcadorInimigo(),x, y, DIM_X_MARCADOR_PRINCIPAL, DIM_Y_MARCADOR_PRINCIPAL, this); 
+    }
+
+    private void setPosicaoBattRam(Graphics g) 
+    {
+        int x = 353;
+        int y = 0;
+        boolean closeCombat=false;
+        switch(game.getEnemiesBattRamLocation()) 
+        { 
+            case 4:
+                y = 440;
+                break;
+            case 3:
+                y = 335;
+                break;
+            case 2:
+                y = 225;
+                break;
+            case 1:
+                y = 120;
+                break;
+            case 0:
+                x = 165;
+                y = 20;
+                break;
+        }
+        if(closeCombat)
+        {
+            int cc[] = game.closeCombatUnits();
+            if(cc[0]==0)
+            {
+                x = 165;
+                y = 20;
+            }
+            else if(cc[1]==0)
+            {
+                x = 235;
+                y = 20;
+            }                
+        }
+        g.drawImage(CardSiegePanel.getImgMarcadorInimigo(),x, y, DIM_X_MARCADOR_PRINCIPAL, DIM_Y_MARCADOR_PRINCIPAL, this); 
+    }
+
+    private void setPosicaoTrebuchet(Graphics g) 
+    {
+        int x = 0;
+        int y = 567;
+        boolean zeroTrabuchets = false;
+        switch(game.getEnemiesTrebuchetCount()) 
+        { 
+            case 3:
+                x = 353;
+                break;
+            case 2:
+                x = 200;
+                break;
+            case 1:
+                x = 47;
+                break;
+            default:
+                zeroTrabuchets=true;
+        }
+        if(!zeroTrabuchets)
+            g.drawImage(CardSiegePanel.getImgMarcadorInimigo(),x, y, DIM_X_MARCADOR_PRINCIPAL, DIM_Y_MARCADOR_PRINCIPAL, this); 
+    }
+
 }
