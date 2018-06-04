@@ -70,8 +70,8 @@ public class CardSiegePanelEnd extends JPanel implements Observer, ConstantesGUI
             @Override
             public void actionPerformed(ActionEvent ev)
             {          
-                game.novoJogo();
-                CardSiegePanel GUI = new CardSiegePanel(new ObservableGame());
+                game.reiniciarJogo();
+                CardSiegeFrame GUI = new CardSiegeFrame(new ObservableGame());
             }
         });
         

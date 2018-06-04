@@ -3,27 +3,38 @@ package UiJogo.vista.gui;
 
 import java.awt.BorderLayout;
 import java.awt.Color;
+import java.awt.Component;
 import java.awt.Dimension;
+import java.awt.FlowLayout;
 import java.awt.Font;
 import java.awt.Graphics;
+import java.awt.GridLayout;
+import java.awt.TextField;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
 import java.util.Observable;
 import java.util.Observer;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.imageio.ImageIO;
 import javax.swing.Box;
+import javax.swing.BoxLayout;
 import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
+import javax.swing.JTextArea;
+import javax.swing.SpringLayout;
 import logicaJogo.ObservableGame;
 
 public class CardSiegePanelStart extends JPanel implements Observer, ConstantesGUI
 {
-    JButton btnIniciar;
-    JLabel lblTitulo; 
+    JButton btnNovoJogo;
+    JButton btnCarregarJogo;
     
+    JLabel lblTitulo; 
+       
     ObservableGame observableGame;
     
     static private BufferedImage fundo = null;
@@ -55,15 +66,31 @@ public class CardSiegePanelStart extends JPanel implements Observer, ConstantesG
 
     private void setupComponents()
     {  
-        btnIniciar = new JButton("Novo Jogo");
+        btnNovoJogo = new JButton("Novo Jogo");
+        btnCarregarJogo = new JButton("Carregar Jogo");
         lblTitulo = new JLabel("Micro Space Empire"); 
         
-        btnIniciar.addActionListener(new ActionListener()
+        btnNovoJogo.addActionListener(new ActionListener()
         {        
             @Override
             public void actionPerformed(ActionEvent ev)
             {
                 observableGame.novoJogo();
+            }
+        });
+        
+        btnCarregarJogo.addActionListener(new ActionListener()
+        {        
+            @Override
+            public void actionPerformed(ActionEvent ev)
+            {
+                try {
+                    observableGame.carregarJogo("default");
+                } catch (IOException ex) {
+                    Logger.getLogger(CardSiegePanelStart.class.getName()).log(Level.SEVERE, null, ex);
+                } catch (ClassNotFoundException ex) {
+                    Logger.getLogger(CardSiegePanelStart.class.getName()).log(Level.SEVERE, null, ex);
+                }
             }
         });
    
@@ -77,28 +104,33 @@ public class CardSiegePanelStart extends JPanel implements Observer, ConstantesG
     
     private void setupLayout()
     {
-        
-        JPanel parteDeBaixo = new JPanel();
         JPanel parteDeCima = new JPanel();
-    
+        JPanel parteDeBaixo = new JPanel();
+        
+
         setLayout(new BorderLayout());
 
-        lblTitulo.setFont(new Font("Arial", Font.ITALIC, 47));
+        lblTitulo.setFont(new Font("Arial", Font.ITALIC, 30));
         lblTitulo.setForeground(Color.WHITE);
-        
-        btnIniciar.setSize(100,100);                
+    
+
+        btnCarregarJogo.setSize(100,100);                
+        btnNovoJogo.setSize(100,100);
         
         add(parteDeCima, BorderLayout.NORTH);
         add(parteDeBaixo, BorderLayout.SOUTH);
-
+        
+    
         parteDeBaixo.add(Box.createRigidArea(new Dimension(0,100)));
         
-        parteDeBaixo.setBackground(new Color(0,0,0,0));
+        parteDeBaixo.setBackground(new Color(0,0,0,0)); //torna o fundo transparente
         parteDeCima.setBackground(new Color(0,0,0,0));
-   
-        parteDeBaixo.add(btnIniciar);
+      
         parteDeCima.add(lblTitulo);
-  
+        parteDeBaixo.add(btnNovoJogo);
+        parteDeBaixo.add(btnCarregarJogo);
+        
+
         validate();
     }
     

@@ -11,6 +11,8 @@ import java.io.File;
 import java.io.IOException;
 import java.util.Observable;
 import java.util.Observer;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.sound.sampled.AudioSystem;
 import javax.sound.sampled.Clip;
 import javax.swing.JFileChooser;
@@ -22,6 +24,7 @@ import javax.swing.JOptionPane;
 import javax.swing.KeyStroke;
 import logicaJogo.Estados.AguardaInicio;
 import logicaJogo.Estados.FimJogo;
+import logicaJogo.GereFicheirosJogo;
 import logicaJogo.Jogo;
 import logicaJogo.ObservableGame;
 
@@ -85,13 +88,13 @@ public class CardSiegeFrame extends JFrame implements Observer, ConstantesGUI
         novoJogo.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_N, ActionEvent.CTRL_MASK)); 
         
         JMenuItem carregarJogo = new JMenuItem("Carregar Jogo");
-        carregarJogo.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_N, ActionEvent.CTRL_MASK)); 
+        carregarJogo.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_L, ActionEvent.CTRL_MASK)); 
         
         JMenuItem guardarJogo = new JMenuItem("Guardar Jogo");
-        guardarJogo.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_N, ActionEvent.CTRL_MASK)); 
+        guardarJogo.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_S, ActionEvent.CTRL_MASK)); 
         
         JMenuItem sairJogo = new JMenuItem("Sair");
-        sairJogo.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_N, ActionEvent.CTRL_MASK)); 
+        sairJogo.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_X, ActionEvent.CTRL_MASK)); 
         
         //montar o JMenu - file
         menuJogo.add(novoJogo);
@@ -128,8 +131,10 @@ public class CardSiegeFrame extends JFrame implements Observer, ConstantesGUI
     class novoJogoMenuBarListener implements ActionListener 
     {
         @Override
-        public void actionPerformed(ActionEvent e) {
-           // game.novoJogo();
+        public void actionPerformed(ActionEvent e) 
+        {
+            game.reiniciarJogo();
+            CardSiegeFrame GUI = new CardSiegeFrame(new ObservableGame());
         }
     }
     
@@ -138,21 +143,13 @@ public class CardSiegeFrame extends JFrame implements Observer, ConstantesGUI
         @Override
         public void actionPerformed(ActionEvent e)
         {
-        /* JFileChooser fc  = new JFileChooser("./data");
-         int returnval = fc.showOpenDialog(MicroSpaceEmpireFrame.this);         
-            if(returnval == JFileChooser.APPROVE_OPTION)
-            {
-                File file = fc.getSelectedFile();
-                try
-                {
-                Jogo jogo = (Jogo)FileUtility.retrieveGameFromFile(file);
-                if(jogo != null){
-                game.setJogo(jogo);
-                }
-                }catch(IOException | ClassNotFoundException ex){
-                     JOptionPane.showMessageDialog(MicroSpaceEmpireFrame.this,"operaçao falhou\r\n\r\n" + ex,"ERRO",JOptionPane.PLAIN_MESSAGE);              
-                }
-            }else{System.out.println("operaçao cancelada");}*/
+            try {
+                GereFicheirosJogo.carregaJogo("default");
+            } catch (IOException ex) {
+                Logger.getLogger(CardSiegeFrame.class.getName()).log(Level.SEVERE, null, ex);
+            } catch (ClassNotFoundException ex) {
+                Logger.getLogger(CardSiegeFrame.class.getName()).log(Level.SEVERE, null, ex);
+            }
         }
     }
     
@@ -161,20 +158,7 @@ public class CardSiegeFrame extends JFrame implements Observer, ConstantesGUI
         @Override
         public void actionPerformed(ActionEvent e)
         {
-          /*  JFileChooser fc  = new JFileChooser("./data");
-
-            int returnval = fc.showSaveDialog(MicroSpaceEmpireFrame.this);
-            if(returnval == JFileChooser.APPROVE_OPTION)
-            {
-                File file = fc.getSelectedFile();
-                try
-                {
-                FileUtility.saveGameToFile(file,game.getJogo());
-                }catch(IOException ex){
-                JOptionPane.showMessageDialog(MicroSpaceEmpireFrame.this,"operaçao falhou\r\n\r\n" + ex,"ERRO",JOptionPane.PLAIN_MESSAGE);
-                }
-
-            }else{System.out.println("operaçao cancelada");}*/
+            GereFicheirosJogo.guardaJogo(game, "default");
         }
     }
     
@@ -192,7 +176,7 @@ public class CardSiegeFrame extends JFrame implements Observer, ConstantesGUI
         @Override
         public void actionPerformed(ActionEvent e)
         {
-          //JOptionPane.showMessageDialog(MicroSpaceEmpireFrame.this,game.help(),"Help",JOptionPane.PLAIN_MESSAGE);
+            
         }
     }
 
@@ -201,7 +185,7 @@ public class CardSiegeFrame extends JFrame implements Observer, ConstantesGUI
         @Override
         public void actionPerformed(ActionEvent e) 
         {
-            //JOptionPane.showMessageDialog(MicroSpaceEmpireFrame.this,game.about(),"About",JOptionPane.PLAIN_MESSAGE);
+            
         }
     }
     

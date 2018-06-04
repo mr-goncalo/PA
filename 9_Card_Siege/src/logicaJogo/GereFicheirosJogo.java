@@ -67,6 +67,37 @@ public class GereFicheirosJogo
         //Livro.setOrdemCriacao(jogo.getMaxCodigoLivro());
         
         return jogo;
+    }    
+
+    public static boolean guardaJogo(ObservableGame jogo, String nomeFicheiro) 
+    {
+        ObjectOutputStream out = null;
+                
+        try
+        {
+            out = new ObjectOutputStream(new FileOutputStream(nomeFicheiro));
+            out.writeObject(jogo);
+        }
+        catch(IOException e)
+        {
+            
+            return false;
+            
+        }
+        finally
+        {
+            if(out != null)
+            {
+                try 
+                {
+                    out.close();
+                }
+                catch (IOException e) 
+                {
+                    return false;
+                }
+            }
+        }
+        return true;
     }
-    
 }

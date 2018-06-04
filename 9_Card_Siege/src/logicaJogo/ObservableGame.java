@@ -2,6 +2,8 @@
 package logicaJogo;
 
 import UiJogo.vista.gui.CardSiegeFrame;
+import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.util.List;
 import java.util.Observable;
 import logicaJogo.Cartas.Card;
@@ -53,6 +55,10 @@ public class ObservableGame extends Observable
         notifyObservers();
     }
 
+    public void reiniciarJogo()
+    {
+        jogo.novoJogo();
+    }
     public void novoJogo() 
     {
         jogo.comecarJogo();// novoJogo(); ???
@@ -340,4 +346,10 @@ public class ObservableGame extends Observable
         setChanged();
         notifyObservers();
     }
+
+    public void carregarJogo(String nomeFicheiro) throws IOException, FileNotFoundException, ClassNotFoundException 
+    {
+        GereFicheirosJogo.carregaJogo(nomeFicheiro);
+    }
+
 }
