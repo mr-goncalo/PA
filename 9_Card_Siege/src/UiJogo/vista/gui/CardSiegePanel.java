@@ -485,6 +485,8 @@ public class CardSiegePanel extends JPanel implements Observer, ConstantesGUI
         else
         {
             btnExtraActionPoint.setEnabled(true);
+            btnArchersAttack.setEnabled(true);
+            btnTunnelMovement.setEnabled(true);
             if(game.troopsInCircleSpaces() && game.unusedBoilingWater())
                 btnBoillingWaterAttack.setEnabled(true);
             if(game.troopsInCloseCombat())
@@ -755,7 +757,7 @@ public class CardSiegePanel extends JPanel implements Observer, ConstantesGUI
     {
         btnOpcao1.setText("Free Movement");
         btnOpcao2.setText("Fast Movement");
-        btnOpcao3.setText("Cancelar");
+        btnOpcao3.setText("Voltar");
         
         btnOpcao1.addActionListener(new ActionListener() 
         {
@@ -764,6 +766,7 @@ public class CardSiegePanel extends JPanel implements Observer, ConstantesGUI
             {
                 game.realizarTunnelMovement(1);
                 desbloqueiaTodosBotoesPrincipais();
+                 game.voltarAcao();
             }
         });
         
@@ -774,6 +777,7 @@ public class CardSiegePanel extends JPanel implements Observer, ConstantesGUI
             {
                 game.realizarTunnelMovement(2);
                 desbloqueiaTodosBotoesPrincipais();
+                 game.voltarAcao();
             }
         });
                 
@@ -786,6 +790,7 @@ public class CardSiegePanel extends JPanel implements Observer, ConstantesGUI
                 desbloqueiaTodosBotoesPrincipais();
             }
         });
+       
     }
      
     private void bloqueiaTodosBotoesPrincipais() 
@@ -810,16 +815,8 @@ public class CardSiegePanel extends JPanel implements Observer, ConstantesGUI
     
     private void desbloqueiaTodosBotoesPrincipais() 
     {
-        btnPassarTurno.setEnabled(true);
-        btnExtraActionPoint.setEnabled(true);
-        btnArchersAttack.setEnabled(true);
-        btnBoillingWaterAttack.setEnabled(true);
-        btnCloseCombatAttack.setEnabled(true);
-        btnCoupure.setEnabled(true);
-        btnRallyTroops.setEnabled(true);
-        btnTunnelMovement.setEnabled(true);
-        btnSupplyRaid.setEnabled(true);
-        btnSabotage.setEnabled(true);
+        update(game, ui);
+         btnPassarTurno.setEnabled(true);
         btnOpcao1.setEnabled(false);
         btnOpcao1.setVisible(false);
         btnOpcao2.setEnabled(false);
