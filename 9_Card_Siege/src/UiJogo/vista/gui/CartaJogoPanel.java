@@ -32,7 +32,7 @@ public class CartaJogoPanel extends JPanel implements ConstantesGUI
     {
         super.paintComponent(g); 
         String s = new String();
-        s = CardSiegePanel.nomeCartas.get(game.getTurno());
+        s = game.getCartaJogo();
         g.drawImage(CardSiegePanel.getImgCartaJogo(s),0, 0, DIM_X_CARTA_JOGO, DIM_Y_CARTA_JOGO, this);   
     }
     

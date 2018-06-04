@@ -21,8 +21,8 @@ import logicaJogo.ObservableGame;
 
 public class CardSiegePanelStart extends JPanel implements Observer, ConstantesGUI
 {
-    JButton start;
-    JLabel title; 
+    JButton btnIniciar;
+    JLabel lblTitulo; 
     
     ObservableGame observableGame;
     
@@ -55,10 +55,10 @@ public class CardSiegePanelStart extends JPanel implements Observer, ConstantesG
 
     private void setupComponents()
     {  
-        start = new JButton("Novo Jogo");
-        title = new JLabel("Micro Space Empire"); 
+        btnIniciar = new JButton("Novo Jogo");
+        lblTitulo = new JLabel("Micro Space Empire"); 
         
-        start.addActionListener(new ActionListener()
+        btnIniciar.addActionListener(new ActionListener()
         {        
             @Override
             public void actionPerformed(ActionEvent ev)
@@ -83,10 +83,10 @@ public class CardSiegePanelStart extends JPanel implements Observer, ConstantesG
     
         setLayout(new BorderLayout());
 
-        title.setFont(new Font("Arial", Font.ITALIC, 47));
-        title.setForeground(Color.WHITE);
+        lblTitulo.setFont(new Font("Arial", Font.ITALIC, 47));
+        lblTitulo.setForeground(Color.WHITE);
         
-        start.setSize(100,100);                
+        btnIniciar.setSize(100,100);                
         
         add(parteDeCima, BorderLayout.NORTH);
         add(parteDeBaixo, BorderLayout.SOUTH);
@@ -96,8 +96,8 @@ public class CardSiegePanelStart extends JPanel implements Observer, ConstantesG
         parteDeBaixo.setBackground(new Color(0,0,0,0));
         parteDeCima.setBackground(new Color(0,0,0,0));
    
-        parteDeBaixo.add(start);
-        parteDeCima.add(title);
+        parteDeBaixo.add(btnIniciar);
+        parteDeCima.add(lblTitulo);
   
         validate();
     }

@@ -7,10 +7,6 @@ package logicaJogo.Actions;
 
 import logicaJogo.DadosJogo;
 
-/**
- *
- * @author eu
- */
 public class RallyTroops extends ActionAdapter {
 
     public RallyTroops(String name, int cost) {

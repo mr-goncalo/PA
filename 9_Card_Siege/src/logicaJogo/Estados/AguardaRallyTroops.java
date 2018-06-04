@@ -7,10 +7,6 @@ package logicaJogo.Estados;
 
 import logicaJogo.DadosJogo;
 
-/**
- *
- * @author eu
- */
 public class AguardaRallyTroops extends EstadoAdapter implements IEstado {
 
     public AguardaRallyTroops(DadosJogo jogo) {

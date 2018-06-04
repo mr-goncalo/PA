@@ -13,7 +13,7 @@ import static UiJogo.vista.gui.ConstantesGUI.DIM_Y_CARTA_JOGADOR;
 public class CartaInimigoPanel extends JPanel implements ConstantesGUI
 {
     private ObservableGame game;
-    
+
     CartaInimigoPanel(ObservableGame game) 
     {
         this.game = game;
@@ -41,8 +41,9 @@ public class CartaInimigoPanel extends JPanel implements ConstantesGUI
 
     private void setPosicaoLadders(Graphics g) 
     {
+        
         int x = 47;
-        int y = 0;
+        int y = 20;
         boolean closeCombat=false;
         switch(game.getEnemiesLaddersLocation()) 
         { 
@@ -65,26 +66,26 @@ public class CartaInimigoPanel extends JPanel implements ConstantesGUI
         if(closeCombat)
         {
             int cc[] = game.closeCombatUnits();
-            if(cc[0]==0)
+            if(cc[0]==1)
             {
                 x = 165;
                 y = 20;
             }
-            else if(cc[1]==0)
+            else if(cc[1]==1)
             {
                 x = 235;
                 y = 20;
-            }                
+            }  
         }
         g.drawImage(CardSiegePanel.getImgMarcadorInimigo(),x, y, DIM_X_MARCADOR_PRINCIPAL, DIM_Y_MARCADOR_PRINCIPAL, this); 
     }
 
-    private void setPosicaoSiegeTower(Graphics g) 
+    private void setPosicaoBattRam(Graphics g) 
     {
         int x = 200;
-        int y = 0;
+        int y = 20;
         boolean closeCombat=false;
-        switch(game.getEnemiesSiegeTowerLocation()) 
+        switch(game.getEnemiesBattRamLocation()) 
         { 
             case 4:
                 y = 440;
@@ -105,26 +106,26 @@ public class CartaInimigoPanel extends JPanel implements ConstantesGUI
         if(closeCombat)
         {
             int cc[] = game.closeCombatUnits();
-            if(cc[0]==0)
+            if(cc[0]==2)
             {
                 x = 165;
                 y = 20;
             }
-            else if(cc[1]==0)
+            else if(cc[1]==2)
             {
                 x = 235;
                 y = 20;
-            }                
+            }     
         }
         g.drawImage(CardSiegePanel.getImgMarcadorInimigo(),x, y, DIM_X_MARCADOR_PRINCIPAL, DIM_Y_MARCADOR_PRINCIPAL, this); 
     }
 
-    private void setPosicaoBattRam(Graphics g) 
+    private void setPosicaoSiegeTower(Graphics g) 
     {
         int x = 353;
-        int y = 0;
+        int y = 20;
         boolean closeCombat=false;
-        switch(game.getEnemiesBattRamLocation()) 
+        switch(game.getEnemiesSiegeTowerLocation()) 
         { 
             case 4:
                 y = 440;
@@ -138,24 +139,24 @@ public class CartaInimigoPanel extends JPanel implements ConstantesGUI
             case 1:
                 y = 120;
                 break;
-            case 0:
-                x = 165;
-                y = 20;
+            case 0:  
+                closeCombat=true;
                 break;
         }
+        
         if(closeCombat)
-        {
+        {   
             int cc[] = game.closeCombatUnits();
-            if(cc[0]==0)
+            if(cc[0]==3)
             {
                 x = 165;
                 y = 20;
             }
-            else if(cc[1]==0)
+            else if(cc[1]==3)
             {
                 x = 235;
                 y = 20;
-            }                
+            }  
         }
         g.drawImage(CardSiegePanel.getImgMarcadorInimigo(),x, y, DIM_X_MARCADOR_PRINCIPAL, DIM_Y_MARCADOR_PRINCIPAL, this); 
     }
@@ -177,10 +178,13 @@ public class CartaInimigoPanel extends JPanel implements ConstantesGUI
                 x = 47;
                 break;
             default:
+                y=0;
                 zeroTrabuchets=true;
         }
         if(!zeroTrabuchets)
             g.drawImage(CardSiegePanel.getImgMarcadorInimigo(),x, y, DIM_X_MARCADOR_PRINCIPAL, DIM_Y_MARCADOR_PRINCIPAL, this); 
+        else
+            g.drawImage(CardSiegePanel.getImgMarcadorInimigo(),x, y, 0, 0, this);          
     }
 
 }

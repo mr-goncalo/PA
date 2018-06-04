@@ -16,6 +16,13 @@ public class DadosJogo implements Constantes, Serializable {
     private boolean perdeu;
     private ArrayList<ArrayList<Card>> deck;
     private ArrayList<ArrayList<Card>> originalDeck;
+    List<Card> card1;
+    List<Card> card2;
+    List<Card> card3;
+    List<Card> card4;
+    List<Card> card5 ;
+    List<Card> card6;
+    List<Card> card7;
     private int turnActionPoints;
     private boolean badWheather;
     private boolean hasSiegeTower;
@@ -119,13 +126,13 @@ public class DadosJogo implements Constantes, Serializable {
         deck = new ArrayList<>();
         originalDeck = new ArrayList<>();
 
-        List<Card> card1 = new ArrayList<>();
-        List<Card> card2 = new ArrayList<>();
-        List<Card> card3 = new ArrayList<>();
-        List<Card> card4 = new ArrayList<>();
-        List<Card> card5 = new ArrayList<>();
-        List<Card> card6 = new ArrayList<>();
-        List<Card> card7 = new ArrayList<>();
+        card1 = new ArrayList<>();
+        card2 = new ArrayList<>();
+        card3 = new ArrayList<>();
+        card4 = new ArrayList<>();
+        card5 = new ArrayList<>();
+        card6 = new ArrayList<>();
+        card7 = new ArrayList<>();
 
         card1.add(new TrebuchetAttack("Trebuchet Attack", "3T - 2 Damage to wall \n\t| 2T - 1 Damage to wall \n\t| 1T - 1 Damage to wall on Dice roll of 4,5,6", 3));
         card1.add(new TrebuchetAttack("Trebuchet Attack", "3T - 2 Damage to wall \n\t| 2T - 1 Damage to wall \n\t| 1T - 1 Damage to wall on Dice roll of 4,5,6", 2));
@@ -154,7 +161,7 @@ public class DadosJogo implements Constantes, Serializable {
         card7.add(new DeterminedEnemy("Determined Enemy", "-1 to attacks on the Battering Ram", 2));
         card7.add(new IronShields("Iron Shields", "-1 to attacks on the Siege Tower", 2));
         card7.add(new Faith("Faith", "+1 to attacks on the Battering Ram,Ladders and Morale actions", 3));
-
+        
         originalDeck.add((ArrayList<Card>) card1);
         originalDeck.add((ArrayList<Card>) card2);
         originalDeck.add((ArrayList<Card>) card3);
@@ -162,7 +169,7 @@ public class DadosJogo implements Constantes, Serializable {
         originalDeck.add((ArrayList<Card>) card5);
         originalDeck.add((ArrayList<Card>) card6);
         originalDeck.add((ArrayList<Card>) card7);
-
+            
         deck.addAll(originalDeck);
         Collections.shuffle(deck);
 
@@ -352,7 +359,7 @@ public class DadosJogo implements Constantes, Serializable {
             log = "Um dos seus recursos chegou a zero! O jogador " + jog.getNomeJogador() + " perdeu o jogo!";
             return true;
         }
-
+        
         return false;
     }
 
@@ -403,6 +410,7 @@ public class DadosJogo implements Constantes, Serializable {
 
     public void DrawCard() {
         Card c = deck.get(0).get(dia - 1);
+        
         c.AdvanceEnemies(this);
         c.ApplyEvent(this);
         c.TurnActionPoints(this);
@@ -953,4 +961,24 @@ public class DadosJogo implements Constantes, Serializable {
         this.perdeu = perdeu;
     }
 
+    public String getCartaJogo() 
+    {
+        List c = deck.get(0);
+        if( c == card1)
+            return CARTA1;
+        if( c == card2)
+            return CARTA2;
+        if( c == card3)
+            return CARTA3;
+        if( c == card4)
+            return CARTA4;
+        if( c == card5)
+            return CARTA5;
+        if( c == card6)
+            return CARTA6;
+        if( c == card7)
+            return CARTA7;
+        
+        return null;
+    }
 }

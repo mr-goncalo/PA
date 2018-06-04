@@ -12,53 +12,6 @@ import logicaJogo.Jogador;
 import logicaJogo.Jogo;
 import logicaJogo.ObservableGame;
 
-
-/*
-
-    TODO LIST
--Evento archers Attack -> feito
--Evento Boiling water -> feito * pode haver bugs 
--Evento Close Combat -> feito * pode haver bugs 
--Evento Coupure - feito * falta testes intensivos
--Evento Rally troops - done
--Evento Tunnel Movement - done
--Evento Supply raid - done
--Evento Sabotage - done
--Evento trocar 1 de morale ou 1 supply por 1 action point - done
-
-jp - o que fiz / o que falta fazer/testar
--guardar/carregar jogo - done(pelo menos parece)
--Recuar as tropas para o castelo - done +/- : no endOfDay(recolher mantimentos e soma à var supplies no máx até 4) : 
-                                - checkar ainda pois meti as posiçoes do array a 0 à excepção da 1º, ver se é isso
-                                - ver também se o ponto 13 do enunciado está feito
--Evento perder instantaneamente - função checkEnemiesCloseCombat , se retornar true no fim do turno é pq existem 2 enimigos da close combat e perde
-                                - fiz também código para obrigar a jogar quando existem 2 enimigos da close combat
--Evento ganhar - ganha se passar os 3 dias: feito no endOfDay : novo estado FimJogo para poder começar novo jogo
--Evento perder no fim de turno : descrito em cima + validação quando algum recurso no fim do turno é = 0
-                                - verificar também quando um terceiro elemento do inimigo vai para a close combat, assim perde logo e o array é só de 2 posições
--falta o evento Bad weather - Done
-
-
-Falta:
--onde por o perder automaticamente, ele já está preparado com uma flag no Dados de jogo "perdeu" chamada atravez do metodo .isPerdeu()
--correção de bugs
--ter em cuidado valores negativos: ex.: Siege Tower Bonus: -1
--melhorar USER INTERFACE 
--testar 
-
-alterado:
--no perder automaticamente foi chamada a função isPerdeu nas seguintes acções/classes : AguardaBoilingWaterAttack, AguardaCloseCombatArrack, AguardaCarta(funcão retira carta),
-    AguardaAccao(realizarAccaoSupplyRaid), AguardaAccao(realizarAccaoSabotage)
--verificar valores negativos: ex.: Siege Tower Bonus: -1, Battering Ram Bonus: -1
-
-alterado Gonçalo 08:10 13/05
--melhorei o perder auto.
--já nao existem valores negativos
--alterei a tua maneira do close combat quando estão lá 2, não é a ui que decide é a maquina de estados de trata das verificações
-
-falta testar
- */
-
 public class UiTexto {
 
     private Jogo jogo;
@@ -198,12 +151,12 @@ public class UiTexto {
         while (true) {
             baseUi();
             System.out.println("Choosed Action: Rally Troops");
-            System.out.println("Reduce Supplies for Bonus?: 1 - Yes  2 - No/Back");
+            System.out.println("Reduce Supplies for Bonus?: 1 - Yes  2 - No 3 - Back");
             Scanner sc = new Scanner(System.in);
             try {
 
                 c = sc.nextInt();
-                if (c == 2) {
+                if (c == 3) {
                     jogo.voltarAcao();
                     return;
                 }

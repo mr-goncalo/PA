@@ -247,4 +247,55 @@ public class Jogo implements Serializable {
     {
         return jogo.getEnemiesTrebuchetCount();
     }
+
+    public String getCartaJogo() 
+    {
+        return jogo.getCartaJogo();
+    }
+
+    public int getMoraleBonus() 
+    {
+        return jogo.getMoraleBonus();
+    }
+    
+    public int getSabotageBonus()
+    {
+        return jogo.getSabotageBonus();
+    }
+    
+    public int getLaddersBonus()
+    {
+        return jogo.getLaddersBonus();
+    }
+    
+    public int getBattRamBonus()
+    {
+        return jogo.getBattRamBonus();
+    }
+    
+    public int getSiegeTowerBonus()
+    {
+        return jogo.getSiegeTowerBonus();
+    }
+   
+    public int getCloseCombatAttBonus()
+    {
+        return jogo.getCloseCombatAttBonus();
+    }
+    
+    public int getRaidBonus()
+    {
+        return jogo.getRaidBonus();
+    }
+    
+    public int getCoupureBonus()
+    {
+        return jogo.getCoupureBonus();
+    }
+    
+    public int getCircleSpacesBonus()
+    {
+        return jogo.getCircleSpacesBonus();
+    }
+                            
 }
