@@ -261,13 +261,16 @@ public class DadosJogo implements Constantes, Serializable {
         }
 
         if (maisLonge == this.enemiesSiegeTowerLocation && hasSiegeTower) {
-            this.enemiesSiegeTowerLocation--;
+//            this.enemiesSiegeTowerLocation--;
+            AdvanceSiegeTower(1);
         }
         if (maisLonge == this.enemiesBattRamLocation) {
-            this.enemiesBattRamLocation--;
+//            this.enemiesBattRamLocation--;
+            AdvanceSiegeTower(1);
         }
         if (maisLonge == this.enemiesLaddersLocation) {
-            this.enemiesLaddersLocation--;
+//            this.enemiesLaddersLocation--;
+            AdvanceSiegeTower(1);
         }
     }
 
@@ -980,5 +983,15 @@ public class DadosJogo implements Constantes, Serializable {
             return CARTA7;
         
         return null;
+    }
+
+    public String sobre() 
+    {
+        return      "Tranalho Prático 2017/2018 - 9 Card Siege \n\n"
+            + "Jogo realizado no âmbito da disciplina: "                 
+            + "\n- Programação Avançada\n"
+            + "\nRealizado por:" 
+            + "\n- João Pedro Janeiro nº21220764" 
+            + "\n- Gonçalo Gomes nº21230556";
     }
 }

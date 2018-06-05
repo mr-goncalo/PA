@@ -297,5 +297,10 @@ public class Jogo implements Serializable {
     {
         return jogo.getCircleSpacesBonus();
     }
+
+    public String sobre() 
+    {
+        return jogo.sobre();
+    }
                             
 }

@@ -79,19 +79,19 @@ public class CardSiegeFrame extends JFrame implements Observer, ConstantesGUI
         
         //Menus do jogo
         JMenu menuJogo = new JMenu("Jogo");
-        menuJogo.setMnemonic(KeyEvent.VK_H);       
+        menuJogo.setMnemonic(KeyEvent.VK_J);       
         JMenu menuAjuda = new JMenu("Ajuda");
-        menuAjuda.setMnemonic(KeyEvent.VK_H);
+        menuAjuda.setMnemonic(KeyEvent.VK_A);
         
         //Submenus do jogo
         JMenuItem novoJogo = new JMenuItem("Novo Jogo");
         novoJogo.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_N, ActionEvent.CTRL_MASK)); 
         
         JMenuItem carregarJogo = new JMenuItem("Carregar Jogo");
-        carregarJogo.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_L, ActionEvent.CTRL_MASK)); 
+        carregarJogo.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_C, ActionEvent.CTRL_MASK)); 
         
         JMenuItem guardarJogo = new JMenuItem("Guardar Jogo");
-        guardarJogo.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_S, ActionEvent.CTRL_MASK)); 
+        guardarJogo.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_G, ActionEvent.CTRL_MASK)); 
         
         JMenuItem sairJogo = new JMenuItem("Sair");
         sairJogo.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_X, ActionEvent.CTRL_MASK)); 
@@ -111,19 +111,19 @@ public class CardSiegeFrame extends JFrame implements Observer, ConstantesGUI
         sairJogo.addActionListener(new sairJogoMenuBarListener());
         
         //submenu de help
-        JMenuItem ajuda = new JMenuItem("Help");
-        ajuda.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_C, ActionEvent.CTRL_MASK)); //atalho
+//        JMenuItem ajuda = new JMenuItem("Ajuda");
+//        ajuda.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_C, ActionEvent.CTRL_MASK)); //atalho
 
-        JMenuItem sobre = new JMenuItem("About");
-        sobre.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_A, ActionEvent.CTRL_MASK)); //atalho
+        JMenuItem sobre = new JMenuItem("Sobre");
+        sobre.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_S, ActionEvent.CTRL_MASK)); //atalho
 
         //montar o Jmenu - help   
-        menuAjuda.add(ajuda);
+//        menuAjuda.add(ajuda);
         menuAjuda.add(sobre);
         menuBar.add(menuAjuda);
 
         //add listeners para sub help opções
-        sobre.addActionListener(new ajudaObjMenuBarListener());
+//        sobre.addActionListener(new ajudaObjMenuBarListener());
         sobre.addActionListener(new sobreObjMenuBarListener());
 
     }
@@ -143,13 +143,24 @@ public class CardSiegeFrame extends JFrame implements Observer, ConstantesGUI
         @Override
         public void actionPerformed(ActionEvent e)
         {
-            try {
-                GereFicheirosJogo.carregaJogo("default");
-            } catch (IOException ex) {
-                Logger.getLogger(CardSiegeFrame.class.getName()).log(Level.SEVERE, null, ex);
-            } catch (ClassNotFoundException ex) {
-                Logger.getLogger(CardSiegeFrame.class.getName()).log(Level.SEVERE, null, ex);
-            }
+            JFileChooser fc  = new JFileChooser("./data");
+            int returnval = fc.showOpenDialog(CardSiegeFrame.this);         
+            if(returnval == JFileChooser.APPROVE_OPTION)
+            {
+                File file = fc.getSelectedFile();
+                try
+                {
+                    Jogo jogo = (Jogo)GereFicheirosJogo.carregaJogoGUI(file);
+                    if(jogo != null)
+                    {
+                        game.setJogo(jogo);
+                    }
+                }
+                catch(IOException | ClassNotFoundException ex)
+                {
+                     JOptionPane.showMessageDialog(CardSiegeFrame.this,"A operaçao falhou\r\n\r\n" + ex,"ERRO",JOptionPane.PLAIN_MESSAGE);              
+                }
+            }else{System.out.println("operaçao cancelada");}
         }
     }
     
@@ -158,7 +169,22 @@ public class CardSiegeFrame extends JFrame implements Observer, ConstantesGUI
         @Override
         public void actionPerformed(ActionEvent e)
         {
-            GereFicheirosJogo.guardaJogo(game, "default");
+            JFileChooser fc  = new JFileChooser("./data");
+
+            int returnval = fc.showSaveDialog(CardSiegeFrame.this);
+            if(returnval == JFileChooser.APPROVE_OPTION)
+            {
+                File file = fc.getSelectedFile();
+                try 
+                {
+                    GereFicheirosJogo.guardaJogoGUI(file, game.getJogo());
+                }
+                catch (IOException ex) 
+                {
+                    Logger.getLogger(CardSiegeFrame.class.getName()).log(Level.SEVERE, null, ex);
+                }
+            }
+            else{System.out.println("Operação anulada");}
         }
     }
     
@@ -170,22 +196,22 @@ public class CardSiegeFrame extends JFrame implements Observer, ConstantesGUI
             System.exit(0);
         }
     }
-    
-    class ajudaObjMenuBarListener implements ActionListener 
-    {
-        @Override
-        public void actionPerformed(ActionEvent e)
-        {
-            
-        }
-    }
+//    
+//    class ajudaObjMenuBarListener implements ActionListener 
+//    {
+//        @Override
+//        public void actionPerformed(ActionEvent e)
+//        {
+//            
+//        }
+//    }
 
     class sobreObjMenuBarListener implements ActionListener 
     {
         @Override
         public void actionPerformed(ActionEvent e) 
         {
-            
+            JOptionPane.showMessageDialog(CardSiegeFrame.this,game.sobre(),"Sobre",JOptionPane.PLAIN_MESSAGE);
         }
     }
     

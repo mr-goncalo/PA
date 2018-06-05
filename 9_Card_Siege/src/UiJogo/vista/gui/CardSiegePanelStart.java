@@ -26,13 +26,13 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTextArea;
 import javax.swing.SpringLayout;
+import logicaJogo.GereFicheirosJogo;
 import logicaJogo.ObservableGame;
 
 public class CardSiegePanelStart extends JPanel implements Observer, ConstantesGUI
 {
     JButton btnNovoJogo;
-    JButton btnCarregarJogo;
-    
+       
     JLabel lblTitulo; 
        
     ObservableGame observableGame;
@@ -66,8 +66,7 @@ public class CardSiegePanelStart extends JPanel implements Observer, ConstantesG
 
     private void setupComponents()
     {  
-        btnNovoJogo = new JButton("Novo Jogo");
-        btnCarregarJogo = new JButton("Carregar Jogo");
+        btnNovoJogo = new JButton("Iniciar Jogo");
         lblTitulo = new JLabel("Micro Space Empire"); 
         
         btnNovoJogo.addActionListener(new ActionListener()
@@ -78,22 +77,7 @@ public class CardSiegePanelStart extends JPanel implements Observer, ConstantesG
                 observableGame.novoJogo();
             }
         });
-        
-        btnCarregarJogo.addActionListener(new ActionListener()
-        {        
-            @Override
-            public void actionPerformed(ActionEvent ev)
-            {
-                try {
-                    observableGame.carregarJogo("default");
-                } catch (IOException ex) {
-                    Logger.getLogger(CardSiegePanelStart.class.getName()).log(Level.SEVERE, null, ex);
-                } catch (ClassNotFoundException ex) {
-                    Logger.getLogger(CardSiegePanelStart.class.getName()).log(Level.SEVERE, null, ex);
-                }
-            }
-        });
-   
+       
     }
     
     @Override
@@ -112,9 +96,7 @@ public class CardSiegePanelStart extends JPanel implements Observer, ConstantesG
 
         lblTitulo.setFont(new Font("Arial", Font.ITALIC, 30));
         lblTitulo.setForeground(Color.WHITE);
-    
-
-        btnCarregarJogo.setSize(100,100);                
+                  
         btnNovoJogo.setSize(100,100);
         
         add(parteDeCima, BorderLayout.NORTH);
@@ -128,9 +110,7 @@ public class CardSiegePanelStart extends JPanel implements Observer, ConstantesG
       
         parteDeCima.add(lblTitulo);
         parteDeBaixo.add(btnNovoJogo);
-        parteDeBaixo.add(btnCarregarJogo);
-        
-
+       
         validate();
     }
     

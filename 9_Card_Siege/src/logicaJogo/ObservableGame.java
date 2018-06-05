@@ -352,4 +352,9 @@ public class ObservableGame extends Observable
         GereFicheirosJogo.carregaJogo(nomeFicheiro);
     }
 
+    public String sobre() 
+    {
+        return jogo.sobre();
+    }
+
 }
