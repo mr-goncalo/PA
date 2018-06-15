@@ -67,7 +67,7 @@ public class CardSiegePanelStart extends JPanel implements Observer, ConstantesG
     private void setupComponents()
     {  
         btnNovoJogo = new JButton("Iniciar Jogo");
-        lblTitulo = new JLabel("Micro Space Empire"); 
+        lblTitulo = new JLabel("9 Card Siege"); 
         
         btnNovoJogo.addActionListener(new ActionListener()
         {        

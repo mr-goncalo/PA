@@ -33,6 +33,7 @@ import javax.swing.border.Border;
 import javax.swing.border.LineBorder;
 import jdk.nashorn.internal.objects.NativeObject;
 import logicaJogo.Cartas.Card;
+import logicaJogo.Estados.AguardaTunnelMovement;
 import logicaJogo.ObservableGame;
 
 public class CardSiegePanel extends JPanel implements Observer, ConstantesGUI
@@ -273,8 +274,11 @@ public class CardSiegePanel extends JPanel implements Observer, ConstantesGUI
             public void actionPerformed(ActionEvent ae) 
             {
                 game.realizarAccaoTunnelMov();
-                bloqueiaTodosBotoesPrincipais();
-                realizarAccaoTunnelMov();
+                if(game.getEstado() instanceof AguardaTunnelMovement)
+                {
+                    bloqueiaTodosBotoesPrincipais();
+                    realizarAccaoTunnelMov(); 
+                }                
             }
         });
         
@@ -375,9 +379,11 @@ public class CardSiegePanel extends JPanel implements Observer, ConstantesGUI
         jPanelCartasJogadores.add(Box.createHorizontalGlue());
         jPanelCartasJogadores.add(cartaInimigoPanel);
 
+        Box boxInformacoes = Box.createVerticalBox();
         Box boxPrincipal = Box.createVerticalBox();
+        
         Box boxLabels = Box.createHorizontalBox();   
-        Box boxLabelsBonus = Box.createVerticalBox();
+        Box boxLabelsBonus = Box.createHorizontalBox();
         Box boxBotoes = Box.createHorizontalBox();
         Box boxBotoesSecundarios = Box.createHorizontalBox();
         
@@ -413,45 +419,53 @@ public class CardSiegePanel extends JPanel implements Observer, ConstantesGUI
         
         boxBotoes.setAlignmentX(Component.CENTER_ALIGNMENT);
         boxBotoesSecundarios.setAlignmentX(Component.CENTER_ALIGNMENT);
-        boxLabelsBonus.setAlignmentX(LEFT_ALIGNMENT);
-       
+        boxLabelsBonus.setAlignmentX(Component.LEFT_ALIGNMENT);
+        boxLabels.setAlignmentX(Component.LEFT_ALIGNMENT);
         
         boxLabels.add(lblEstado);
-        boxLabels.add(Box.createHorizontalGlue());  
+        boxLabels.add(Box.createHorizontalBox()); 
+        boxLabels.add(Box.createHorizontalBox());
         boxLabelsBonus.add(lblTurnActionPoints);
-        boxLabelsBonus.add(Box.createHorizontalGlue());
+        boxLabelsBonus.add(Box.createVerticalGlue());
         boxLabelsBonus.add(lblMoraleBonus);
-        boxLabelsBonus.add(Box.createHorizontalGlue());
+        boxLabelsBonus.add(Box.createVerticalGlue());
         boxLabelsBonus.add(lblSabotageBonus);
-        boxLabelsBonus.add(Box.createHorizontalGlue());
+        boxLabelsBonus.add(Box.createVerticalGlue());
         boxLabelsBonus.add(lblLaddersBonus);
-        boxLabelsBonus.add(Box.createHorizontalGlue());
+        boxLabelsBonus.add(Box.createVerticalGlue());
         boxLabelsBonus.add(lblBattRamBonus);
-        boxLabelsBonus.add(Box.createHorizontalGlue());
+        boxLabelsBonus.add(Box.createVerticalGlue());
         boxLabelsBonus.add(lblSiegeTowerBonus);
-        boxLabelsBonus.add(Box.createHorizontalGlue());
+        boxLabelsBonus.add(Box.createVerticalGlue());
         boxLabelsBonus.add(lblCloseCombatBonus);
-        boxLabelsBonus.add(Box.createHorizontalGlue());
+        boxLabelsBonus.add(Box.createVerticalGlue());
         boxLabelsBonus.add(lblRaidBonus);
-        boxLabelsBonus.add(Box.createHorizontalGlue());
+        boxLabelsBonus.add(Box.createVerticalGlue());
         boxLabelsBonus.add(lblCoupureBonus);
-        boxLabelsBonus.add(Box.createHorizontalGlue());
+        boxLabelsBonus.add(Box.createVerticalGlue());
         boxLabelsBonus.add(lblCircleSpaceBonus);
-        boxLabelsBonus.add(Box.createHorizontalGlue());
+        boxLabelsBonus.add(Box.createVerticalGlue());
+        boxInformacoes.add(Box.createHorizontalBox());
+        boxInformacoes.add(boxLabels);
+        boxInformacoes.add(Box.createHorizontalBox());
+        boxInformacoes.add(Box.createHorizontalBox());
+        boxInformacoes.add(boxLabelsBonus);
+        boxInformacoes.add(Box.createHorizontalBox());
         boxPrincipal.add(Box.createVerticalGlue());   
         boxPrincipal.add(boxBotoes);
         boxPrincipal.add(Box.createVerticalGlue());
-        boxPrincipal.add(boxLabels);
-        boxPrincipal.add(Box.createVerticalGlue());
         boxPrincipal.add(boxBotoesSecundarios);
         boxPrincipal.add(Box.createVerticalGlue());
-        boxPrincipal.add(boxLabelsBonus);
+        boxPrincipal.add(Box.createVerticalGlue());
         
+        add(Box.createHorizontalGlue());
+        add(boxInformacoes, BorderLayout.NORTH); 
+        add(Box.createHorizontalGlue());
         add(jPanelCartasJogo);
         add(Box.createHorizontalGlue());
         add(jPanelCartasJogadores);
         add(boxPrincipal, BorderLayout.SOUTH);   
-     
+         
         validate();    
     }
     
@@ -766,7 +780,7 @@ public class CardSiegePanel extends JPanel implements Observer, ConstantesGUI
             {
                 game.realizarTunnelMovement(1);
                 desbloqueiaTodosBotoesPrincipais();
-                 game.voltarAcao();
+                game.voltarAcao();
             }
         });
         
@@ -777,7 +791,7 @@ public class CardSiegePanel extends JPanel implements Observer, ConstantesGUI
             {
                 game.realizarTunnelMovement(2);
                 desbloqueiaTodosBotoesPrincipais();
-                 game.voltarAcao();
+                game.voltarAcao();
             }
         });
                 

@@ -34,7 +34,7 @@ public class AguardaTunnelMovement extends EstadoAdapter {
                 getJogo().tunnelFreeMovement();
                 getJogo().setUsedFreeMovement(true);
             } else {
-                getJogo().setLog("You can use this in the same turn that troops entered in tunnel,or more than once");
+                getJogo().setLog("You can't use this in the same turn that troops entered in tunnel,or more than once");
                 return this;
             }
         } else if (move == 2) {//fast movement

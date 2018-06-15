@@ -302,5 +302,10 @@ public class Jogo implements Serializable {
     {
         return jogo.sobre();
     }
+
+    boolean troopsInsideTunnel() 
+    {
+        return jogo.troopsInsideTunnel();
+    }
                             
 }

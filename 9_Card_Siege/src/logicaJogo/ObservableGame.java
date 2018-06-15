@@ -125,6 +125,8 @@ public class ObservableGame extends Observable
     public void realizarAccaoTunnelMov() 
     {   
         jogo.realizarAccaoTunnelMov();
+        setChanged();
+        notifyObservers();
     }
 
     public void realizarAccaoSupplyRaid() 
@@ -355,6 +357,11 @@ public class ObservableGame extends Observable
     public String sobre() 
     {
         return jogo.sobre();
+    }
+
+    public boolean troopsInsideTunnel() 
+    {
+        return jogo.troopsInsideTunnel();
     }
 
 }
